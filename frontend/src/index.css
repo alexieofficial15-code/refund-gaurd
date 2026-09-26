@@ -1,0 +1,444 @@
+/* ==========================================================================
+   RefundGuard Design System Tokens & Base Styles
+   Aesthetics: Trustworthy, Financial Protection, Clean White + Deep Navy + Soft Blue
+   Full-Page Transparent Background & Glassmorphic Elements
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-main: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-soft-blue: rgba(240, 246, 254, 0.85);
+  --bg-soft-blue-hover: rgba(228, 239, 253, 0.92);
+  --bg-blue-pill: rgba(230, 240, 250, 0.9);
+  --border-subtle: rgba(226, 232, 240, 0.8);
+  --border-blue: rgba(199, 217, 236, 0.85);
+  --border-focus: #1d70b8;
+
+  /* Brand Colors */
+  --navy-primary: #0a192f;
+  --navy-deep: #061122;
+  --navy-light: #162a45;
+  --blue-accent: #1d70b8;
+  --blue-accent-hover: #155b96;
+  --blue-calm: #2563eb;
+  --blue-muted: #3b82f6;
+
+  /* Typography Colors */
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --text-subtle: #64748b;
+  --text-light: #94a3b8;
+  --text-inverse: #ffffff;
+  --text-blue-accent: #195e99;
+
+  /* Status Tokens */
+  --status-success-bg: rgba(236, 253, 245, 0.9);
+  --status-success-text: #047857;
+  --status-success-border: #a7f3d0;
+
+  --status-warning-bg: rgba(255, 251, 235, 0.9);
+  --status-warning-text: #b45309;
+  --status-warning-border: #fde68a;
+
+  --status-danger-bg: rgba(254, 242, 242, 0.9);
+  --status-danger-text: #b91c1c;
+  --status-danger-border: #fecaca;
+
+  --status-info-bg: rgba(239, 246, 255, 0.9);
+  --status-info-text: #1d4ed8;
+  --status-info-border: #bfdbfe;
+
+  /* Shadows & Elevations */
+  --shadow-xs: 0 1px 3px rgba(10, 25, 47, 0.05);
+  --shadow-sm: 0 4px 10px rgba(10, 25, 47, 0.06);
+  --shadow-md: 0 8px 22px rgba(10, 25, 47, 0.08);
+  --shadow-lg: 0 16px 36px rgba(10, 25, 47, 0.12);
+  --shadow-glass: 0 12px 36px 0 rgba(10, 25, 47, 0.1);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Font */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: 16px;
+  color: var(--text-main);
+  background-color: #f1f5f9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   FULL-PAGE BACKGROUND IMAGE (Behind text all the way down the page)
+   ========================================================================== */
+
+.site-app-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Fixed background photo with transparency/soft lighting */
+.site-fixed-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    linear-gradient(135deg, rgba(248, 250, 252, 0.86) 0%, rgba(240, 246, 254, 0.82) 45%, rgba(225, 238, 255, 0.86) 100%),
+    url('/images/fintech_security_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  filter: saturate(1.1);
+}
+
+.site-fixed-glow {
+  position: fixed;
+  top: -10vw;
+  right: -5vw;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29, 112, 184, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(50px);
+}
+
+.site-content-layer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Typography Base */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--navy-primary);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+p {
+  line-height: 1.5;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+a {
+  color: var(--blue-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--blue-accent-hover);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(29, 112, 184, 0.15);
+}
+
+/* ==========================================================================
+   CLEAN CAPSULE FROSTED GLASS BUTTONS (Matching Reference Design)
+   Ultra-smooth blur, specular top rim, pill silhouette, crisp outlines
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.65rem;
+  font-weight: 600;
+  font-size: 0.94rem;
+  border-radius: 9999px; /* Clean capsule pill */
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+/* Primary Glass Button (Deep Navy Frosted Glass with Crisp Specular Rim) */
+.btn-primary {
+  background: linear-gradient(180deg, rgba(22, 50, 92, 0.78) 0%, rgba(10, 25, 47, 0.88) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.45),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.25),
+    0 10px 30px rgba(10, 25, 47, 0.22);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, rgba(29, 65, 118, 0.88) 0%, rgba(15, 34, 64, 0.94) 100%);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.7),
+    0 14px 38px rgba(10, 25, 47, 0.3),
+    0 0 20px rgba(29, 112, 184, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.3),
+    0 4px 14px rgba(10, 25, 47, 0.2);
+}
+
+/* Secondary Glass Button (Frosted Translucent Glass Capsule like the shared image) */
+.btn-glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.48) 0%, rgba(235, 245, 255, 0.28) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  color: var(--navy-primary);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 
+    inset 0 1.5px 2.5px rgba(255, 255, 255, 0.85),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.06),
+    0 10px 28px rgba(10, 25, 47, 0.08);
+}
+
+.btn-glass:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(230, 242, 255, 0.5) 100%);
+  border-color: rgba(255, 255, 255, 0.95);
+  color: var(--blue-accent);
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.95),
+    0 14px 34px rgba(29, 112, 184, 0.16);
+}
+
+.btn-glass:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* Outline Glass Capsule Button */
+.btn-outline {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(248, 250, 252, 0.2) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--navy-primary);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(255, 255, 255, 0.9);
+  color: var(--blue-accent);
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.8),
+    0 8px 22px rgba(29, 112, 184, 0.12);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* Trust Pill & Badges */
+.trust-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.95rem;
+  background-color: rgba(230, 240, 250, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(29, 112, 184, 0.25);
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-blue-accent);
+  letter-spacing: -0.01em;
+}
+
+/* Card Container with Frosted Glass Elevation */
+.card-clean {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.card-clean:hover {
+  border-color: var(--border-blue);
+  box-shadow: var(--shadow-md);
+}
+
+/* Form Styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.form-label {
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text-main);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.form-input.has-icon-left {
+  padding-left: 2.6rem;
+}
+
+.form-input.has-icon-right {
+  padding-right: 2.6rem;
+}
+
+.form-toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: transparent;
+  color: var(--text-subtle);
+  padding: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+.form-toggle-password:hover {
+  color: var(--text-main);
+}
+
+.form-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1.45;
+}
+
+.form-checkbox-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  accent-color: var(--navy-primary);
+  cursor: pointer;
+}
+
+/* Legal Disclaimer Box */
+.disclaimer-box {
+  background: rgba(240, 246, 254, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(29, 112, 184, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.1rem;
+  font-size: 0.81rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 1rem;
+  }
+}

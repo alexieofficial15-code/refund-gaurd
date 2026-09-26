@@ -1,0 +1,112 @@
+/* ==========================================================================
+   FLOATING GLASS CAPSULE DOCK (Matches User's Reference Image Exactly)
+   ========================================================================== */
+
+.floating-dock-wrapper {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.floating-glass-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 9999px;
+  background: rgba(10, 25, 47, 0.62);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    inset 0 1.5px 2.5px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.25),
+    0 16px 40px rgba(6, 17, 34, 0.35),
+    0 0 24px rgba(29, 112, 184, 0.18);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-glass-capsule:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.6),
+    0 20px 48px rgba(6, 17, 34, 0.45),
+    0 0 32px rgba(29, 112, 184, 0.3);
+}
+
+.dock-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.dock-pill-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Active Inner Pill (Matches the solid rounded home button in user image) */
+.dock-pill-btn.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  box-shadow: 
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dock-pill-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.dock-pill-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Subtle Three Carousel Dots (Matches reference image) */
+.dock-carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dock-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dock-dot.active {
+  background-color: rgba(255, 255, 255, 0.85);
+  width: 7px;
+  height: 7px;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 640px) {
+  .floating-dock-wrapper {
+    bottom: 16px;
+  }
+  .dock-pill-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
