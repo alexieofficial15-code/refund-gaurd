@@ -902,16 +902,14 @@ router.post('/:caseNumber/settle', async (req, res) => {
         await userDoc.save();
         await syncUserWallet(caseDoc.userId);
 
-        // Send formal settlement notification email to claimant
-        try {
-          await sendSettlementNotificationEmail({
-            user: userDoc,
-            caseDoc,
-            amount
-          });
-        } catch (mailErr) {
+        // Send formal settlement notification email to claimant in background (non-blocking)
+        sendSettlementNotificationEmail({
+          user: userDoc,
+          caseDoc,
+          amount
+        }).catch(mailErr => {
           console.error('Failed to send settlement email:', mailErr);
-        }
+        });
       }
     }
 

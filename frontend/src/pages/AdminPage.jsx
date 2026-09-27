@@ -43,6 +43,8 @@ export default function AdminPage({ onNavigate }) {
   const [selectedCaseForAffidavit, setSelectedCaseForAffidavit] = useState(null);
   const [selectedCaseForSettle, setSelectedCaseForSettle] = useState(null);
   const [settleInputAmount, setSettleInputAmount] = useState('');
+  const [isSettling, setIsSettling] = useState(false);
+  const [updatingCaseNumber, setUpdatingCaseNumber] = useState(null);
 
   // Specialist Messaging State
   const [selectedMsgCaseIndex, setSelectedMsgCaseIndex] = useState(0);
@@ -114,6 +116,7 @@ export default function AdminPage({ onNavigate }) {
 
   // 1. UPDATE STATUS
   const handleUpdateStatus = async (caseNumber, newStatus) => {
+    setUpdatingCaseNumber(caseNumber);
     try {
       const activeToken = token || localStorage.getItem('refundguard_token');
       const res = await fetch(`/api/cases/${caseNumber}/details`, {
@@ -125,7 +128,9 @@ export default function AdminPage({ onNavigate }) {
         body: JSON.stringify({ status: newStatus })
       });
 
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success !== false) {
         if (newStatus === 'resolved') {
           try {
             localStorage.removeItem(`refundguard_seen_settlement_${caseNumber}`);
@@ -134,12 +139,17 @@ export default function AdminPage({ onNavigate }) {
         setCases(prev => prev.map(c => c.caseNumber === caseNumber ? {
           ...c,
           status: newStatus,
+          settledAmount: c.settledAmount || (newStatus === 'resolved' ? c.disputedAmount : c.settledAmount),
           settlementFlashPending: newStatus === 'resolved'
         } : c));
         showToast(`Case #${caseNumber} status updated to ${newStatus.replace('_', ' ').toUpperCase()}`);
+      } else {
+        showToast(data.message || 'Failed to update status', 'error');
       }
     } catch (err) {
       showToast('Failed to update status', 'error');
+    } finally {
+      setUpdatingCaseNumber(null);
     }
   };
 
@@ -305,6 +315,7 @@ export default function AdminPage({ onNavigate }) {
       return;
     }
 
+    setIsSettling(true);
     try {
       const activeToken = token || localStorage.getItem('refundguard_token');
       const res = await fetch(`/api/cases/${selectedCaseForSettle.caseNumber}/settle`, {
@@ -344,6 +355,8 @@ export default function AdminPage({ onNavigate }) {
       setSelectedCaseForSettle(null);
     } catch (err) {
       showToast(err.message || 'Error recording settlement', 'error');
+    } finally {
+      setIsSettling(false);
     }
   };
 
@@ -696,6 +709,7 @@ export default function AdminPage({ onNavigate }) {
                         <select 
                           className="status-quick-select"
                           value={c.status}
+                          disabled={updatingCaseNumber === c.caseNumber}
                           onChange={(e) => handleUpdateStatus(c.caseNumber, e.target.value)}
                         >
                           <option value="submitted">Submitted</option>
@@ -1266,80 +1280,7 @@ export default function AdminPage({ onNavigate }) {
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* MODAL 3: SETTLEMENT DIALOG                                                */}
-      {/* ========================================================================= */}
-      {selectedCaseForSettle && (
-        <div className="admin-modal-backdrop" onClick={() => setSelectedCaseForSettle(null)}>
-          <div className="admin-modal-card" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-modal-header">
-              <h3 className="admin-modal-title">
-                Settle & Recover Dispute #{selectedCaseForSettle.caseNumber}
-              </h3>
-              <button 
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }} 
-                onClick={() => setSelectedCaseForSettle(null)}
-              >
-                <X size={18} />
-              </button>
-            </div>
 
-            <form onSubmit={handleConfirmSettle}>
-              <div className="admin-modal-body">
-                <div style={{
-                  background: '#ecfdf5',
-                  border: '1px solid #a7f3d0',
-                  borderRadius: '8px',
-                  padding: '1rem',
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem'
-                }}>
-                  <Award size={28} color="#059669" />
-                  <div>
-                    <strong style={{ color: '#065f46', fontSize: '0.9rem', display: 'block' }}>
-                      Record Settlement Recovery
-                    </strong>
-                    <span style={{ fontSize: '0.78rem', color: '#047857' }}>
-                      This will transition the case to Resolved and update the user's dashboard with the settled fund amount.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="admin-form-group">
-                  <label className="admin-form-label">Confirmed Settled Amount ($ USD)</label>
-                  <input 
-                    type="number" 
-                    className="admin-form-input" 
-                    value={settleInputAmount}
-                    onChange={(e) => setSettleInputAmount(e.target.value)}
-                    placeholder="4850.00"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="admin-modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-secondary" 
-                  onClick={() => setSelectedCaseForSettle(null)}
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit" 
-                  className="btn btn-primary"
-                  style={{ background: '#059669', borderColor: '#059669' }}
-                >
-                  <Check size={14} /> Confirm Settlement
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
 
       {/* ========================================================================= */}
       {/* MODAL 4: AFFIDAVIT INSPECTION MODAL                                       */}
@@ -1422,11 +1363,11 @@ export default function AdminPage({ onNavigate }) {
       )}
 
       {/* ========================================== */}
-      {/* MODAL 5: CONFIRM CASE SETTLEMENT           */}
+      {/* MODAL: CONFIRM CASE SETTLEMENT             */}
       {/* ========================================== */}
       {selectedCaseForSettle && (
         <div className="admin-modal-backdrop" onClick={() => setSelectedCaseForSettle(null)}>
-          <div className="admin-modal-dialog" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '480px' }}>
+          <div className="admin-modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px', background: '#ffffff', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
             <div className="admin-modal-header" style={{ background: '#ecfdf5', borderBottom: '1px solid #a7f3d0' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                 <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#10b981', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1512,7 +1453,8 @@ export default function AdminPage({ onNavigate }) {
               <div className="admin-modal-footer">
                 <button 
                   type="button" 
-                  className="btn btn-secondary"
+                  className="btn btn-secondary" 
+                  disabled={isSettling}
                   onClick={() => setSelectedCaseForSettle(null)}
                 >
                   Cancel
@@ -1520,9 +1462,17 @@ export default function AdminPage({ onNavigate }) {
                 <button 
                   type="submit" 
                   className="btn"
-                  style={{ background: '#059669', color: '#ffffff', border: 'none' }}
+                  disabled={isSettling}
+                  style={{ background: '#059669', color: '#ffffff', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', opacity: isSettling ? 0.7 : 1 }}
                 >
-                  Confirm Settlement & Credit Wallet
+                  {isSettling ? (
+                    <>
+                      <RefreshCw size={14} className="spin" />
+                      <span>Recording Settlement...</span>
+                    </>
+                  ) : (
+                    <span>Confirm Settlement & Credit Wallet</span>
+                  )}
                 </button>
               </div>
             </form>
