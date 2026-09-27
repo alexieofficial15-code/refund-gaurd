@@ -42,6 +42,38 @@ function createInitialMilestones() {
   ];
 }
 
+/**
+ * Automatically synchronize user wallet balance based on active resolved cases.
+ * If an admin steps down a case from resolved to pending/under review, the money is immediately deducted.
+ * When a case is moved back to resolved/approved, the money is credited.
+ */
+export async function syncUserWallet(userId) {
+  if (!userId) return 0;
+  try {
+    const userDoc = await User.findById(userId);
+    if (!userDoc) return 0;
+
+    const userCases = await Case.find({ userId });
+    // Total settled funds from cases that are CURRENTLY in 'resolved' status
+    const totalResolvedCredit = userCases
+      .filter(c => c.status === 'resolved')
+      .reduce((sum, c) => sum + (Number(c.settledAmount || c.disputedAmount) || 0), 0);
+
+    // Total completed withdrawals
+    const totalWithdrawals = (userDoc.walletTransactions || [])
+      .filter(t => t.type === 'withdrawal' && t.status !== 'failed' && t.status !== 'cancelled')
+      .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+    const calculatedBalance = Math.max(0, totalResolvedCredit - totalWithdrawals);
+    userDoc.walletBalance = calculatedBalance;
+    await userDoc.save();
+    return calculatedBalance;
+  } catch (err) {
+    console.error('Error syncing user wallet:', err);
+    return 0;
+  }
+}
+
 // ==========================================
 // 1. PUBLIC CASE RADAR TRACKING (No auth required)
 // ==========================================
@@ -156,13 +188,15 @@ router.get('/', async (req, res) => {
 // ==========================================
 router.get('/wallet/me', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id || req.user._id);
+    const userId = req.user.id || req.user._id;
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ success: false, message: 'User profile not found.' });
     }
+    const currentBalance = await syncUserWallet(userId);
     return res.json({
       success: true,
-      walletBalance: user.walletBalance || 0,
+      walletBalance: currentBalance,
       walletTransactions: user.walletTransactions || [],
       withdrawalAllowed: Boolean(user.withdrawalAllowed),
       clearanceFeePaid: Boolean(user.clearanceFeePaid)
@@ -467,9 +501,27 @@ router.patch('/:caseNumber/status', authMiddleware, async (req, res) => {
       }
     }
 
+    const previousStatus = existing.status;
     existing.status = status;
     if (disputeChannel) existing.disputeChannel = disputeChannel;
+
+    if (status === 'resolved' && previousStatus !== 'resolved') {
+      existing.settlementFlashPending = true;
+      if (!existing.settledAmount) {
+        existing.settledAmount = existing.disputedAmount;
+      }
+      existing.settledAt = new Date();
+    } else if (status !== 'resolved') {
+      // Stepped down from resolved: revoke withdrawal permission and reset settlement flags
+      existing.withdrawalAllowed = false;
+      existing.settlementFlashPending = false;
+    }
+
     await existing.save();
+
+    if (existing.userId) {
+      await syncUserWallet(existing.userId);
+    }
 
     return res.json({
       success: true,
@@ -541,8 +593,13 @@ router.patch('/:caseNumber/details', async (req, res) => {
     if (disputedAmount !== undefined) caseDoc.disputedAmount = Number(disputedAmount);
     if (settledAmount !== undefined) caseDoc.settledAmount = Number(settledAmount);
     if (status !== undefined) {
-      if (status === 'resolved' && caseDoc.status !== 'resolved') {
+      const prevStatus = caseDoc.status;
+      if (status === 'resolved' && prevStatus !== 'resolved') {
         caseDoc.settlementFlashPending = true;
+        if (!caseDoc.settledAmount) {
+          caseDoc.settledAmount = caseDoc.disputedAmount;
+        }
+        caseDoc.settledAt = new Date();
         if (caseDoc.userId) {
           sendSettlementNotificationEmail({
             user: caseDoc.userId,
@@ -550,6 +607,10 @@ router.patch('/:caseNumber/details', async (req, res) => {
             amount: caseDoc.settledAmount || caseDoc.disputedAmount || 0
           }).catch(err => console.error('Failed to dispatch settlement email on status resolve:', err));
         }
+      } else if (status !== 'resolved') {
+        // Stepped down from resolved: revoke withdrawal permission and reset settlement flags
+        caseDoc.withdrawalAllowed = false;
+        caseDoc.settlementFlashPending = false;
       }
       caseDoc.status = status;
     }
@@ -560,6 +621,12 @@ router.patch('/:caseNumber/details', async (req, res) => {
     if (counterpartyInfo !== undefined) caseDoc.counterpartyInfo = counterpartyInfo;
 
     await caseDoc.save();
+
+    // Synchronize owner wallet immediately
+    if (caseDoc.userId) {
+      const uId = caseDoc.userId._id || caseDoc.userId;
+      await syncUserWallet(uId);
+    }
 
     return res.json({
       success: true,
@@ -592,12 +659,34 @@ router.patch('/:caseNumber/milestones', async (req, res) => {
     }
 
     caseDoc.milestones = milestones;
+
+    // Check step 4 (Formal Filing & Outcome Determination)
+    const step4 = milestones.find(m => m.stepOrder === 4);
+    if (step4) {
+      if (step4.status === 'completed' && caseDoc.status !== 'resolved') {
+        caseDoc.status = 'resolved';
+        if (!caseDoc.settledAmount) caseDoc.settledAmount = caseDoc.disputedAmount;
+        caseDoc.settledAt = new Date();
+        caseDoc.settlementFlashPending = true;
+      } else if (step4.status !== 'completed' && caseDoc.status === 'resolved') {
+        // Stepped back from step 4 completed to upcoming or current: step down!
+        caseDoc.status = 'under_review';
+        caseDoc.withdrawalAllowed = false;
+        caseDoc.settlementFlashPending = false;
+      }
+    }
+
     await caseDoc.save();
+
+    if (caseDoc.userId) {
+      await syncUserWallet(caseDoc.userId);
+    }
 
     return res.json({
       success: true,
       message: `Milestones for case ${formattedNumber} updated successfully.`,
-      milestones: caseDoc.milestones
+      milestones: caseDoc.milestones,
+      case: caseDoc
     });
   } catch (err) {
     console.error('Update milestones error:', err);
@@ -801,7 +890,6 @@ router.post('/:caseNumber/settle', async (req, res) => {
     if (caseDoc.userId) {
       const userDoc = await User.findById(caseDoc.userId);
       if (userDoc) {
-        userDoc.walletBalance = (Number(userDoc.walletBalance) || 0) + amount;
         if (!userDoc.walletTransactions) userDoc.walletTransactions = [];
         userDoc.walletTransactions.unshift({
           type: 'settlement_credit',
@@ -813,6 +901,7 @@ router.post('/:caseNumber/settle', async (req, res) => {
           createdAt: new Date()
         });
         await userDoc.save();
+        await syncUserWallet(caseDoc.userId);
 
         // Send formal settlement notification email to claimant
         try {

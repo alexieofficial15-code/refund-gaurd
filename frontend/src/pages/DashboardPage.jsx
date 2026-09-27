@@ -198,14 +198,15 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     || cases[0] 
     || null;
 
-  // Recovered balance for the active case (or fallback to wallet balance)
-  const activeCaseBalance = activeCase 
+  // Recovered balance for the active case: ONLY credited if status is 'resolved'
+  const isCaseResolved = Boolean(activeCase && activeCase.status === 'resolved');
+  const activeCaseBalance = isCaseResolved 
     ? Number(activeCase.settledAmount || activeCase.disputedAmount || 0) 
-    : Number(walletBalance || 0);
+    : 0;
 
-  // Active case withdrawal authorization status
+  // Active case withdrawal authorization status (only valid if case is currently resolved)
   const isCaseWithdrawalAllowed = Boolean(
-    activeCase && (
+    isCaseResolved && (
       activeCase.withdrawalAllowed === true ||
       localStorage.getItem(`refundguard_withdrawal_allowed_${activeCase.caseNumber}`) === 'true'
     )
@@ -282,6 +283,11 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
   const handleWithdrawClick = async () => {
     if (!activeCase) {
       setWithdrawNotice('No dispute case selected for withdrawal.');
+      return;
+    }
+
+    if (activeCase.status !== 'resolved') {
+      setWithdrawNotice(`Case #${activeCase.caseNumber} is currently ${activeCase.status.replace('_', ' ').toUpperCase()}. Restitution payout will be unlocked once proceedings conclude and administration marks the case as resolved.`);
       return;
     }
 
@@ -1279,8 +1285,9 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
               <div className="wallet-case-pills-grid">
                 {cases.map((c, idx) => {
                   const isCurrent = activeCase?.caseNumber === c.caseNumber;
-                  const cAmount = Number(c.settledAmount || c.disputedAmount || 0);
-                  const isApproved = Boolean(c.withdrawalAllowed || localStorage.getItem(`refundguard_withdrawal_allowed_${c.caseNumber}`) === 'true');
+                  const isCaseSettled = c.status === 'resolved';
+                  const cAmount = isCaseSettled ? Number(c.settledAmount || c.disputedAmount || 0) : 0;
+                  const isApproved = Boolean(isCaseSettled && (c.withdrawalAllowed || localStorage.getItem(`refundguard_withdrawal_allowed_${c.caseNumber}`) === 'true'));
                   return (
                     <button
                       key={c._id || c.caseNumber || idx}
@@ -1290,13 +1297,17 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                     >
                       <div className="case-select-header">
                         <span className="case-select-id">Case #{c.caseNumber}</span>
-                        <span className={`case-select-status-badge ${isApproved ? 'badge-approved' : 'badge-pending'}`}>
-                          {isApproved ? 'Approved for Withdrawal' : 'Pending $300 Clearance'}
+                        <span className={`case-select-status-badge ${isApproved ? 'badge-approved' : (isCaseSettled ? 'badge-pending' : 'badge-review')}`} style={!isCaseSettled ? { background: '#f1f5f9', color: '#64748b', borderColor: '#e2e8f0' } : {}}>
+                          {isApproved 
+                            ? 'Approved for Withdrawal' 
+                            : (isCaseSettled ? 'Pending $300 Clearance' : 'In Progress / Pending Review')}
                         </span>
                       </div>
                       <div className="case-select-body">
                         <span className="case-select-label">Recovered Amount</span>
-                        <span className="case-select-val">${cAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD</span>
+                        <span className="case-select-val" style={!isCaseSettled ? { color: '#94a3b8' } : {}}>
+                          ${cAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
+                        </span>
                       </div>
                     </button>
                   );
@@ -1336,13 +1347,19 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                 <span className="wallet-currency-code">USD</span>
               </div>
               <div className="wallet-active-case-status-bar">
-                {isCaseWithdrawalAllowed ? (
-                  <span className="wallet-status-tag status-approved">
-                    Withdrawal Status: Approved by Admin (Ready for Immediate Payout)
-                  </span>
+                {isCaseResolved ? (
+                  isCaseWithdrawalAllowed ? (
+                    <span className="wallet-status-tag status-approved">
+                      Withdrawal Status: Approved by Admin (Ready for Immediate Payout)
+                    </span>
+                  ) : (
+                    <span className="wallet-status-tag status-pending">
+                      Withdrawal Status: Case Resolved (Requires $300 Upfront Clearance Approval)
+                    </span>
+                  )
                 ) : (
-                  <span className="wallet-status-tag status-pending">
-                    Withdrawal Status: Locked (Requires $300 Upfront Clearance Approval)
+                  <span className="wallet-status-tag" style={{ background: '#f8fafc', color: '#64748b', border: '1px solid #e2e8f0' }}>
+                    Case Status: {activeCase?.status ? activeCase.status.replace('_', ' ').toUpperCase() : 'PENDING'} (Dispute In Progress &bull; Unsettled)
                   </span>
                 )}
               </div>
@@ -1360,14 +1377,14 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
               </div>
               <div className="wallet-mini-stat">
                 <span className="mini-stat-label">RECOVERED SUM</span>
-                <span className="mini-stat-val text-green">
+                <span className={`mini-stat-val ${isCaseResolved ? 'text-green' : 'text-slate'}`}>
                   ${activeCaseBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="wallet-mini-stat">
                 <span className="mini-stat-label">CLEARANCE STATUS</span>
-                <span className={`mini-stat-val ${isCaseWithdrawalAllowed ? 'text-green' : 'text-amber'}`}>
-                  {isCaseWithdrawalAllowed ? 'Clearance OK' : '$300 Required'}
+                <span className={`mini-stat-val ${isCaseResolved ? (isCaseWithdrawalAllowed ? 'text-green' : 'text-amber') : 'text-slate'}`}>
+                  {isCaseResolved ? (isCaseWithdrawalAllowed ? 'Clearance OK' : '$300 Required') : 'Pending Resolution'}
                 </span>
               </div>
             </div>
