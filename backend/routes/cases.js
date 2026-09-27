@@ -505,13 +505,13 @@ router.patch('/:caseNumber/status', authMiddleware, async (req, res) => {
     existing.status = status;
     if (disputeChannel) existing.disputeChannel = disputeChannel;
 
-    if (status === 'resolved' && previousStatus !== 'resolved') {
+    if (status === 'resolved') {
       existing.settlementFlashPending = true;
       if (!existing.settledAmount) {
         existing.settledAmount = existing.disputedAmount;
       }
       existing.settledAt = new Date();
-    } else if (status !== 'resolved') {
+    } else {
       // Stepped down from resolved: revoke withdrawal permission and reset settlement flags
       existing.withdrawalAllowed = false;
       existing.settlementFlashPending = false;
@@ -593,8 +593,7 @@ router.patch('/:caseNumber/details', async (req, res) => {
     if (disputedAmount !== undefined) caseDoc.disputedAmount = Number(disputedAmount);
     if (settledAmount !== undefined) caseDoc.settledAmount = Number(settledAmount);
     if (status !== undefined) {
-      const prevStatus = caseDoc.status;
-      if (status === 'resolved' && prevStatus !== 'resolved') {
+      if (status === 'resolved') {
         caseDoc.settlementFlashPending = true;
         if (!caseDoc.settledAmount) {
           caseDoc.settledAmount = caseDoc.disputedAmount;
@@ -607,7 +606,7 @@ router.patch('/:caseNumber/details', async (req, res) => {
             amount: caseDoc.settledAmount || caseDoc.disputedAmount || 0
           }).catch(err => console.error('Failed to dispatch settlement email on status resolve:', err));
         }
-      } else if (status !== 'resolved') {
+      } else {
         // Stepped down from resolved: revoke withdrawal permission and reset settlement flags
         caseDoc.withdrawalAllowed = false;
         caseDoc.settlementFlashPending = false;

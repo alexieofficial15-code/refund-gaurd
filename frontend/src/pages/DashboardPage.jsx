@@ -392,16 +392,20 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
               }
             }
 
-            // Check if any case has a pending settlement confirmation (ONLY when newly approved)
-            const newlySettled = data.cases.find(c => {
-              if (c.status !== 'resolved') return false;
-              const seenKey = `refundguard_seen_settlement_${c.caseNumber}`;
-              return c.settlementFlashPending === true && !localStorage.getItem(seenKey);
+            // Clean up seen keys for any cases that are NOT resolved so stepping down allows re-triggering
+            data.cases.forEach(c => {
+              if (c.status !== 'resolved') {
+                try {
+                  localStorage.removeItem(`refundguard_seen_settlement_${c.caseNumber}`);
+                } catch (_) {}
+              }
             });
+
+            // Check if any case has a pending settlement confirmation (server is authoritative via settlementFlashPending)
+            const newlySettled = data.cases.find(c => c.status === 'resolved' && c.settlementFlashPending === true);
 
             if (newlySettled && isMounted) {
               const seenKey = `refundguard_seen_settlement_${newlySettled.caseNumber}`;
-              // Mark as seen immediately so it will never animate again on refresh or revisit
               try {
                 localStorage.setItem(seenKey, 'true');
                 if (activeToken) {
@@ -414,6 +418,9 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                   }).catch(() => {});
                 }
               } catch (_) {}
+
+              // Update in-memory state so subsequent silent refreshes don't re-trigger it
+              setCases(prev => prev.map(c => c.caseNumber === newlySettled.caseNumber ? { ...c, settlementFlashPending: false } : c));
 
               setCongratsCaseData(newlySettled);
               setSelectedCaseNumber(newlySettled.caseNumber);

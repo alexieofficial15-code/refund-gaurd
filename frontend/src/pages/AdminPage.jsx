@@ -126,7 +126,16 @@ export default function AdminPage({ onNavigate }) {
       });
 
       if (res.ok) {
-        setCases(prev => prev.map(c => c.caseNumber === caseNumber ? { ...c, status: newStatus } : c));
+        if (newStatus === 'resolved') {
+          try {
+            localStorage.removeItem(`refundguard_seen_settlement_${caseNumber}`);
+          } catch (_) {}
+        }
+        setCases(prev => prev.map(c => c.caseNumber === caseNumber ? {
+          ...c,
+          status: newStatus,
+          settlementFlashPending: newStatus === 'resolved'
+        } : c));
         showToast(`Case #${caseNumber} status updated to ${newStatus.replace('_', ' ').toUpperCase()}`);
       }
     } catch (err) {
@@ -161,7 +170,15 @@ export default function AdminPage({ onNavigate }) {
       });
 
       if (res.ok) {
-        setCases(prev => prev.map(c => c.caseNumber === selectedCaseForEdit.caseNumber ? selectedCaseForEdit : c));
+        if (selectedCaseForEdit.status === 'resolved') {
+          try {
+            localStorage.removeItem(`refundguard_seen_settlement_${selectedCaseForEdit.caseNumber}`);
+          } catch (_) {}
+        }
+        setCases(prev => prev.map(c => c.caseNumber === selectedCaseForEdit.caseNumber ? {
+          ...selectedCaseForEdit,
+          settlementFlashPending: selectedCaseForEdit.status === 'resolved'
+        } : c));
         showToast(`Dossier #${selectedCaseForEdit.caseNumber} details saved!`);
         setSelectedCaseForEdit(null);
       }
