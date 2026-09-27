@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
  * Configured for domain: refundguard.com
  */
 
-const DOMAIN_NAME = process.env.DOMAIN_NAME || 'refundguard.com';
+const DOMAIN_NAME = process.env.DOMAIN_NAME || 'refundgaurd.com';
 const APP_URL = process.env.APP_URL || `https://${DOMAIN_NAME}`;
 const SMTP_FROM_NAME = process.env.SMTP_FROM_NAME || 'RefundGuard Restitution Bureau';
 const SMTP_FROM_EMAIL = process.env.SMTP_FROM_EMAIL || `settlements@${DOMAIN_NAME}`;
@@ -35,12 +35,44 @@ function getTransporter() {
 }
 
 /**
- * Dispatch an email with automatic fallback to simulated console logging
+ * Dispatch an email with Resend API (Primary) -> Nodemailer SMTP -> Console Simulation
  */
 async function sendMail({ to, subject, html, text, fromTitle = SMTP_FROM_NAME, fromEmail = SMTP_FROM_EMAIL }) {
   const fromAddress = `"${fromTitle}" <${fromEmail}>`;
-  const transporter = getTransporter();
 
+  // 1. Primary: Resend API (reads securely from process.env.RESEND_API_KEY)
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (resendApiKey) {
+    try {
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: `${fromTitle} <${fromEmail}>`,
+          to: Array.isArray(to) ? to : [to],
+          subject,
+          html,
+          text: text || ''
+        })
+      });
+
+      const resData = await response.json();
+      if (response.ok && resData.id) {
+        console.log(`[RESEND EMAIL DISPATCHED] To: ${to} | Subject: "${subject}" | Id: ${resData.id}`);
+        return { success: true, messageId: resData.id, mode: 'resend' };
+      } else {
+        console.error(`[RESEND EMAIL WARNING]:`, resData);
+      }
+    } catch (err) {
+      console.error(`[RESEND EXCEPTION]:`, err.message);
+    }
+  }
+
+  // 2. Secondary: Nodemailer SMTP
+  const transporter = getTransporter();
   if (transporter) {
     try {
       const info = await transporter.sendMail({
