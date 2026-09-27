@@ -401,10 +401,17 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
               }
             });
 
-            // Check if any case has a pending settlement confirmation (server is authoritative via settlementFlashPending)
-            const newlySettled = data.cases.find(c => c.status === 'resolved' && c.settlementFlashPending === true);
+            // Check if any case has a pending settlement confirmation
+            // IMPORTANT: Only trigger celebration animation for claimant users logged into their dashboard, NEVER for admins!
+            const isClaimantUser = currentUser?.role !== 'admin' && currentUser?.role !== 'investigator';
+            const newlySettled = isClaimantUser ? data.cases.find(c => {
+              if (c.status !== 'resolved') return false;
+              if (c.settlementFlashPending !== true) return false;
+              const seenKey = `refundguard_seen_settlement_${c.caseNumber}`;
+              return !localStorage.getItem(seenKey);
+            }) : null;
 
-            if (newlySettled && isMounted) {
+            if (newlySettled && isMounted && !congratsFlashModalOpen) {
               const seenKey = `refundguard_seen_settlement_${newlySettled.caseNumber}`;
               try {
                 localStorage.setItem(seenKey, 'true');

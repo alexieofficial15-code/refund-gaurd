@@ -168,23 +168,13 @@ function MainApp() {
               />
             )}
 
-            {/* Dashboard Page - preserved in memory when authenticated so switching between Track/Start and Dashboard is instantaneous */}
-            {isAuthenticated ? (
-              <div style={{ display: activePage === 'dashboard' ? 'block' : 'none' }}>
-                <DashboardPage 
-                  onStartNewCase={handleStartCase}
-                  onNavigate={(page) => navigateTo(page)}
-                  isActive={activePage === 'dashboard'}
-                />
-              </div>
-            ) : (
-              activePage === 'dashboard' && (
-                <DashboardPage 
-                  onStartNewCase={handleStartCase}
-                  onNavigate={(page) => navigateTo(page)}
-                  isActive={true}
-                />
-              )
+            {/* Dashboard Page - Only mounted when user is actively on dashboard */}
+            {activePage === 'dashboard' && (
+              <DashboardPage 
+                onStartNewCase={handleStartCase}
+                onNavigate={(page) => navigateTo(page)}
+                isActive={true}
+              />
             )}
 
             {activePage === 'track' && (

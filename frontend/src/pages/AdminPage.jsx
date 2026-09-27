@@ -131,11 +131,9 @@ export default function AdminPage({ onNavigate }) {
       const data = await res.json().catch(() => ({}));
 
       if (res.ok && data.success !== false) {
-        if (newStatus === 'resolved') {
-          try {
-            localStorage.removeItem(`refundguard_seen_settlement_${caseNumber}`);
-          } catch (_) {}
-        }
+        try {
+          localStorage.removeItem(`refundguard_seen_settlement_${caseNumber}`);
+        } catch (_) {}
         setCases(prev => prev.map(c => c.caseNumber === caseNumber ? {
           ...c,
           status: newStatus,
@@ -180,11 +178,9 @@ export default function AdminPage({ onNavigate }) {
       });
 
       if (res.ok) {
-        if (selectedCaseForEdit.status === 'resolved') {
-          try {
-            localStorage.removeItem(`refundguard_seen_settlement_${selectedCaseForEdit.caseNumber}`);
-          } catch (_) {}
-        }
+        try {
+          localStorage.removeItem(`refundguard_seen_settlement_${selectedCaseForEdit.caseNumber}`);
+        } catch (_) {}
         setCases(prev => prev.map(c => c.caseNumber === selectedCaseForEdit.caseNumber ? {
           ...selectedCaseForEdit,
           settlementFlashPending: selectedCaseForEdit.status === 'resolved'
