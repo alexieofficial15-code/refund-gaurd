@@ -1,13 +1,13 @@
 import nodemailer from 'nodemailer';
 
 /**
- * RefundGuard Institutional Email Notification Service
- * Configured for domain: refundguard.com
+ * US.ClaimBack Institutional Email Notification Service
+ * Configured for domain: claimback.us / active domain
  */
 
-const DOMAIN_NAME = process.env.DOMAIN_NAME || 'refundgaurd.com';
+const DOMAIN_NAME = process.env.DOMAIN_NAME || 'usclaimback.com';
 const APP_URL = process.env.APP_URL || `https://${DOMAIN_NAME}`;
-const SMTP_FROM_NAME = process.env.SMTP_FROM_NAME || 'RefundGuard Restitution Bureau';
+const SMTP_FROM_NAME = process.env.SMTP_FROM_NAME || 'US.ClaimBack Restitution Bureau';
 const SMTP_FROM_EMAIL = process.env.SMTP_FROM_EMAIL || `settlements@${DOMAIN_NAME}`;
 
 /**
@@ -121,7 +121,7 @@ export async function sendSettlementNotificationEmail({ user, caseDoc, amount })
   const subject = `Official Notice: Restitution Settlement of $${formattedAmount} USD Credited - Case #${cNum}`;
 
   const textBody = `
-REFUNDGUARD RESTITUTION & DISPUTE BUREAU (${DOMAIN_NAME})
+US.CLAIMBACK RESTITUTION & DISPUTE BUREAU (${DOMAIN_NAME})
 OFFICIAL SETTLEMENT NOTIFICATION
 
 Dear ${claimantName},
@@ -135,14 +135,14 @@ SETTLEMENT SUMMARY:
 - Settlement Date: ${dateStr}
 - Status: Funds Recovered & Credited
 
-When you log in to your RefundGuard dashboard, your updated balance will be visible and ready for disbursement verification.
+When you log in to your US.ClaimBack dashboard, your updated balance will be visible and ready for disbursement verification.
 
 Access your dashboard and member wallet here:
 ${dashboardUrl}
 
 Sincerely,
 Senior Dispute Specialist Sarah K.
-RefundGuard Financial Restitution Bureau
+US.ClaimBack Financial Restitution Bureau
 https://${DOMAIN_NAME}
 `.trim();
 
@@ -177,7 +177,7 @@ https://${DOMAIN_NAME}
 <body>
   <div class="container">
     <div class="header">
-      <div class="header-logo"><img src="${APP_URL}/logo.png" width="30" height="30" style="vertical-align: middle; margin-right: 10px; border-radius: 7px;" alt="RefundGuard Emblem" />Refund<span>Guard</span></div>
+      <div class="header-logo"><img src="${APP_URL}/logo.png" width="30" height="30" style="vertical-align: middle; margin-right: 10px; border-radius: 7px;" alt="US.ClaimBack Emblem" />US.<span>ClaimBack</span></div>
       <div class="header-subtitle">Interbank Restitution & Fraud Recovery Division &bull; ${DOMAIN_NAME}</div>
     </div>
     <div class="content">
@@ -229,7 +229,7 @@ https://${DOMAIN_NAME}
     </div>
 
     <div class="footer">
-      <p><strong>RefundGuard Financial Restitution Bureau</strong></p>
+      <p><strong>US.ClaimBack Financial Restitution Bureau</strong></p>
       <p>Official banking communication issued under FinCEN & SWIFT Interbank Guidelines. Registered domain: ${DOMAIN_NAME}.</p>
       <p>This automated message was sent to ${recipientEmail} regarding active dispute file #${cNum}.</p>
     </div>
@@ -243,7 +243,7 @@ https://${DOMAIN_NAME}
     subject,
     text: textBody,
     html: htmlBody,
-    fromTitle: 'RefundGuard Settlement Bureau',
+    fromTitle: 'US.ClaimBack Settlement Bureau',
     fromEmail: `settlements@${DOMAIN_NAME}`
   });
 }
@@ -266,7 +266,7 @@ export async function sendClearanceBillEmail({ user, caseDoc, amount, billNumber
   const subject = `Action Required: $300 Upfront Clearance Bill for Payout Authorization - Case #${cNum}`;
 
   const textBody = `
-REFUNDGUARD COMPLIANCE & ESCROW DIVISION (${DOMAIN_NAME})
+US.CLAIMBACK COMPLIANCE & ESCROW DIVISION (${DOMAIN_NAME})
 MANDATORY CLEARANCE NOTICE
 
 Dear ${claimantName},
@@ -291,7 +291,7 @@ ${dashboardUrl}
 
 Sincerely,
 Compliance & Escrow Clearance Office
-RefundGuard Global Restitution Network
+US.ClaimBack Global Restitution Network
 https://${DOMAIN_NAME}
 `.trim();
 
@@ -305,7 +305,7 @@ https://${DOMAIN_NAME}
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
     .header { background: #0f172a; padding: 28px 32px; text-align: left; }
     .header-logo { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
-    .header-logo span { color: #f59e0b; }
+    .header-logo span { color: #10b981; }
     .header-subtitle { color: #94a3b8; font-size: 12px; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
     .content { padding: 36px 32px; }
     .badge { display: inline-block; background: #fffbeb; color: #b45309; border: 1px solid #fde68a; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
@@ -326,7 +326,7 @@ https://${DOMAIN_NAME}
 <body>
   <div class="container">
     <div class="header">
-      <div class="header-logo"><img src="${APP_URL}/logo.png" width="30" height="30" style="vertical-align: middle; margin-right: 10px; border-radius: 7px;" alt="RefundGuard Emblem" />Refund<span>Guard</span></div>
+      <div class="header-logo"><img src="${APP_URL}/logo.png" width="30" height="30" style="vertical-align: middle; margin-right: 10px; border-radius: 7px;" alt="US.ClaimBack Emblem" />US.<span>ClaimBack</span></div>
       <div class="header-subtitle">Compliance, Escrow & Restitution Clearance &bull; ${DOMAIN_NAME}</div>
     </div>
     <div class="content">
@@ -374,7 +374,7 @@ https://${DOMAIN_NAME}
       </table>
 
       <p style="font-size: 14px; line-height: 1.5; color: #475569;">
-        Please log in to your RefundGuard member dashboard to view instructions on submitting proof for your $300 clearance bill. Once your payment is verified by administration, your withdrawal will be immediately unlocked.
+        Please log in to your US.ClaimBack member dashboard to view instructions on submitting proof for your $300 clearance bill. Once your payment is verified by administration, your withdrawal will be immediately unlocked.
       </p>
 
       <div style="text-align: center; margin: 28px 0 12px;">
@@ -383,7 +383,7 @@ https://${DOMAIN_NAME}
     </div>
 
     <div class="footer">
-      <p><strong>RefundGuard Compliance & Escrow Bureau</strong></p>
+      <p><strong>US.ClaimBack Compliance & Escrow Bureau</strong></p>
       <p>Cross-Border Interbank Restitution Network &bull; Registered Domain: ${DOMAIN_NAME}.</p>
       <p>This official notice was dispatched to ${recipientEmail} regarding dispute file #${cNum}.</p>
     </div>
@@ -397,7 +397,7 @@ https://${DOMAIN_NAME}
     subject,
     text: textBody,
     html: htmlBody,
-    fromTitle: 'RefundGuard Compliance & Escrow',
+    fromTitle: 'US.ClaimBack Compliance & Escrow',
     fromEmail: `clearance@${DOMAIN_NAME}`
   });
 }

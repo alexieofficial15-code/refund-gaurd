@@ -138,7 +138,7 @@ export default function AuthPage({
       return;
     }
     if (!legalConsent) {
-      setErrorMsg('You must acknowledge that RefundGuard does not guarantee recovery.');
+      setErrorMsg('You must acknowledge that US.ClaimBack does not guarantee recovery.');
       return;
     }
 
@@ -660,7 +660,7 @@ export default function AuthPage({
                     required
                   />
                   <span>
-                    I understand and agree that <strong>RefundGuard is an evidence preparation and dispute routing platform</strong> and does NOT promise or guarantee recovery of lost funds.
+                    I understand and agree that <strong>US.ClaimBack is an evidence preparation and dispute routing platform</strong> and does NOT promise or guarantee recovery of lost funds.
                   </span>
                 </label>
               </div>
@@ -930,7 +930,7 @@ export default function AuthPage({
 
           <div className="trust-panel-footer">
             <p>
-              RefundGuard is an evidence preparation service. We do not guarantee fund recovery. Final outcomes rest with financial institutions.
+              US.ClaimBack is an evidence preparation service. We do not guarantee fund recovery. Final outcomes rest with financial institutions.
             </p>
           </div>
         </div>

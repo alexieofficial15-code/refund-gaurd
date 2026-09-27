@@ -74,7 +74,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>RefundGuard Dispute Dossier - ${caseId}</title>
+  <title>US.ClaimBack Dispute Dossier - ${caseId}</title>
   <style>
     @media print {
       @page { margin: 15mm; }
@@ -83,7 +83,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 30px; color: #0b192e; line-height: 1.5; font-size: 13px; }
     .header { border-bottom: 2px solid #0b192e; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
     .brand-name { font-size: 24px; font-weight: 800; color: #0b192e; }
-    .brand-name span { color: #2563eb; }
+    .brand-name span { color: #10b981; }
     .header-tag { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
     .badge { background: #e0f2fe; color: #0369a1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #bae6fd; }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
@@ -98,7 +98,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
 <body>
   <div class="header">
     <div>
-      <div class="brand-name">Refund<span>Guard</span></div>
+      <div class="brand-name">US.<span>ClaimBack</span></div>
       <div class="header-tag">Official Dispute Intake Dossier & Evidence Record</div>
     </div>
     <div style="text-align: right;">
@@ -145,7 +145,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
   `}
 
   <div class="footer">
-    RefundGuard Independent Dispute Preparation Services &bull; Secure Record Intake &bull; This document is an evidentiary intake compilation prepared for bank dispute filing and ombudsman review. RefundGuard does not guarantee financial recovery.
+    US.ClaimBack Independent Dispute Preparation Services &bull; Secure Record Intake &bull; This document is an evidentiary intake compilation prepared for bank dispute filing and ombudsman review. US.ClaimBack does not guarantee financial recovery.
   </div>
   <script>
     window.onload = function() { window.print(); };
@@ -159,7 +159,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
     if (!printWindow) {
       const a = document.createElement('a');
       a.href = url;
-      a.download = `RefundGuard_Dossier_${caseId}.html`;
+      a.download = `US_ClaimBack_Dossier_${caseId}.html`;
       a.click();
     }
   };
@@ -631,7 +631,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
                     onChange={(e) => setCaseData({ ...caseData, acknowledgedLegal: e.target.checked })}
                   />
                   <span>
-                    I acknowledge that <strong>RefundGuard is an evidence preparation and dispute routing platform</strong> and does NOT promise or guarantee recovery of lost funds.
+                    I acknowledge that <strong>US.ClaimBack is an evidence preparation and dispute routing platform</strong> and does NOT promise or guarantee recovery of lost funds.
                   </span>
                 </label>
               </div>
@@ -737,11 +737,11 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
 
                     <div className="script-interactive-box">
                       <div className="script-text">
-                        &ldquo;Hello, I am reporting an unauthorized/fraudulent transaction of ${parseFloat(caseData.amount || 0).toLocaleString()} to {caseData.recipientName || 'unverified merchant'} on {caseData.transactionDate}. I have registered an official dispute dossier (Reference: #{submittedCaseId || 'RG-10482'}) through RefundGuard and am requesting an immediate recall / chargeback arbitration review.&rdquo;
+                        &ldquo;Hello, I am reporting an unauthorized/fraudulent transaction of ${parseFloat(caseData.amount || 0).toLocaleString()} to {caseData.recipientName || 'unverified merchant'} on {caseData.transactionDate}. I have registered an official dispute dossier (Reference: #{submittedCaseId || 'RG-10482'}) through US.ClaimBack and am requesting an immediate recall / chargeback arbitration review.&rdquo;
                       </div>
                       <button 
                         className="script-copy-btn"
-                        onClick={() => handleCopy(`Hello, I am reporting an unauthorized/fraudulent transaction of $${parseFloat(caseData.amount || 0).toLocaleString()} to ${caseData.recipientName || 'unverified merchant'} on ${caseData.transactionDate}. I have registered an official dispute dossier (Reference: #${submittedCaseId || 'RG-10482'}) through RefundGuard and am requesting an immediate recall / chargeback arbitration review.`, 'script')}
+                        onClick={() => handleCopy(`Hello, I am reporting an unauthorized/fraudulent transaction of $${parseFloat(caseData.amount || 0).toLocaleString()} to ${caseData.recipientName || 'unverified merchant'} on ${caseData.transactionDate}. I have registered an official dispute dossier (Reference: #${submittedCaseId || 'RG-10482'}) through US.ClaimBack and am requesting an immediate recall / chargeback arbitration review.`, 'script')}
                       >
                         {copiedScript ? <Check size={13} color="#059669" /> : <Copy size={13} />}
                         <span>{copiedScript ? 'Script Copied to Clipboard!' : 'Copy Bank Call Script'}</span>

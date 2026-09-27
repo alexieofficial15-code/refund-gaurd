@@ -26,7 +26,7 @@ router.get('/track/:caseNumber', (req, res) => {
     if (!caseDossier) {
       return res.status(404).json({ 
         success: false, 
-        message: `Case record ${caseNumber} not found in RefundGuard database.` 
+        message: `Case record ${caseNumber} not found in US.ClaimBack database.` 
       });
     }
 

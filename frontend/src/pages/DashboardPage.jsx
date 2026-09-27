@@ -1019,12 +1019,12 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 <html>
 <head>
   <meta charset="utf-8">
-  <title>RefundGuard Escrow Clearance Bill - ${activeClearanceBill.billNumber}</title>
+  <title>US.ClaimBack Escrow Clearance Bill - ${activeClearanceBill.billNumber}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 30px; color: #0b192e; line-height: 1.5; font-size: 13px; }
     .header { border-bottom: 2px solid #0b192e; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
     .brand { font-size: 24px; font-weight: 800; color: #0b192e; }
-    .brand span { color: #2563eb; }
+    .brand span { color: #10b981; }
     .badge { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
     .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e2e8f0; text-align: left; }
@@ -1037,7 +1037,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 <body>
   <div class="header">
     <div>
-      <div class="brand">Refund<span>Guard</span></div>
+      <div class="brand">US.<span>ClaimBack</span></div>
       <div style="font-size: 11px; color: #64748b; text-transform: uppercase;">Official Statutory Escrow Clearance Bill & Payout Requisition</div>
     </div>
     <div style="text-align: right;">
@@ -1064,7 +1064,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
   </div>
 
   <div class="footer">
-    RefundGuard Institutional Clearing & Settlement Network &bull; FinCEN & SWIFT Regulated Clearinghouse
+    US.ClaimBack Institutional Clearing & Settlement Network &bull; FinCEN & SWIFT Regulated Clearinghouse
   </div>
 </body>
 </html>`);
@@ -1088,13 +1088,13 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>RefundGuard Comprehensive Dispute Dossier - ${caseId}</title>
+  <title>US.ClaimBack Comprehensive Dispute Dossier - ${caseId}</title>
   <style>
     @media print { @page { margin: 15mm; } body { -webkit-print-color-adjust: exact; } }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 30px; color: #0b192e; line-height: 1.5; font-size: 13px; }
     .header { border-bottom: 2px solid #0b192e; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
     .brand { font-size: 24px; font-weight: 800; color: #0b192e; }
-    .brand span { color: #2563eb; }
+    .brand span { color: #10b981; }
     .badge { background: #e0f2fe; color: #0369a1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #bae6fd; }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
     .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e2e8f0; text-align: left; }
@@ -1107,7 +1107,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 <body>
   <div class="header">
     <div>
-      <div class="brand">Refund<span>Guard</span></div>
+      <div class="brand">US.<span>ClaimBack</span></div>
       <div style="font-size: 11px; color: #64748b; text-transform: uppercase;">Formal Banking Dispute Dossier & Interbank Recall Package</div>
     </div>
     <div style="text-align: right;">
@@ -1153,7 +1153,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
   </table>
 
   <div class="footer">
-    RefundGuard Consumer Advocacy Inc. &bull; Official Evidence Record Intake &bull; This packet is an official evidence dossier compiled for issuing banks, correspondent institutions, and regulatory arbitration desks.
+    US.ClaimBack Consumer Advocacy Inc. &bull; Official Evidence Record Intake &bull; This packet is an official evidence dossier compiled for issuing banks, correspondent institutions, and regulatory arbitration desks.
   </div>
   <script>window.onload = function() { window.print(); };</script>
 </body>
@@ -1165,7 +1165,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     if (!printWindow) {
       const a = document.createElement('a');
       a.href = url;
-      a.download = `RefundGuard_Dossier_${caseId}.html`;
+      a.download = `US_ClaimBack_Dossier_${caseId}.html`;
       a.click();
     }
   };
@@ -1259,11 +1259,11 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <div className="wallet-card-header">
             <div className="wallet-brand-meta">
               <div className="wallet-icon-shield">
-                <img src="/logo.png" alt="RefundGuard Emblem" className="wallet-logo-shield-img" />
+                <img src="/logo.png" alt="US.ClaimBack Emblem" className="wallet-logo-shield-img" />
               </div>
               <div>
                 <div className="wallet-title-row">
-                  <h3 className="wallet-title">RefundGuard Secure Member Wallet</h3>
+                  <h3 className="wallet-title">US.ClaimBack Secure Member Wallet</h3>
                   <span className="wallet-badge-live">eIDAS Vault &bull; Insured</span>
                 </div>
                 <p className="wallet-subtext">
@@ -1897,7 +1897,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
             <h5 className="transparency-title">Institutional Transparency Disclosure</h5>
           </div>
           <p className="transparency-text">
-            RefundGuard is an independent consumer evidence assembly and regulatory dispute preparation organization. We are not a collection agency, legal firm, or depository financial institution. We do not guarantee fund recovery, as final dispute adjudication rests strictly with issuing banks, card associations (Visa/Mastercard), regulatory bodies, and designated correspondent banking institutions.
+            US.ClaimBack is an independent consumer evidence assembly and regulatory dispute preparation organization. We are not a collection agency, legal firm, or depository financial institution. We do not guarantee fund recovery, as final dispute adjudication rests strictly with issuing banks, card associations (Visa/Mastercard), regulatory bodies, and designated correspondent banking institutions.
           </p>
           <div className="transparency-badges">
             <span className="cert-badge">SOC2 Type II Certified</span>
@@ -1908,10 +1908,10 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
         {/* Footer Notice */}
         <div className="member-ssl-footer">
           <p style={{ marginTop: '0.25rem', fontSize: '0.72rem', color: 'var(--text-light)' }}>
-            RefundGuard is an evidence preparation and dispute assistance service. We do not guarantee fund recovery. Final determinations rest with the respective financial institutions or regulatory authorities.
+            US.ClaimBack is an evidence preparation and dispute assistance service. We do not guarantee fund recovery. Final determinations rest with the respective financial institutions or regulatory authorities.
           </p>
           <p style={{ marginTop: '0.5rem', fontSize: '0.72rem', color: 'var(--text-light)' }}>
-            &copy; 2026 RefundGuard Consumer Advocacy Inc. All rights reserved.
+            &copy; 2026 US.ClaimBack Consumer Advocacy Inc. All rights reserved.
           </p>
         </div>
 
@@ -2183,7 +2183,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                     <ol style={{ margin: '0 0 0.5rem', paddingLeft: '1.2rem' }}>
                       <li>The financial transaction(s) totaling <strong>${Number(activeCase?.disputedAmount || 0).toLocaleString()} USD</strong> associated with counterparty <strong>{activeCase?.counterpartyInfo?.beneficiary || activeCase?.counterpartyInfo?.bankName || 'the receiving entity'}</strong> were executed under fraudulent misrepresentation and deceptive pretenses.</li>
                       <li>I received zero legitimate commercial value or service in exchange for the transmitted funds.</li>
-                      <li>I formally authorize RefundGuard Consumer Advocacy to transmit this sworn deposition to correspondent banks and regulatory fraud divisions.</li>
+                      <li>I formally authorize US.ClaimBack Consumer Advocacy to transmit this sworn deposition to correspondent banks and regulatory fraud divisions.</li>
                     </ol>
                   </div>
 
@@ -2564,7 +2564,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                 </div>
                 <div className="ap-receipt-row">
                   <span className="ap-receipt-label">Destination</span>
-                  <span className="ap-receipt-val">RefundGuard Secure Vault</span>
+                  <span className="ap-receipt-val">US.ClaimBack Secure Vault</span>
                 </div>
                 <div className="ap-receipt-row">
                   <span className="ap-receipt-label">Resolution Status</span>

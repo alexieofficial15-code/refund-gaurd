@@ -63,9 +63,9 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
         <div className="navbar-inner">
           {/* Brand Logo with Official Emblem */}
           <div className="brand-logo" onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/logo.png" alt="RefundGuard Emblem" className="brand-logo-img" />
+            <img src="/logo.png" alt="US.ClaimBack Emblem" className="brand-logo-img" />
             <div className="brand-name">
-              Refund<span>Guard</span>
+              US.<span>ClaimBack</span>
             </div>
           </div>
 
@@ -288,7 +288,7 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
               {/* Footer Disclaimer Card */}
               <div className="drawer-disclaimer-card">
                 <p>
-                  RefundGuard is an evidence preparation and dispute assistance service. We do not guarantee fund recovery. Final determinations rest with the respective financial institutions or regulatory authorities.
+                  US.ClaimBack is an evidence preparation and dispute assistance service. We do not guarantee fund recovery. Final determinations rest with the respective financial institutions or regulatory authorities.
                 </p>
               </div>
             </div>

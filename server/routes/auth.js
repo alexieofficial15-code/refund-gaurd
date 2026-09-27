@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
     if (!legalConsentAgreed) {
       return res.status(400).json({ 
         success: false, 
-        message: 'You must acknowledge that RefundGuard does not guarantee recovery of funds.' 
+        message: 'You must acknowledge that US.ClaimBack does not guarantee recovery of funds.' 
       });
     }
 

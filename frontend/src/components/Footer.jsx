@@ -10,9 +10,9 @@ export default function Footer({ onNavigate }) {
           {/* Col 1: Brand & Mission */}
           <div className="footer-brand-col">
             <div className="brand-logo" onClick={() => onNavigate && onNavigate('home')}>
-              <img src="/logo.png" alt="RefundGuard Emblem" className="brand-logo-img" />
+              <img src="/logo.png" alt="US.ClaimBack Emblem" className="brand-logo-img" />
               <div className="brand-name">
-                Refund<span>Guard</span>
+                US.<span>ClaimBack</span>
               </div>
             </div>
             <p className="footer-brand-desc">
@@ -103,14 +103,14 @@ export default function Footer({ onNavigate }) {
             <span>Regulatory & Non-Guarantee Notice</span>
           </div>
           <p className="footer-disclaimer-text">
-            RefundGuard is an evidence preparation service and does not guarantee fund recovery. Final dispute outcomes rest solely with financial institutions, card networks, and regulatory authorities.
+            US.ClaimBack is an evidence preparation service and does not guarantee fund recovery. Final dispute outcomes rest solely with financial institutions, card networks, and regulatory authorities.
           </p>
         </div>
 
         {/* Bottom Bar */}
         <div className="footer-bottom-bar">
           <div>
-            &copy; {new Date().getFullYear()} RefundGuard Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} US.ClaimBack Inc. All rights reserved.
           </div>
           <div className="footer-cert-badges">
             <div className="cert-item">

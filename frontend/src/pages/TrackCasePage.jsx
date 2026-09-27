@@ -87,7 +87,7 @@ export default function TrackCasePage({ onNavigate, initialCaseNumber = '' }) {
               Track Your Case Progress
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
-              Enter your official RefundGuard case identifier to inspect live dispute milestones directly from our database.
+              Enter your official US.ClaimBack case identifier to inspect live dispute milestones directly from our database.
             </p>
           </div>
 

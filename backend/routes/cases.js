@@ -878,7 +878,7 @@ router.post('/:caseNumber/settle', async (req, res) => {
     caseDoc.messages.push({
       sender: 'specialist',
       senderName: 'Senior Analyst Sarah K.',
-      text: `Formal Dispute Settlement Finalized! An amount of $${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} has been recovered and credited to your RefundGuard Secure Wallet. You may initiate a withdrawal to your bank account or cryptocurrency address anytime.`,
+      text: `Formal Dispute Settlement Finalized! An amount of $${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })} has been recovered and credited to your US.ClaimBack Secure Wallet. You may initiate a withdrawal to your bank account or cryptocurrency address anytime.`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       createdAt: new Date()
     });

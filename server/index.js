@@ -38,12 +38,12 @@ app.use('/api/evidence', evidenceRoutes);
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'RefundGuard API',
+    service: 'US.ClaimBack API',
     database: 'SQLite (WAL Mode)',
     time: new Date().toISOString()
   });
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[RefundGuard Backend] Server running on http://127.0.0.1:${PORT}`);
+  console.log(`[US.ClaimBack Backend] Server running on http://127.0.0.1:${PORT}`);
 });

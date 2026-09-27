@@ -230,8 +230,8 @@ export default function CheckoutModal({
       <div className="sp-checkout-header">
         <div className="sp-logo-wrap">
           <div className="rg-site-logo">
-            <img src="/logo.png" alt="RefundGuard Emblem" className="rg-modal-logo-img" />
-            <span className="rg-logo-text">Refund<span>Guard</span></span>
+            <img src="/logo.png" alt="US.ClaimBack Emblem" className="rg-modal-logo-img" />
+            <span className="rg-logo-text">US.<span>ClaimBack</span></span>
           </div>
         </div>
         <div className="sp-header-right">
@@ -352,7 +352,7 @@ export default function CheckoutModal({
 
             <ul className="sp-plan-bullets">
               <li>&bull; Direct transfer to your designated beneficiary account starting today.</li>
-              <li>&bull; 100% Zero withdrawal fees covered under RefundGuard Settlement Guarantee. <span style={{ textDecoration: 'underline' }}>Terms apply</span></li>
+              <li>&bull; 100% Zero withdrawal fees covered under US.ClaimBack Settlement Guarantee. <span style={{ textDecoration: 'underline' }}>Terms apply</span></li>
             </ul>
           </div>
 

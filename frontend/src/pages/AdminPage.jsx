@@ -1424,7 +1424,7 @@ export default function AdminPage({ onNavigate }) {
                     />
                   </div>
                   <span style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.3rem', display: 'block' }}>
-                    This exact sum will be credited to the claimant's RefundGuard Secure Member Wallet and the Apple Pay style payment received confirmation will be displayed.
+                    This exact sum will be credited to the claimant's US.ClaimBack Secure Member Wallet and the Apple Pay style payment received confirmation will be displayed.
                   </span>
                 </div>
 

@@ -41,14 +41,14 @@ app.get('/api/health', (req, res) => {
   const dbStatus = getDBStatus();
   res.json({
     status: 'ok',
-    service: 'RefundGuard API',
+    service: 'US.ClaimBack API',
     database: dbStatus,
     time: new Date().toISOString()
   });
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[RefundGuard Backend] Server running on http://127.0.0.1:${PORT}`);
+  console.log(`[US.ClaimBack Backend] Server running on http://127.0.0.1:${PORT}`);
 });
 
 export default app;
