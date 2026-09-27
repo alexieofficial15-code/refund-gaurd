@@ -190,7 +190,29 @@ export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
                 >
                   See How It Works
                 </button>
+
+                {!isAuthenticated && (
+                  <button 
+                    className="btn btn-outline hero-signin-btn" 
+                    onClick={() => onOpenAuth('signin')}
+                  >
+                    Sign In
+                  </button>
+                )}
               </div>
+
+              {!isAuthenticated && (
+                <div className="hero-member-login-banner">
+                  <span className="hero-member-login-text">Existing claimant?</span>
+                  <button 
+                    type="button" 
+                    className="hero-member-login-link"
+                    onClick={() => onOpenAuth('signin')}
+                  >
+                    Sign in to your dispute account &rarr;
+                  </button>
+                </div>
+              )}
 
               <div className="hero-trust-statement">
                 <span>Independent dispute preparation &bull; Non-guarantee policy</span>

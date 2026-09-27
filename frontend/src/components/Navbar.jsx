@@ -172,16 +172,16 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
                 </button>
               </nav>
 
-              {/* Desktop Actions */}
+              {/* Desktop & Mobile Actions */}
               <div className="desktop-nav-actions">
                 <button 
-                  className="btn btn-outline" 
+                  className="btn btn-outline nav-signin-btn" 
                   onClick={() => onOpenAuth('signin')}
                 >
                   Sign In
                 </button>
                 <button 
-                  className="btn btn-primary" 
+                  className="btn btn-primary nav-start-case-btn" 
                   onClick={handleStartCaseClick}
                 >
                   Start a Case
@@ -193,7 +193,8 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
                   onClick={() => setIsDrawerOpen(true)}
                   aria-label="Open mobile menu"
                 >
-                  Menu
+                  <span className="mobile-toggle-icon">☰</span>
+                  <span className="mobile-toggle-text">Menu</span>
                 </button>
               </div>
             </>
@@ -214,7 +215,7 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
               {/* Header */}
               <div className="drawer-header">
                 <div className="drawer-header-left">
-                  <span className="drawer-title">Navigation</span>
+                  <span className="drawer-title">US.ClaimBack</span>
                 </div>
                 <button 
                   className="drawer-close-btn"
@@ -222,6 +223,21 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
                   aria-label="Close navigation"
                 >
                   ✕
+                </button>
+              </div>
+
+              {/* Top Quick Sign-in Callout inside Drawer */}
+              <div className="drawer-top-auth-box">
+                <div>
+                  <div className="drawer-top-auth-title">Existing Claimant?</div>
+                  <div className="drawer-top-auth-sub">Access your live dispute dashboard</div>
+                </div>
+                <button 
+                  type="button"
+                  className="drawer-top-signin-btn"
+                  onClick={handleAuthClick}
+                >
+                  Sign In &rarr;
                 </button>
               </div>
 
