@@ -57,17 +57,16 @@ export async function syncUserWallet(userId) {
     // Total settled funds from cases that are CURRENTLY in 'resolved' status
     const totalResolvedCredit = userCases
       .filter(c => c.status === 'resolved')
-      .reduce((sum, c) => sum + (Number(c.settledAmount || c.disputedAmount) || 0), 0);
+      .reduce((sum, c) => {
+        const amt = (c.settledAmount !== undefined && c.settledAmount !== null)
+          ? Number(c.settledAmount)
+          : Number(c.disputedAmount || 0);
+        return sum + amt;
+      }, 0);
 
-    // Total completed withdrawals
-    const totalWithdrawals = (userDoc.walletTransactions || [])
-      .filter(t => t.type === 'withdrawal' && t.status !== 'failed' && t.status !== 'cancelled')
-      .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
-
-    const calculatedBalance = Math.max(0, totalResolvedCredit - totalWithdrawals);
-    userDoc.walletBalance = calculatedBalance;
+    userDoc.walletBalance = Math.max(0, totalResolvedCredit);
     await userDoc.save();
-    return calculatedBalance;
+    return userDoc.walletBalance;
   } catch (err) {
     console.error('Error syncing user wallet:', err);
     return 0;
@@ -232,12 +231,17 @@ router.post('/wallet/withdraw', authMiddleware, async (req, res) => {
         caseNumber: caseNumber.toString().trim().toUpperCase(), 
         userId: user._id 
       });
-      if (targetCase && targetCase.withdrawalAllowed) {
+      if (targetCase && (targetCase.withdrawalAllowed || targetCase.status === 'resolved')) {
+        isAllowed = true;
+      }
+    } else {
+      targetCase = await Case.findOne({ userId: user._id, status: 'resolved' }) || await Case.findOne({ userId: user._id });
+      if (targetCase && (targetCase.withdrawalAllowed || targetCase.status === 'resolved')) {
         isAllowed = true;
       }
     }
 
-    // Must be allowed/approved by admin after completing the $300 bill
+    // Must be allowed/approved by admin after completing the $300 bill or case marked resolved
     if (!isAllowed) {
       try {
         await sendClearanceBillEmail({
@@ -256,7 +260,9 @@ router.post('/wallet/withdraw', authMiddleware, async (req, res) => {
     }
 
     const availableBalance = targetCase 
-      ? Number(targetCase.settledAmount || targetCase.disputedAmount || user.walletBalance || 0)
+      ? ((targetCase.settledAmount !== undefined && targetCase.settledAmount !== null && targetCase.settledAmount > 0)
+          ? Number(targetCase.settledAmount)
+          : Number(targetCase.disputedAmount || user.walletBalance || 0))
       : (Number(user.walletBalance) || 0);
 
     if (withdrawAmount > availableBalance) {
@@ -266,10 +272,18 @@ router.post('/wallet/withdraw', authMiddleware, async (req, res) => {
       });
     }
 
+    // Immediately subtract from target case in database
+    const newCaseBalance = Math.max(0, availableBalance - withdrawAmount);
+    if (targetCase) {
+      targetCase.settledAmount = newCaseBalance;
+      await targetCase.save();
+    }
+
+    // Immediately subtract from user balance
     user.walletBalance = Math.max(0, (Number(user.walletBalance) || availableBalance) - withdrawAmount);
     if (!user.walletTransactions) user.walletTransactions = [];
 
-    const destinationLabel = details?.destination || details?.accountNumber || details?.walletAddress || (method ? method.replace('_', ' ').toUpperCase() : 'Bank Account');
+    const destinationLabel = details?.destination || details?.cardNumberMasked || details?.accountNumber || details?.walletAddress || (method ? method.replace('_', ' ').toUpperCase() : 'Card / Bank');
     const clearanceBillNumber = details?.clearanceBillNumber || `INV-CLR-${Math.floor(1000 + Math.random() * 9000)}`;
     
     const newTx = {
@@ -277,25 +291,27 @@ router.post('/wallet/withdraw', authMiddleware, async (req, res) => {
       amount: withdrawAmount,
       caseNumber: targetCase ? targetCase.caseNumber : (caseNumber || undefined),
       description: `Disbursement to ${destinationLabel}`,
-      method: method || 'bank_wire',
+      method: method || 'card',
       details: {
         ...details,
         clearanceBillNumber,
-        clearanceFeeAmount: 300.00,
-        clearanceFeeStatus: details?.feePaymentReference ? 'verifying_payment' : 'pending_fee_payment',
-        clearanceFeeReason: 'Interbank AML / Cross-Border Restitution Escrow Release Clearance Bill (FinCEN & SWIFT Reg. #CLR-882)'
+        notice: 'Disbursement initiated. Payout may take up to 3 business days to reflect in destination account.'
       },
-      status: 'pending_clearance',
+      status: 'completed',
       createdAt: new Date()
     };
 
     user.walletTransactions.unshift(newTx);
     await user.save();
 
+    // Re-sync wallet balance across user's cases to guarantee database consistency
+    await syncUserWallet(user._id);
+
     return res.json({
       success: true,
-      message: `Withdrawal request for $${withdrawAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })} received. Mandatory $300.00 clearance bill issued (#${clearanceBillNumber}). Payout status: Awaiting Clearance Bill Settlement.`,
+      message: `Withdrawal request for $${withdrawAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })} received. Please note that the withdrawal might take up to 3 business days to reflect in your account.`,
       walletBalance: user.walletBalance,
+      case: targetCase,
       clearanceBillNumber,
       clearanceFee: 300.00,
       transaction: newTx

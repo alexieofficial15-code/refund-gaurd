@@ -22,23 +22,63 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error('UI Render Error caught by boundary:', error, errorInfo);
   }
+  componentDidUpdate(prevProps) {
+    if (this.props.activePage !== prevProps.activePage && this.state.hasError) {
+      this.setState({ hasError: false, error: null });
+    }
+  }
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '520px', margin: '0 auto' }}>
+        <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '560px', margin: '0 auto' }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🛡️</div>
           <h2 style={{ fontSize: '1.4rem', color: 'var(--navy-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
             Display Refresh Required
           </h2>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1.5rem', lineHeight: 1.5 }}>
-            A temporary component state update occurred. Click below to reload the dashboard.
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1.25rem', lineHeight: 1.5 }}>
+            A temporary display state update occurred. You can return to the Home page or refresh your session.
           </p>
-          <button 
-            className="btn btn-primary" 
-            onClick={() => { this.setState({ hasError: false }); window.location.reload(); }}
-          >
-            Reload Dashboard View
-          </button>
+          {this.state.error?.message && (
+            <div style={{ 
+              background: '#fef2f2', 
+              border: '1px solid #fecaca', 
+              borderRadius: '8px', 
+              padding: '0.75rem 1rem', 
+              color: '#991b1b', 
+              fontSize: '0.8rem', 
+              textAlign: 'left', 
+              marginBottom: '1.5rem',
+              wordBreak: 'break-word',
+              fontFamily: 'monospace'
+            }}>
+              {this.state.error.message}
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button 
+              className="btn btn-primary" 
+              onClick={() => {
+                this.setState({ hasError: false, error: null });
+                if (this.props.onNavigateHome) {
+                  this.props.onNavigateHome();
+                } else {
+                  window.location.hash = '#landing';
+                  window.location.reload();
+                }
+              }}
+            >
+              Return to Home Page
+            </button>
+            <button 
+              className="btn btn-outline" 
+              onClick={() => { 
+                this.setState({ hasError: false, error: null }); 
+                window.location.reload(); 
+              }}
+            >
+              Reload Page
+            </button>
+          </div>
         </div>
       );
     }
@@ -150,7 +190,11 @@ function MainApp() {
         />
 
         <main style={{ flex: 1 }}>
-          <ErrorBoundary>
+          <ErrorBoundary 
+            key={activePage} 
+            activePage={activePage} 
+            onNavigateHome={() => navigateTo('home')}
+          >
             {activePage === 'home' && (
               <HomePage 
                 onStartCase={handleStartCase}

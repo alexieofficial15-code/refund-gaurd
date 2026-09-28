@@ -15,9 +15,7 @@ export default function CheckoutModal({
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [isEditingAmount, setIsEditingAmount] = useState(false);
   // Start with NO payment method selected so it starts by ONLY listing the methods
-  const [paymentMethod, setPaymentMethod] = useState(''); 
-  const [country, setCountry] = useState('Cameroon');
-  const [isChangingCountry, setIsChangingCountry] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('');
 
   // Form states for the payment methods
   // 1. Card
@@ -196,7 +194,7 @@ export default function CheckoutModal({
 
         const data = await res.json();
         if (res.ok && data.success) {
-          onWithdrawSuccess(data.walletBalance, data.transaction);
+          onWithdrawSuccess(data.walletBalance, data.transaction, data.case);
           setCompletedTx(data.transaction || {
             amount: currentAmount,
             description: destinationStr,
@@ -208,11 +206,14 @@ export default function CheckoutModal({
         }
       } else {
         // Standalone or preview mode
-        setCompletedTx({
+        const mockNewBalance = Math.max(0, balanceNumber - currentAmount);
+        const mockTx = {
           amount: currentAmount,
           description: destinationStr,
           createdAt: new Date()
-        });
+        };
+        onWithdrawSuccess(mockNewBalance, mockTx);
+        setCompletedTx(mockTx);
         setPaymentSuccess(true);
       }
     } catch (err) {
@@ -221,8 +222,6 @@ export default function CheckoutModal({
       setIsSubmitting(false);
     }
   };
-
-  const countries = ['Cameroon', 'United States', 'United Kingdom', 'Canada', 'France', 'Germany', 'Nigeria', 'South Africa', 'Australia', 'Switzerland'];
 
   const modalBody = (
     <div className={`sp-checkout-container ${isPage ? 'is-page' : 'is-modal'}`}>
@@ -253,8 +252,29 @@ export default function CheckoutModal({
           </div>
           <h2 className="sp-success-title">Withdrawal Dispatched</h2>
           <p className="sp-success-subtext">
-            Your restitution payout of <strong>${formattedAmount} USD</strong> has been authorized and queued for instant clearing.
+            Your restitution payout of <strong>${formattedAmount} USD</strong> has been authorized and dispatched. Please note that the withdrawal might take up to 3 days to reflect in your account.
           </p>
+
+          <div style={{
+            background: 'rgba(59, 130, 246, 0.08)',
+            border: '1px solid rgba(59, 130, 246, 0.22)',
+            borderRadius: '10px',
+            padding: '12px 14px',
+            margin: '0 0 1.25rem',
+            textAlign: 'left',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '10px',
+            fontSize: '0.85rem',
+            color: '#1e3a8a',
+            lineHeight: '1.45'
+          }}>
+            <Info size={18} style={{ minWidth: '18px', marginTop: '2px', color: '#2563eb' }} />
+            <div>
+              <strong style={{ color: '#1d4ed8' }}>Processing Timeline:</strong> Disbursements typically take <strong>up to 3 business days</strong> to settle through card and banking clearance networks.
+            </div>
+          </div>
+
           <div className="sp-receipt-box">
             <div className="sp-receipt-row">
               <span>Payout Method:</span>
@@ -266,11 +286,11 @@ export default function CheckoutModal({
             </div>
             <div className="sp-receipt-row">
               <span>Status:</span>
-              <span className="sp-badge-green">Authorized &bull; 0% Fee</span>
+              <span className="sp-badge-green">Authorized &bull; Processing</span>
             </div>
             <div className="sp-receipt-row">
-              <span>Execution Speed:</span>
-              <strong>Instant Interbank Clearing (11ms)</strong>
+              <span>Settlement Window:</span>
+              <strong style={{ color: '#0f766e' }}>Up to 3 business days</strong>
             </div>
           </div>
           <button 
@@ -662,38 +682,11 @@ export default function CheckoutModal({
             </form>
           </div>
 
-          {/* 7. Footer: Country selection & Cookies */}
+          {/* 7. Footer: Security Assurance */}
           <div className="sp-checkout-footer">
-            <div className="sp-country-row">
-              <span className="sp-country-name">{country}</span>
-              <button 
-                type="button" 
-                className="sp-change-country-link"
-                onClick={() => setIsChangingCountry(!isChangingCountry)}
-              >
-                Change country
-              </button>
-            </div>
-
-            {isChangingCountry && (
-              <div className="sp-country-dropdown">
-                {countries.map((c) => (
-                  <div 
-                    key={c} 
-                    className={`sp-country-item ${country === c ? 'active' : ''}`}
-                    onClick={() => {
-                      setCountry(c);
-                      setIsChangingCountry(false);
-                    }}
-                  >
-                    {c}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="sp-cookie-row">
-              <button type="button" className="sp-cookie-link">Cookies Settings</button>
+            <div className="sp-security-footnote">
+              <Lock size={13} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle', color: '#10b981' }} />
+              <span>256-Bit TLS Bank Encryption &bull; Official Settlement Guarantee &bull; 0% Payout Fee</span>
             </div>
           </div>
         </>

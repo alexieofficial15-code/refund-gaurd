@@ -181,32 +181,38 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
   // -------------------------------------------------------------
   // DYNAMIC STATS & USER METADATA
   // -------------------------------------------------------------
-  const activeCasesList = cases.filter(c => c.status !== 'resolved' && c.status !== 'withdrawn');
-  const resolvedCasesList = cases.filter(c => c.status === 'resolved');
-  const underReviewCasesList = cases.filter(c => c.status === 'under_review' || c.status === 'submitted');
+  const validCases = Array.isArray(cases) ? cases.filter(Boolean) : [];
+  const activeCasesList = validCases.filter(c => c && c.status !== 'resolved' && c.status !== 'withdrawn');
+  const resolvedCasesList = validCases.filter(c => c && c.status === 'resolved');
+  const underReviewCasesList = validCases.filter(c => c && (c.status === 'under_review' || c.status === 'submitted'));
 
-  const totalReportedAmount = cases.reduce((sum, c) => sum + (Number(c.disputedAmount) || 0), 0);
-  const totalRecoveredAmount = resolvedCasesList.reduce((sum, c) => sum + (Number(c.settledAmount || c.disputedAmount) || 0), 0);
+  const totalReportedAmount = validCases.reduce((sum, c) => sum + (Number(c?.disputedAmount) || 0), 0);
+  const totalRecoveredAmount = resolvedCasesList.reduce((sum, c) => {
+    const amt = (c?.settledAmount !== undefined && c?.settledAmount !== null) ? Number(c.settledAmount) : (Number(c?.disputedAmount) || 0);
+    return sum + amt;
+  }, 0);
 
   const activeCasesCount = activeCasesList.length;
   const underReviewCount = underReviewCasesList.length;
   const recoveredCount = resolvedCasesList.length;
 
   // Selected active case for entire dashboard (board, withdrawal, dossier)
-  const activeCase = (selectedCaseNumber ? cases.find(c => c.caseNumber === selectedCaseNumber) : null) 
-    || cases[activeCaseIndex] 
-    || cases[0] 
+  const activeCase = (selectedCaseNumber ? validCases.find(c => c && c.caseNumber === selectedCaseNumber) : null) 
+    || validCases[activeCaseIndex] 
+    || validCases[0] 
     || null;
 
   // Recovered balance for the active case: ONLY credited if status is 'resolved'
   const isCaseResolved = Boolean(activeCase && activeCase.status === 'resolved');
   const activeCaseBalance = isCaseResolved 
-    ? Number(activeCase.settledAmount || activeCase.disputedAmount || 0) 
+    ? ((activeCase.settledAmount !== undefined && activeCase.settledAmount !== null)
+        ? Number(activeCase.settledAmount)
+        : Number(activeCase.disputedAmount || 0))
     : 0;
 
   // Active case withdrawal authorization status (only valid if case is currently resolved)
   const isCaseWithdrawalAllowed = Boolean(
-    isCaseResolved && (
+    isCaseResolved && activeCase && (
       activeCase.withdrawalAllowed === true ||
       localStorage.getItem(`refundguard_withdrawal_allowed_${activeCase.caseNumber}`) === 'true'
     )
@@ -1299,8 +1305,9 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
               <div className="wallet-case-pills-grid">
                 {cases.map((c, idx) => {
                   const isCurrent = activeCase?.caseNumber === c.caseNumber;
-                  const isCaseSettled = c.status === 'resolved';
-                  const cAmount = isCaseSettled ? Number(c.settledAmount || c.disputedAmount || 0) : 0;
+                  const cAmount = isCaseSettled 
+                    ? ((c.settledAmount !== undefined && c.settledAmount !== null) ? Number(c.settledAmount) : Number(c.disputedAmount || 0))
+                    : 0;
                   const isApproved = Boolean(isCaseSettled && (c.withdrawalAllowed || localStorage.getItem(`refundguard_withdrawal_allowed_${c.caseNumber}`) === 'true'));
                   return (
                     <button
@@ -1571,7 +1578,9 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <div className="case-selector-bar">
             {cases.map((c, idx) => {
               const isSelected = activeCase?.caseNumber === c.caseNumber;
-              const caseAmount = Number(c.settledAmount || c.disputedAmount || 0);
+              const caseAmount = (c.settledAmount !== undefined && c.settledAmount !== null)
+                ? Number(c.settledAmount)
+                : Number(c.disputedAmount || 0);
               const isApproved = Boolean(c.withdrawalAllowed || localStorage.getItem(`refundguard_withdrawal_allowed_${c.caseNumber}`) === 'true');
               return (
                 <button
@@ -2610,13 +2619,32 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
         activeCase={activeCase}
         currentUser={currentUser}
         token={token}
-        onWithdrawSuccess={(newBalance, newTx) => {
+        onWithdrawSuccess={(newBalance, newTx, updatedCase) => {
           if (typeof newBalance === 'number') {
             setWalletBalance(newBalance);
           }
           if (newTx) {
             setWalletTransactions(prev => [newTx, ...prev]);
           }
+
+          const targetCaseNumber = updatedCase?.caseNumber || activeCase?.caseNumber;
+          const targetSettledAmount = updatedCase?.settledAmount !== undefined 
+            ? updatedCase.settledAmount 
+            : (typeof newBalance === 'number' ? newBalance : Math.max(0, activeCaseBalance - parseFloat(withdrawAmount || 0)));
+
+          setCases(prev => {
+            const updated = prev.map(c => {
+              if (c.caseNumber === targetCaseNumber) {
+                return { ...c, settledAmount: targetSettledAmount };
+              }
+              return c;
+            });
+            try {
+              localStorage.setItem('refundguard_cached_cases', JSON.stringify(updated));
+            } catch (_) {}
+            return updated;
+          });
+
           loadWalletData();
         }}
       />

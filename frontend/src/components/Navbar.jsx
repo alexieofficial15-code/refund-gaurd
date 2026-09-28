@@ -75,11 +75,20 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <button
                 type="button"
-                className="nav-link-item"
+                className={`nav-link-item ${activePage === 'home' ? 'active' : ''}`}
                 onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--navy-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.35rem 0.6rem' }}
+                style={{ fontSize: '0.84rem', fontWeight: 600, color: activePage === 'home' ? 'var(--blue-accent)' : 'var(--navy-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.35rem 0.6rem' }}
               >
                 Home
+              </button>
+
+              <button
+                type="button"
+                className={`nav-link-item ${activePage === 'dashboard' ? 'active' : ''}`}
+                onClick={() => { setActivePage('dashboard'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                style={{ fontSize: '0.84rem', fontWeight: 600, color: activePage === 'dashboard' ? 'var(--blue-accent)' : 'var(--navy-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.35rem 0.6rem' }}
+              >
+                Dashboard
               </button>
 
               {(currentUser?.role === 'admin' || currentUser?.role === 'investigator') && (
