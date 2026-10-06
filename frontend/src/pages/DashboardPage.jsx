@@ -1305,6 +1305,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
               <div className="wallet-case-pills-grid">
                 {cases.map((c, idx) => {
                   const isCurrent = activeCase?.caseNumber === c.caseNumber;
+                  const isCaseSettled = Boolean(c && c.status === 'resolved');
                   const cAmount = isCaseSettled 
                     ? ((c.settledAmount !== undefined && c.settledAmount !== null) ? Number(c.settledAmount) : Number(c.disputedAmount || 0))
                     : 0;
