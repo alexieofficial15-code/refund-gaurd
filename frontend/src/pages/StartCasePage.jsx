@@ -83,16 +83,16 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 30px; color: #0b192e; line-height: 1.5; font-size: 13px; }
     .header { border-bottom: 2px solid #0b192e; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
     .brand-name { font-size: 24px; font-weight: 800; color: #0b192e; }
-    .brand-name span { color: #10b981; }
-    .header-tag { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
-    .badge { background: #e0f2fe; color: #0369a1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #bae6fd; }
+    .brand-name span { color: #2f8a6f; }
+    .header-tag { font-size: 11px; color: #6b7773; text-transform: uppercase; letter-spacing: 0.05em; }
+    .badge { background: #e9f4ef; color: #0369a1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #bae6fd; }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-    .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e2e8f0; text-align: left; }
-    .meta-table th { background-color: #f8fafc; font-weight: 600; width: 28%; color: #475569; }
-    .section-title { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 8px; color: #0b192e; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-    .narrative-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; white-space: pre-wrap; margin-bottom: 15px; font-size: 12px; }
-    .footer { margin-top: 35px; border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 10px; color: #64748b; text-align: center; }
-    .watermark { font-size: 10px; color: #059669; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e4e8e1; text-align: left; }
+    .meta-table th { background-color: #f7f8f3; font-weight: 600; width: 28%; color: #44524e; }
+    .section-title { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 8px; color: #0b192e; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #e4e8e1; padding-bottom: 4px; }
+    .narrative-box { background: #f7f8f3; border: 1px solid #e4e8e1; padding: 12px; border-radius: 6px; white-space: pre-wrap; margin-bottom: 15px; font-size: 12px; }
+    .footer { margin-top: 35px; border-top: 1px solid #d5dcd6; padding-top: 12px; font-size: 10px; color: #6b7773; text-align: center; }
+    .watermark { font-size: 10px; color: #0f6b3a; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
   </style>
 </head>
 <body>
@@ -103,7 +103,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
     </div>
     <div style="text-align: right;">
       <span class="badge">Intake Reference: ${caseId}</span>
-      <div style="margin-top: 5px;" class="watermark">✓ Cryptographically Logged in MongoDB Atlas</div>
+      <div style="margin-top: 5px;" class="watermark">Cryptographically Logged in MongoDB Atlas</div>
     </div>
   </div>
 
@@ -113,7 +113,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
     <tr><th>Claimant Legal Name</th><td><strong>${claimantName}</strong></td></tr>
     <tr><th>Claimant Verified Email</th><td>${claimantEmail}</td></tr>
     <tr><th>Dispute Category</th><td>${caseData.scamType}</td></tr>
-    <tr><th>Reported Disputed Sum</th><td><strong style="font-size: 14px; color: #0f172a;">$${amountFormatted} ${caseData.currency}</strong></td></tr>
+    <tr><th>Reported Disputed Sum</th><td><strong style="font-size: 14px; color: #0b2b26;">$${amountFormatted} ${caseData.currency}</strong></td></tr>
     <tr><th>Incident / Transfer Date</th><td>${caseData.transactionDate}</td></tr>
     <tr><th>Payment Route / Channel</th><td>${caseData.paymentMethod}</td></tr>
     <tr><th>Counterparty Recipient</th><td><strong>${caseData.recipientName || 'Unverified Merchant'}</strong></td></tr>
@@ -127,7 +127,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
 
   <div class="section-title">Cataloged Evidence Attachments (${caseData.evidenceFiles.length} records)</div>
   ${caseData.evidenceFiles.length === 0 ? `
-    <div class="narrative-box" style="font-style: italic; color: #64748b; font-size: 11px;">
+    <div class="narrative-box" style="font-style: italic; color: #6b7773; font-size: 11px;">
       No electronic evidence files attached during initial intake. Claimant may upload supporting files later via the Evidence Vault in their Member Dashboard.
     </div>
   ` : `
@@ -138,7 +138,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
           <td>${i + 1}</td>
           <td><strong>${f.name}</strong></td>
           <td>${f.size}</td>
-          <td><span style="color: #059669; font-weight: 600;">✓ Encrypted & Queued</span></td>
+          <td><span style="color: #0f6b3a; font-weight: 600;">Encrypted & Queued</span></td>
         </tr>
       `).join('')}
     </table>
@@ -352,12 +352,12 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
             gap: '0.5rem'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <UserCheck size={16} color="#059669" />
+              <UserCheck size={16} color="#0f6b3a" />
               <span style={{ fontSize: '0.82rem', color: '#065f46', fontWeight: 600 }}>
                 Verified Claimant: <strong>{currentUser?.fullName || currentUser?.name || 'Claimant Member'}</strong> ({currentUser?.email})
               </span>
             </div>
-            <span style={{ fontSize: '0.74rem', color: '#059669', fontWeight: 700, textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '0.74rem', color: '#0f6b3a', fontWeight: 700, textTransform: 'uppercase' }}>
               ● Cryptographic Vault
             </span>
           </div>
@@ -372,7 +372,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
                 else if (s.num < currentStep) statusClass = 'done';
                 return (
                   <div key={s.num} className={`wizard-step-bubble ${statusClass}`}>
-                    {s.num < currentStep ? '✓' : s.num}
+                    {s.num < currentStep ? <Check size={14} strokeWidth={3} /> : s.num}
                   </div>
                 );
               })}
@@ -551,9 +551,9 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
                   <div style={{
                     padding: '1.25rem',
                     textAlign: 'center',
-                    background: '#f8fafc',
+                    background: '#f7f8f3',
                     borderRadius: '10px',
-                    border: '1px dashed #cbd5e1',
+                    border: '1px dashed #d5dcd6',
                     color: 'var(--text-muted)',
                     fontSize: '0.85rem'
                   }}>
@@ -675,14 +675,14 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
                     onClick={() => handleCopy(submittedCaseId || 'RG-10482', 'ref')}
                     title="Copy Reference Number"
                   >
-                    {copiedReference ? <Check size={14} color="#059669" /> : <Copy size={14} />}
+                    {copiedReference ? <Check size={14} color="#0f6b3a" /> : <Copy size={14} />}
                     <span>{copiedReference ? 'Copied!' : 'Copy'}</span>
                   </button>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.25rem', fontSize: '0.78rem', color: 'var(--text-subtle)', flexWrap: 'wrap' }}>
                   <span>Status: <strong style={{ color: 'var(--navy-primary)' }}>Assigned to Intake Desk</strong></span>
                   <span>&bull;</span>
-                  <span>Ledger: <strong style={{ color: '#059669' }}>Cryptographic Hash Verified</strong></span>
+                  <span>Ledger: <strong style={{ color: '#0f6b3a' }}>Cryptographic Hash Verified</strong></span>
                 </div>
               </div>
 
@@ -721,7 +721,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
                     <ShieldAlert size={20} color="var(--blue-accent)" />
                     <span>Claimant Action Checklist &amp; What To Do Next</span>
                   </h3>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#059669', background: '#ecfdf5', padding: '3px 8px', borderRadius: '4px' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#0f6b3a', background: '#ecfdf5', padding: '3px 8px', borderRadius: '4px' }}>
                     Active Guidance Protocol
                   </span>
                 </div>
@@ -743,7 +743,7 @@ export default function StartCasePage({ onCaseSubmitted, onTrackCase, onOpenAuth
                         className="script-copy-btn"
                         onClick={() => handleCopy(`Hello, I am reporting an unauthorized/fraudulent transaction of $${parseFloat(caseData.amount || 0).toLocaleString()} to ${caseData.recipientName || 'unverified merchant'} on ${caseData.transactionDate}. I have registered an official dispute dossier (Reference: #${submittedCaseId || 'RG-10482'}) through US.ClaimBack and am requesting an immediate recall / chargeback arbitration review.`, 'script')}
                       >
-                        {copiedScript ? <Check size={13} color="#059669" /> : <Copy size={13} />}
+                        {copiedScript ? <Check size={13} color="#0f6b3a" /> : <Copy size={13} />}
                         <span>{copiedScript ? 'Script Copied to Clipboard!' : 'Copy Bank Call Script'}</span>
                       </button>
                     </div>

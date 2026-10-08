@@ -432,7 +432,7 @@ export default function AdminPage({ onNavigate }) {
           top: '20px',
           right: '20px',
           zIndex: 10000,
-          background: notification.type === 'error' ? '#dc2626' : '#059669',
+          background: notification.type === 'error' ? '#dc2626' : '#0f6b3a',
           color: '#ffffff',
           padding: '0.75rem 1.25rem',
           borderRadius: '8px',
@@ -455,7 +455,7 @@ export default function AdminPage({ onNavigate }) {
             <ShieldCheck size={13} />
             <span>Fraud Operations & Compliance Desk</span>
           </div>
-          <h1 className="admin-page-title">Dispute Management Console</h1>
+          <h1 className="admin-page-title">Dispute Management <em>Console</em></h1>
           <p className="admin-page-subtitle">
             Control dispute lifecycles, advance regulatory milestones, verify legal affidavits, and dispatch specialist communications.
           </p>
@@ -573,7 +573,7 @@ export default function AdminPage({ onNavigate }) {
           {/* Filter and Search Bar */}
           <div className="admin-filter-bar">
             <div className="admin-search-wrap">
-              <Search size={15} color="#64748b" />
+              <Search size={15} color="#6b7773" />
               <input 
                 type="text" 
                 placeholder="Search case #, claimant name, counterparty..." 
@@ -584,7 +584,7 @@ export default function AdminPage({ onNavigate }) {
             </div>
 
             <div className="admin-filter-selects">
-              <label style={{ fontSize: '0.78rem', fontWeight: 600, color: '#64748b' }}>Filter Status:</label>
+              <label style={{ fontSize: '0.78rem', fontWeight: 600, color: '#6b7773' }}>Filter Status:</label>
               <select 
                 className="admin-select"
                 value={statusFilter}
@@ -636,23 +636,23 @@ export default function AdminPage({ onNavigate }) {
                       </td>
 
                       <td>
-                        <div style={{ fontWeight: 600, color: '#0f172a' }}>{c.scamType || 'Fraud Claim'}</div>
-                        <div style={{ fontSize: '0.74rem', color: '#64748b' }}>To: {bankName}</div>
+                        <div style={{ fontWeight: 600, color: '#0b2b26' }}>{c.scamType || 'Fraud Claim'}</div>
+                        <div style={{ fontSize: '0.74rem', color: '#6b7773' }}>To: {bankName}</div>
                       </td>
 
                       <td>
-                        <div style={{ fontWeight: 700, color: '#0f172a' }}>
+                        <div style={{ fontWeight: 700, color: '#0b2b26' }}>
                           ${Number(c.disputedAmount || 0).toLocaleString()} {c.currency || 'USD'}
                         </div>
                         {c.settledAmount > 0 && (
-                          <span style={{ fontSize: '0.72rem', color: '#059669', fontWeight: 600 }}>
+                          <span style={{ fontSize: '0.72rem', color: '#0f6b3a', fontWeight: 600 }}>
                             (${Number(c.settledAmount).toLocaleString()} settled)
                           </span>
                         )}
                       </td>
 
                       <td>
-                        <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 500 }}>
+                        <span style={{ fontSize: '0.78rem', color: '#44524e', fontWeight: 500 }}>
                           {c.disputeChannel || 'Under Evidence Review'}
                         </span>
                       </td>
@@ -674,7 +674,7 @@ export default function AdminPage({ onNavigate }) {
                           ))}
                         </div>
                         <button 
-                          style={{ background: 'none', border: 'none', padding: 0, fontSize: '0.72rem', color: '#2563eb', cursor: 'pointer', marginTop: '2px' }}
+                          style={{ background: 'none', border: 'none', padding: 0, fontSize: '0.72rem', color: '#0f5d4b', cursor: 'pointer', marginTop: '2px' }}
                           onClick={() => setSelectedCaseForMilestones(c)}
                         >
                           Manage Steps
@@ -697,7 +697,7 @@ export default function AdminPage({ onNavigate }) {
                           title={c.withdrawalAllowed ? "Withdrawal Allowed (Click to lock)" : "Approve withdrawal after $300 clearance is verified"}
                           onClick={() => handleToggleWithdrawal(c.caseNumber, c.withdrawalAllowed)}
                         >
-                          {c.withdrawalAllowed ? "✓ Withdrawal Approved" : "Approve $300 Withdrawal"}
+                          {c.withdrawalAllowed ? "Withdrawal Approved" : "Approve $300 Withdrawal"}
                         </button>
                       </td>
 
@@ -739,8 +739,8 @@ export default function AdminPage({ onNavigate }) {
                               <Award size={12} /> Settle
                             </button>
                           ) : (
-                            <span style={{ fontSize: '0.7rem', color: '#059669', fontWeight: 700 }}>
-                              ✓ Settled
+                            <span style={{ fontSize: '0.7rem', color: '#0f6b3a', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                              <Check size={12} strokeWidth={3} /> Settled
                             </span>
                           )}
 
@@ -767,7 +767,7 @@ export default function AdminPage({ onNavigate }) {
 
                 {filteredCases.length === 0 && (
                   <tr>
-                    <td colSpan="8" style={{ textAlign: 'center', padding: '3rem 1rem', color: '#64748b' }}>
+                    <td colSpan="8" style={{ textAlign: 'center', padding: '3rem 1rem', color: '#6b7773' }}>
                       No matching cases found in database.
                     </td>
                   </tr>
@@ -816,21 +816,21 @@ export default function AdminPage({ onNavigate }) {
 
                       <td>
                         <span className={`affidavit-tag ${isVerified ? 'verified' : 'pending'}`}>
-                          {isVerified ? '✓ Cryptographically Sealed' : '! Action Required'}
+                          {isVerified ? 'Cryptographically Sealed' : '! Action Required'}
                         </span>
                       </td>
 
                       <td>
-                        <span style={{ fontSize: '0.78rem', color: '#0f172a', fontWeight: 600 }}>
+                        <span style={{ fontSize: '0.78rem', color: '#0b2b26', fontWeight: 600 }}>
                           {affInfo.protocol || 'eIDAS Reg. #EF-9481'}
                         </span>
                         {affInfo.certHash && (
-                          <div style={{ fontSize: '0.7rem', color: '#64748b' }}>{affInfo.certHash}</div>
+                          <div style={{ fontSize: '0.7rem', color: '#6b7773' }}>{affInfo.certHash}</div>
                         )}
                       </td>
 
                       <td>
-                        <span style={{ fontSize: '0.78rem', color: '#475569' }}>
+                        <span style={{ fontSize: '0.78rem', color: '#44524e' }}>
                           {affInfo.signedDateFormatted || (isVerified ? 'Recorded in Ledger' : 'Pending')}
                         </span>
                       </td>
@@ -841,10 +841,10 @@ export default function AdminPage({ onNavigate }) {
                             <img 
                               src={affInfo.signatureImg} 
                               alt="Signature" 
-                              style={{ maxHeight: '36px', border: '1px solid #e2e8f0', borderRadius: '4px', background: '#fff', padding: '2px' }} 
+                              style={{ maxHeight: '36px', border: '1px solid #e4e8e1', borderRadius: '4px', background: '#fff', padding: '2px' }} 
                             />
                           ) : (
-                            <span style={{ fontFamily: 'cursive', fontSize: '1.1rem', color: '#1e3a8a' }}>
+                            <span style={{ fontFamily: 'cursive', fontSize: '1.1rem', color: '#0b2b26' }}>
                               {affInfo.typedSignature || claimant}
                             </span>
                           )
@@ -887,7 +887,7 @@ export default function AdminPage({ onNavigate }) {
         <div className="messenger-desk-layout">
           {/* Case Selector list */}
           <div className="desk-cases-list">
-            <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e2e8f0', fontSize: '0.74rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>
+            <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e4e8e1', fontSize: '0.74rem', fontWeight: 700, color: '#6b7773', textTransform: 'uppercase' }}>
               Select Active Claimant Dossier
             </div>
             {cases.map((c, idx) => (
@@ -897,15 +897,15 @@ export default function AdminPage({ onNavigate }) {
                 onClick={() => setSelectedMsgCaseIndex(idx)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px' }}>
-                  <strong style={{ fontSize: '0.82rem', color: '#0f172a' }}>#{c.caseNumber}</strong>
+                  <strong style={{ fontSize: '0.82rem', color: '#0b2b26' }}>#{c.caseNumber}</strong>
                   <span className={`status-pill ${c.status}`} style={{ fontSize: '0.65rem', padding: '1px 6px' }}>
                     {c.status.replace('_', ' ')}
                   </span>
                 </div>
-                <div style={{ fontSize: '0.78rem', color: '#334155' }}>
+                <div style={{ fontSize: '0.78rem', color: '#3d4f4a' }}>
                   {c.claimantName || c.userId?.fullName || 'Claimant'}
                 </div>
-                <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                <div style={{ fontSize: '0.72rem', color: '#6b7773' }}>
                   ${Number(c.disputedAmount).toLocaleString()} USD
                 </div>
               </div>
@@ -918,10 +918,10 @@ export default function AdminPage({ onNavigate }) {
               <>
                 <div className="desk-chat-header">
                   <div>
-                    <h3 style={{ margin: 0, fontSize: '0.95rem', color: '#0f172a', fontWeight: 700 }}>
+                    <h3 style={{ margin: 0, fontSize: '0.95rem', color: '#0b2b26', fontWeight: 700 }}>
                       Live Communication &bull; #{activeMsgCase.caseNumber}
                     </h3>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#6b7773' }}>
                       Claimant: <strong>{activeMsgCase.claimantName || activeMsgCase.userId?.fullName || 'Claimant'}</strong> ({activeMsgCase.claimantEmail || activeMsgCase.userId?.email})
                     </span>
                   </div>
@@ -936,7 +936,7 @@ export default function AdminPage({ onNavigate }) {
 
                 {/* Canned responses */}
                 <div className="desk-canned-bar">
-                  <span style={{ fontSize: '0.7rem', color: '#64748b', alignSelf: 'center', fontWeight: 600 }}>Canned:</span>
+                  <span style={{ fontSize: '0.7rem', color: '#6b7773', alignSelf: 'center', fontWeight: 600 }}>Canned:</span>
                   <button 
                     className="canned-pill"
                     onClick={() => setAnalystMsgText('The preliminary SWIFT recall notification has been dispatched to correspondent fraud units under reference #SW-4819.')}
@@ -994,7 +994,7 @@ export default function AdminPage({ onNavigate }) {
                 </form>
               </>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#6b7773' }}>
                 Select a case to view conversation.
               </div>
             )}
@@ -1032,16 +1032,16 @@ export default function AdminPage({ onNavigate }) {
                     </td>
 
                     <td>
-                      <div style={{ fontSize: '0.8rem', color: '#0f172a', fontWeight: 600 }}>
+                      <div style={{ fontSize: '0.8rem', color: '#0b2b26', fontWeight: 600 }}>
                         {c.evidence?.length || 2} Evidence Files Cataloged
                       </div>
-                      <span style={{ fontSize: '0.73rem', color: '#64748b' }}>
+                      <span style={{ fontSize: '0.73rem', color: '#6b7773' }}>
                         Bank wire MT103, chat transcript, transaction logs
                       </span>
                     </td>
 
                     <td>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#059669', fontWeight: 700 }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#0f6b3a', fontWeight: 700 }}>
                         <CheckCircle2 size={13} /> SHA-256 Verified In Vault
                       </span>
                     </td>
@@ -1073,7 +1073,7 @@ export default function AdminPage({ onNavigate }) {
             <div className="admin-modal-header">
               <h3 className="admin-modal-title">Edit Case #{selectedCaseForEdit.caseNumber}</h3>
               <button 
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }} 
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7773' }} 
                 onClick={() => setSelectedCaseForEdit(null)}
               >
                 <X size={18} />
@@ -1152,11 +1152,11 @@ export default function AdminPage({ onNavigate }) {
                   </select>
                 </div>
 
-                <div className="admin-form-group" style={{ background: '#f8fafc', padding: '0.9rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginTop: '1rem' }}>
-                  <label className="admin-form-label" style={{ fontWeight: 700, color: '#0f172a', marginBottom: '0.35rem' }}>
+                <div className="admin-form-group" style={{ background: '#f7f8f3', padding: '0.9rem', borderRadius: '8px', border: '1px solid #e4e8e1', marginTop: '1rem' }}>
+                  <label className="admin-form-label" style={{ fontWeight: 700, color: '#0b2b26', marginBottom: '0.35rem' }}>
                     $300 Clearance & Withdrawal Permission
                   </label>
-                  <p style={{ fontSize: '0.74rem', color: '#64748b', margin: '0 0 0.6rem', lineHeight: 1.45 }}>
+                  <p style={{ fontSize: '0.74rem', color: '#6b7773', margin: '0 0 0.6rem', lineHeight: 1.45 }}>
                     Authorize the claimant to withdraw recovered funds via the Checkout screen after confirming their $300 upfront clearance fee.
                   </p>
                   <button
@@ -1169,7 +1169,7 @@ export default function AdminPage({ onNavigate }) {
                       handleToggleWithdrawal(selectedCaseForEdit.caseNumber, selectedCaseForEdit.withdrawalAllowed);
                     }}
                   >
-                    {selectedCaseForEdit.withdrawalAllowed ? '✓ Withdrawal Authorized (Click to Lock)' : 'Approve $300 & Unlock Withdrawal'}
+                    {selectedCaseForEdit.withdrawalAllowed ? 'Withdrawal Authorized (Click to Lock)' : 'Approve $300 & Unlock Withdrawal'}
                   </button>
                 </div>
               </div>
@@ -1205,7 +1205,7 @@ export default function AdminPage({ onNavigate }) {
                 Milestones &bull; #{selectedCaseForMilestones.caseNumber}
               </h3>
               <button 
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }} 
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7773' }} 
                 onClick={() => setSelectedCaseForMilestones(null)}
               >
                 <X size={18} />
@@ -1213,7 +1213,7 @@ export default function AdminPage({ onNavigate }) {
             </div>
 
             <div className="admin-modal-body">
-              <p style={{ margin: '0 0 1rem', fontSize: '0.82rem', color: '#64748b' }}>
+              <p style={{ margin: '0 0 1rem', fontSize: '0.82rem', color: '#6b7773' }}>
                 Update the 4 regulatory dispute milestones. The user's dashboard progress bar and timeline will reflect these changes immediately.
               </p>
 
@@ -1227,20 +1227,20 @@ export default function AdminPage({ onNavigate }) {
                   key={step.stepOrder}
                   style={{
                     padding: '0.85rem 1rem',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid #e4e8e1',
                     borderRadius: '8px',
                     marginBottom: '0.75rem',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    background: step.status === 'completed' ? '#f0fdf4' : step.status === 'current' ? '#eff6ff' : '#ffffff'
+                    background: step.status === 'completed' ? '#f0fdf4' : step.status === 'current' ? '#f2fbc4' : '#ffffff'
                   }}
                 >
                   <div>
-                    <div style={{ fontSize: '0.74rem', fontWeight: 700, color: step.status === 'completed' ? '#059669' : step.status === 'current' ? '#2563eb' : '#64748b' }}>
+                    <div style={{ fontSize: '0.74rem', fontWeight: 700, color: step.status === 'completed' ? '#0f6b3a' : step.status === 'current' ? '#0f5d4b' : '#6b7773' }}>
                       STEP {step.stepOrder}
                     </div>
-                    <strong style={{ fontSize: '0.84rem', color: '#0f172a' }}>{step.title}</strong>
+                    <strong style={{ fontSize: '0.84rem', color: '#0b2b26' }}>{step.title}</strong>
                   </div>
 
                   <select 
@@ -1249,13 +1249,13 @@ export default function AdminPage({ onNavigate }) {
                       borderRadius: '6px',
                       fontSize: '0.76rem',
                       fontWeight: 700,
-                      border: '1px solid #cbd5e1',
+                      border: '1px solid #d5dcd6',
                       background: '#fff'
                     }}
                     value={step.status}
                     onChange={(e) => handleToggleMilestoneStatus(step.stepOrder, e.target.value)}
                   >
-                    <option value="completed">Completed ✓</option>
+                    <option value="completed">Completed</option>
                     <option value="current">Current (In Progress)</option>
                     <option value="upcoming">Upcoming</option>
                   </select>
@@ -1289,7 +1289,7 @@ export default function AdminPage({ onNavigate }) {
                 Sealed Deposition &bull; #{selectedCaseForAffidavit.caseNumber}
               </h3>
               <button 
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }} 
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7773' }} 
                 onClick={() => setSelectedCaseForAffidavit(null)}
               >
                 <X size={18} />
@@ -1298,16 +1298,16 @@ export default function AdminPage({ onNavigate }) {
 
             <div className="admin-modal-body">
               <div style={{
-                background: '#f8fafc',
-                border: '1px solid #e2e8f0',
+                background: '#f7f8f3',
+                border: '1px solid #e4e8e1',
                 borderRadius: '8px',
                 padding: '1rem',
                 fontSize: '0.82rem',
                 lineHeight: 1.5,
-                color: '#334155',
+                color: '#3d4f4a',
                 marginBottom: '1rem'
               }}>
-                <p style={{ margin: '0 0 0.5rem', fontWeight: 700, color: '#0f172a' }}>
+                <p style={{ margin: '0 0 0.5rem', fontWeight: 700, color: '#0b2b26' }}>
                   LEGAL DEPOSITION SUMMARY (eIDAS #EF-9481)
                 </p>
                 <p style={{ margin: '0 0 0.4rem' }}>
@@ -1330,7 +1330,7 @@ export default function AdminPage({ onNavigate }) {
               <div>
                 <label className="admin-form-label">Digital Signature</label>
                 {selectedCaseForAffidavit.affidavitInfo?.signatureImg ? (
-                  <div style={{ background: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '8px', padding: '0.75rem', display: 'inline-block' }}>
+                  <div style={{ background: '#ffffff', border: '1px solid #d5dcd6', borderRadius: '8px', padding: '0.75rem', display: 'inline-block' }}>
                     <img 
                       src={selectedCaseForAffidavit.affidavitInfo.signatureImg} 
                       alt="Claimant Signature" 
@@ -1338,7 +1338,7 @@ export default function AdminPage({ onNavigate }) {
                     />
                   </div>
                 ) : (
-                  <div style={{ fontFamily: 'cursive', fontSize: '1.4rem', color: '#1e3a8a', padding: '0.5rem 0' }}>
+                  <div style={{ fontFamily: 'cursive', fontSize: '1.4rem', color: '#0b2b26', padding: '0.5rem 0' }}>
                     {selectedCaseForAffidavit.affidavitInfo?.typedSignature || selectedCaseForAffidavit.claimantName || 'Digital Deponent'}
                   </div>
                 )}
@@ -1366,7 +1366,7 @@ export default function AdminPage({ onNavigate }) {
           <div className="admin-modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px', background: '#ffffff', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
             <div className="admin-modal-header" style={{ background: '#ecfdf5', borderBottom: '1px solid #a7f3d0' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#10b981', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#2f8a6f', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Award size={18} />
                 </div>
                 <div>
@@ -1375,7 +1375,7 @@ export default function AdminPage({ onNavigate }) {
                 </div>
               </div>
               <button 
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }} 
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b7773' }} 
                 onClick={() => setSelectedCaseForSettle(null)}
               >
                 <X size={18} />
@@ -1385,24 +1385,24 @@ export default function AdminPage({ onNavigate }) {
             <form onSubmit={handleConfirmSettle}>
               <div className="admin-modal-body">
                 <div style={{
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  background: '#f7f8f3',
+                  border: '1px solid #e4e8e1',
                   borderRadius: '8px',
                   padding: '0.9rem',
                   fontSize: '0.82rem',
                   marginBottom: '1rem'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                    <span style={{ color: '#64748b' }}>Dispute Reference:</span>
-                    <strong style={{ color: '#0f172a' }}>#{selectedCaseForSettle.caseNumber}</strong>
+                    <span style={{ color: '#6b7773' }}>Dispute Reference:</span>
+                    <strong style={{ color: '#0b2b26' }}>#{selectedCaseForSettle.caseNumber}</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                    <span style={{ color: '#64748b' }}>Claimant Name:</span>
-                    <strong style={{ color: '#0f172a' }}>{selectedCaseForSettle.claimantName || selectedCaseForSettle.userId?.fullName || 'Claimant Member'}</strong>
+                    <span style={{ color: '#6b7773' }}>Claimant Name:</span>
+                    <strong style={{ color: '#0b2b26' }}>{selectedCaseForSettle.claimantName || selectedCaseForSettle.userId?.fullName || 'Claimant Member'}</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#64748b' }}>Original Disputed Sum:</span>
-                    <strong style={{ color: '#0f172a' }}>${Number(selectedCaseForSettle.disputedAmount || 0).toLocaleString()} USD</strong>
+                    <span style={{ color: '#6b7773' }}>Original Disputed Sum:</span>
+                    <strong style={{ color: '#0b2b26' }}>${Number(selectedCaseForSettle.disputedAmount || 0).toLocaleString()} USD</strong>
                   </div>
                 </div>
 
@@ -1411,19 +1411,19 @@ export default function AdminPage({ onNavigate }) {
                     Settled Recovery Amount (USD) *
                   </label>
                   <div style={{ position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', fontWeight: 700, color: '#64748b' }}>$</span>
+                    <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', fontWeight: 700, color: '#6b7773' }}>$</span>
                     <input 
                       type="number" 
                       step="0.01" 
                       min="1"
                       className="admin-form-input" 
-                      style={{ paddingLeft: '1.8rem', fontSize: '1.1rem', fontWeight: 700, color: '#059669' }}
+                      style={{ paddingLeft: '1.8rem', fontSize: '1.1rem', fontWeight: 700, color: '#0f6b3a' }}
                       value={settleInputAmount}
                       onChange={(e) => setSettleInputAmount(e.target.value)}
                       required
                     />
                   </div>
-                  <span style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.3rem', display: 'block' }}>
+                  <span style={{ fontSize: '0.72rem', color: '#6b7773', marginTop: '0.3rem', display: 'block' }}>
                     This exact sum will be credited to the claimant's US.ClaimBack Secure Member Wallet and the Apple Pay style payment received confirmation will be displayed.
                   </span>
                 </div>
@@ -1459,7 +1459,7 @@ export default function AdminPage({ onNavigate }) {
                   type="submit" 
                   className="btn"
                   disabled={isSettling}
-                  style={{ background: '#059669', color: '#ffffff', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', opacity: isSettling ? 0.7 : 1 }}
+                  style={{ background: '#0f6b3a', color: '#ffffff', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', opacity: isSettling ? 0.7 : 1 }}
                 >
                   {isSettling ? (
                     <>

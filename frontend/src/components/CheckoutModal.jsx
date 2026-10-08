@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle2, AlertCircle, Info, Lock, ShieldCheck, ArrowRight } from 'lucide-react';
+import BrandMark from './BrandMark';
 import './CheckoutModal.css';
 
 export default function CheckoutModal({ 
@@ -229,7 +230,7 @@ export default function CheckoutModal({
       <div className="sp-checkout-header">
         <div className="sp-logo-wrap">
           <div className="rg-site-logo">
-            <img src="/logo.png" alt="US.ClaimBack Emblem" className="rg-modal-logo-img" />
+            <BrandMark size={32} />
             <span className="rg-logo-text">US.<span>ClaimBack</span></span>
           </div>
         </div>
@@ -248,7 +249,7 @@ export default function CheckoutModal({
       {paymentSuccess ? (
         <div className="sp-success-view">
           <div className="sp-success-icon">
-            <CheckCircle2 size={54} color="#10b981" />
+            <CheckCircle2 size={54} color="#2f8a6f" />
           </div>
           <h2 className="sp-success-title">Withdrawal Dispatched</h2>
           <p className="sp-success-subtext">
@@ -266,12 +267,12 @@ export default function CheckoutModal({
             alignItems: 'flex-start',
             gap: '10px',
             fontSize: '0.85rem',
-            color: '#1e3a8a',
+            color: '#0b2b26',
             lineHeight: '1.45'
           }}>
-            <Info size={18} style={{ minWidth: '18px', marginTop: '2px', color: '#2563eb' }} />
+            <Info size={18} style={{ minWidth: '18px', marginTop: '2px', color: '#0f5d4b' }} />
             <div>
-              <strong style={{ color: '#1d4ed8' }}>Processing Timeline:</strong> Disbursements typically take <strong>up to 3 business days</strong> to settle through card and banking clearance networks.
+              <strong style={{ color: '#0b4638' }}>Processing Timeline:</strong> Disbursements typically take <strong>up to 3 business days</strong> to settle through card and banking clearance networks.
             </div>
           </div>
 
@@ -357,7 +358,7 @@ export default function CheckoutModal({
           {/* 4. Selected Plan / Item Card */}
           <div className="sp-plan-card">
             <div className="sp-plan-card-main">
-              <div className="sp-plan-badge" style={{ background: '#10b981' }}>
+              <div className="sp-plan-badge" style={{ background: '#2f8a6f' }}>
                 <ShieldCheck size={24} color="#ffffff" />
               </div>
               <div className="sp-plan-details">
@@ -400,13 +401,13 @@ export default function CheckoutModal({
                     <div className="sp-card-brand-logos">
                       <span className="sp-card-logo visa-logo" title="Visa">
                         <svg viewBox="0 0 36 24" width="32" height="20">
-                          <rect width="36" height="24" rx="3" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1" />
+                          <rect width="36" height="24" rx="3" fill="#ffffff" stroke="#e4e8e1" strokeWidth="1" />
                           <text x="18" y="15" fill="#1434CB" fontSize="10" fontWeight="900" textAnchor="middle" fontStyle="italic" fontFamily="sans-serif">VISA</text>
                         </svg>
                       </span>
                       <span className="sp-card-logo mastercard-logo" title="Mastercard">
                         <svg viewBox="0 0 36 24" width="32" height="20">
-                          <rect width="36" height="24" rx="3" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1" />
+                          <rect width="36" height="24" rx="3" fill="#ffffff" stroke="#e4e8e1" strokeWidth="1" />
                           <circle cx="14" cy="12" r="6" fill="#EB001B" />
                           <circle cx="22" cy="12" r="6" fill="#F79E1B" fillOpacity="0.85" />
                         </svg>
@@ -685,7 +686,7 @@ export default function CheckoutModal({
           {/* 7. Footer: Security Assurance */}
           <div className="sp-checkout-footer">
             <div className="sp-security-footnote">
-              <Lock size={13} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle', color: '#10b981' }} />
+              <Lock size={13} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle', color: '#2f8a6f' }} />
               <span>256-Bit TLS Bank Encryption &bull; Official Settlement Guarantee &bull; 0% Payout Fee</span>
             </div>
           </div>

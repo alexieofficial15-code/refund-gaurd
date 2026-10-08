@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Menu, X, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import BrandMark from './BrandMark';
 import './Navbar.css';
 
 export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartCase }) {
@@ -57,27 +59,27 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
     }
   };
 
+  const isStaff = currentUser?.role === 'admin' || currentUser?.role === 'investigator';
+
   return (
     <header className="navbar-header">
       <div className="container">
-        <div className="navbar-inner">
-          {/* Brand Logo with Official Emblem */}
+        <div className={`navbar-pill ${isAuthenticated ? 'is-member' : ''}`}>
+          {/* Brand */}
           <div className="brand-logo" onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/logo.png" alt="US.ClaimBack Emblem" className="brand-logo-img" />
+            <BrandMark size={34} />
             <div className="brand-name">
               US.<span>ClaimBack</span>
             </div>
           </div>
 
-          {/* Conditional Navigation based on Auth status */}
           {isAuthenticated ? (
-            /* ================= LOGGED IN MEMBER HEADER (No Navigation Drawer) ================= */
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            /* ================= LOGGED IN MEMBER HEADER ================= */
+            <div className="navbar-member-group">
               <button
                 type="button"
                 className={`nav-link-item ${activePage === 'home' ? 'active' : ''}`}
                 onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                style={{ fontSize: '0.84rem', fontWeight: 600, color: activePage === 'home' ? 'var(--blue-accent)' : 'var(--navy-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.35rem 0.6rem' }}
               >
                 Home
               </button>
@@ -86,56 +88,31 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
                 type="button"
                 className={`nav-link-item ${activePage === 'dashboard' ? 'active' : ''}`}
                 onClick={() => { setActivePage('dashboard'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                style={{ fontSize: '0.84rem', fontWeight: 600, color: activePage === 'dashboard' ? 'var(--blue-accent)' : 'var(--navy-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.35rem 0.6rem' }}
               >
                 Dashboard
               </button>
 
-              {(currentUser?.role === 'admin' || currentUser?.role === 'investigator') && (
-                <button 
-                  type="button" 
-                  className={`nav-link-item ${activePage === 'admin' ? 'active' : ''}`}
-                  style={{
-                    padding: '0.35rem 0.75rem',
-                    fontSize: '0.78rem',
-                    fontWeight: 700,
-                    background: activePage === 'admin' ? '#eff6ff' : '#f8fafc',
-                    color: activePage === 'admin' ? '#1d4ed8' : '#2563eb',
-                    border: '1px solid #bfdbfe',
-                    borderRadius: '6px',
-                    cursor: 'pointer'
-                  }}
+              {isStaff && (
+                <button
+                  type="button"
+                  className={`nav-admin-chip ${activePage === 'admin' ? 'active' : ''}`}
                   onClick={() => setActivePage('admin')}
                 >
-                  ⚡ Admin Desk
+                  <ShieldCheck size={14} strokeWidth={2.4} />
+                  Admin Desk
                 </button>
               )}
 
-              <div 
+              <div
                 className="member-avatar-circle"
                 title={`Logged in as ${currentUser?.fullName || currentUser?.name || 'Claimant'}`}
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  backgroundColor: '#0f172a',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '0.85rem',
-                  fontWeight: 700,
-                  border: '1.5px solid rgba(255,255,255,0.2)',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.12)'
-                }}
               >
                 {currentUser?.avatar || (currentUser?.fullName ? currentUser.fullName[0].toUpperCase() : 'B')}
               </div>
 
-              <button 
+              <button
                 type="button"
-                className="btn btn-outline"
-                style={{ padding: '0.35rem 0.8rem', fontSize: '0.78rem', borderRadius: '6px' }}
+                className="nav-cta-btn"
                 onClick={() => {
                   signOut();
                   setActivePage('home');
@@ -147,62 +124,41 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
           ) : (
             /* ================= PUBLIC LANDING PAGE HEADER ================= */
             <>
-              {/* Desktop Navigation */}
               <nav className="desktop-nav-links">
-                <button 
-                  className="nav-link-item"
-                  onClick={() => handleNavSection('how-it-works')}
-                >
+                <button className="nav-link-item" onClick={() => handleNavSection('how-it-works')}>
                   How It Works
                 </button>
-                <button 
-                  className="nav-link-item"
-                  onClick={() => handleNavSection('scam-types')}
-                >
+                <button className="nav-link-item" onClick={() => handleNavSection('scam-types')}>
                   Scam Types
                 </button>
-                <button 
-                  className="nav-link-item"
-                  onClick={() => handleNavSection('reviews')}
-                >
+                <button className="nav-link-item" onClick={() => handleNavSection('reviews')}>
                   Case Reviews
                 </button>
-                <button 
+                <button
                   className="nav-link-item"
                   onClick={() => { setActivePage('track'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 >
                   Track Case
                 </button>
-                <button 
-                  className="nav-link-item"
-                  onClick={() => handleNavSection('help-center')}
-                >
+                <button className="nav-link-item" onClick={() => handleNavSection('help-center')}>
                   Help Center
                 </button>
               </nav>
 
-              {/* Desktop & Mobile Actions */}
               <div className="desktop-nav-actions">
-                <button 
-                  className="btn btn-outline nav-signin-btn" 
-                  onClick={() => onOpenAuth('signin')}
-                >
+                <button className="nav-signin-btn" onClick={() => onOpenAuth('signin')}>
                   Sign In
                 </button>
-                <button 
-                  className="btn btn-primary nav-start-case-btn" 
-                  onClick={handleStartCaseClick}
-                >
+                <button className="nav-cta-btn nav-start-case-btn" onClick={handleStartCaseClick}>
                   Start a Case
                 </button>
 
-                {/* Mobile Menu Button */}
-                <button 
+                <button
                   className="mobile-toggle-btn"
                   onClick={() => setIsDrawerOpen(true)}
                   aria-label="Open mobile menu"
                 >
-                  <span className="mobile-toggle-icon">☰</span>
+                  <Menu size={18} strokeWidth={2.2} />
                   <span className="mobile-toggle-text">Menu</span>
                 </button>
               </div>
@@ -211,81 +167,63 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
         </div>
       </div>
 
-      {/* Mobile Drawer (Only for public landing page visitors; removed completely for logged-in members) */}
+      {/* Mobile Drawer (public visitors only) */}
       {!isAuthenticated && (
         <>
-          <div 
+          <div
             className={`drawer-backdrop ${isDrawerOpen ? 'is-open' : ''}`}
             onClick={() => setIsDrawerOpen(false)}
           />
 
           <div className={`mobile-nav-panel ${isDrawerOpen ? 'is-open' : ''}`}>
             <div className="drawer-content-inner">
-              {/* Header */}
               <div className="drawer-header">
                 <div className="drawer-header-left">
+                  <BrandMark size={32} />
                   <span className="drawer-title">US.ClaimBack</span>
                 </div>
-                <button 
+                <button
                   className="drawer-close-btn"
                   onClick={() => setIsDrawerOpen(false)}
                   aria-label="Close navigation"
                 >
-                  ✕
+                  <X size={20} strokeWidth={2.2} />
                 </button>
               </div>
 
-              {/* Top Quick Sign-in Callout inside Drawer */}
               <div className="drawer-top-auth-box">
                 <div>
                   <div className="drawer-top-auth-title">Existing Claimant?</div>
                   <div className="drawer-top-auth-sub">Access your live dispute dashboard</div>
                 </div>
-                <button 
-                  type="button"
-                  className="drawer-top-signin-btn"
-                  onClick={handleAuthClick}
-                >
-                  Sign In &rarr;
+                <button type="button" className="drawer-top-signin-btn" onClick={handleAuthClick}>
+                  Sign In <ArrowRight size={14} strokeWidth={2.4} />
                 </button>
               </div>
 
-              {/* Public Visitor Navigation Links */}
               <ul className="drawer-nav-list">
                 <li>
-                  <button 
-                    className="drawer-nav-link"
-                    onClick={() => handleNavSection('how-it-works')}
-                  >
+                  <button className="drawer-nav-link" onClick={() => handleNavSection('how-it-works')}>
                     <span>How It Works</span>
                   </button>
                 </li>
                 <li>
-                  <button 
-                    className="drawer-nav-link"
-                    onClick={() => handleNavSection('scam-types')}
-                  >
+                  <button className="drawer-nav-link" onClick={() => handleNavSection('scam-types')}>
                     <span>Scam Types</span>
                   </button>
                 </li>
                 <li>
-                  <button 
-                    className="drawer-nav-link"
-                    onClick={() => handleNavSection('reviews')}
-                  >
+                  <button className="drawer-nav-link" onClick={() => handleNavSection('reviews')}>
                     <span>Case Reviews</span>
                   </button>
                 </li>
                 <li>
-                  <button 
-                    className="drawer-nav-link"
-                    onClick={handleStartCaseClick}
-                  >
+                  <button className="drawer-nav-link" onClick={handleStartCaseClick}>
                     <span>Start a Case</span>
                   </button>
                 </li>
                 <li>
-                  <button 
+                  <button
                     className="drawer-nav-link"
                     onClick={() => { setIsDrawerOpen(false); setActivePage('track'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   >
@@ -293,24 +231,16 @@ export default function Navbar({ activePage, setActivePage, onOpenAuth, onStartC
                   </button>
                 </li>
                 <li>
-                  <button 
-                    className="drawer-nav-link"
-                    onClick={() => handleNavSection('help-center')}
-                  >
+                  <button className="drawer-nav-link" onClick={() => handleNavSection('help-center')}>
                     <span>Help Center</span>
                   </button>
                 </li>
               </ul>
 
-              {/* Action Button: Sign In / Sign Up */}
-              <button 
-                className="drawer-auth-btn"
-                onClick={handleAuthClick}
-              >
+              <button className="drawer-auth-btn" onClick={handleAuthClick}>
                 Sign In / Sign Up
               </button>
 
-              {/* Footer Disclaimer Card */}
               <div className="drawer-disclaimer-card">
                 <p>
                   US.ClaimBack is an evidence preparation and dispute assistance service. We do not guarantee fund recovery. Final determinations rest with the respective financial institutions or regulatory authorities.

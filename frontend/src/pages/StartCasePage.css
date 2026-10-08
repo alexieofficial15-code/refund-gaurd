@@ -33,7 +33,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #f1f5f9;
+  background-color: #f1f3ec;
   border: 2px solid var(--border-subtle);
   color: var(--text-muted);
   display: flex;
@@ -205,13 +205,13 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.1);
+  background: rgba(15, 93, 75, 0.1);
   color: var(--blue-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
-  border: 1px solid rgba(37, 99, 235, 0.2);
+  border: 1px solid rgba(15, 93, 75, 0.2);
 }
 
 .auth-gate-title {
@@ -260,8 +260,8 @@
 }
 
 .confirmation-case-ref-box {
-  background: linear-gradient(135deg, rgba(239, 246, 255, 0.9) 0%, rgba(240, 253, 250, 0.8) 100%);
-  border: 1px solid #bfdbfe;
+  background: var(--lime-soft);
+  border: 1px solid #cfe3d8;
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   margin: 0 auto 2rem;
@@ -288,7 +288,7 @@
 
 .case-ref-copy-btn {
   background: #ffffff;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d5dcd6;
   border-radius: 6px;
   padding: 0.35rem 0.7rem;
   font-size: 0.78rem;
@@ -302,7 +302,7 @@
 }
 
 .case-ref-copy-btn:hover {
-  background: #f8fafc;
+  background: #f7f8f3;
   border-color: var(--blue-accent);
   color: var(--blue-accent);
 }
@@ -399,8 +399,8 @@
 
 /* Interactive Script Box */
 .script-interactive-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #f7f8f3;
+  border: 1px solid #e4e8e1;
   border-left: 3px solid var(--blue-accent);
   border-radius: 6px;
   padding: 1rem;
@@ -409,7 +409,7 @@
 
 .script-text {
   font-size: 0.82rem;
-  color: #334155;
+  color: #3d4f4a;
   font-style: italic;
   line-height: 1.55;
   margin-bottom: 0.75rem;
@@ -417,7 +417,7 @@
 
 .script-copy-btn {
   background: #ffffff;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d5dcd6;
   border-radius: 4px;
   padding: 0.35rem 0.75rem;
   font-size: 0.75rem;
@@ -445,8 +445,8 @@
 }
 
 .timeline-pill {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #f7f8f3;
+  border: 1px solid #e4e8e1;
   border-radius: 6px;
   padding: 0.75rem;
 }

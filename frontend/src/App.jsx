@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ShieldAlert } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -31,7 +32,9 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '560px', margin: '0 auto' }}>
-          <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🛡️</div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 64, height: 64, borderRadius: 20, background: 'var(--lime)', color: 'var(--navy-primary)', marginBottom: '1rem' }}>
+            <ShieldAlert size={30} strokeWidth={1.9} />
+          </div>
           <h2 style={{ fontSize: '1.4rem', color: 'var(--navy-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
             Display Refresh Required
           </h2>

@@ -43,7 +43,7 @@
 /* Page wrapper when shown as full page */
 .sp-page-wrapper {
   min-height: 100vh;
-  background: #ffffff;
+  background: transparent;
   display: flex;
   justify-content: center;
   padding: 2.5rem 1rem 4rem;
@@ -56,7 +56,7 @@
   margin: 0 auto;
   padding: 1.5rem 1.25rem 2rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Circular Std', 'Circular', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #121212;
+  color: #10201c;
   box-sizing: border-box;
 }
 
@@ -90,12 +90,12 @@
 .rg-logo-text {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #0b2b26;
   letter-spacing: -0.02em;
 }
 
 .rg-logo-text span {
-  color: #10b981;
+  color: #2f8a6f;
 }
 
 .sp-header-right {
@@ -108,7 +108,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: #e91e63; /* Pink initial badge from screenshot */
+  background: #e4f76a; /* Pink initial badge from screenshot */
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 700;
@@ -120,12 +120,12 @@
 }
 
 .sp-close-btn {
-  background: #f4f4f5;
+  background: #f1f3ec;
   border: none;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  color: #71717a;
+  color: #6b7773;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,8 +134,8 @@
 }
 
 .sp-close-btn:hover {
-  background: #e4e4e7;
-  color: #18181b;
+  background: #e4e8e1;
+  color: #0b2b26;
 }
 
 /* 2. Info / Eligibility Alert Notice */
@@ -144,11 +144,11 @@
   align-items: flex-start;
   gap: 0.75rem;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e4e8e1;
   border-radius: 8px;
   padding: 0.9rem 1rem;
   margin-bottom: 1.75rem;
-  color: #121212;
+  color: #10201c;
   font-size: 0.88rem;
   line-height: 1.4;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
@@ -157,12 +157,12 @@
 .sp-alert-icon {
   flex-shrink: 0;
   margin-top: 1px;
-  color: #121212;
+  color: #10201c;
 }
 
 .sp-alert-text {
   font-weight: 500;
-  color: #18181b;
+  color: #0b2b26;
 }
 
 /* 3. Checkout Header & Change Plan */
@@ -176,7 +176,7 @@
 .sp-section-title {
   font-size: 1.55rem;
   font-weight: 800;
-  color: #000000;
+  color: #0b2b26;
   letter-spacing: -0.02em;
   margin: 0;
 }
@@ -184,7 +184,7 @@
 .sp-change-plan-btn {
   background: none;
   border: none;
-  color: #121212;
+  color: #10201c;
   font-size: 0.84rem;
   font-weight: 600;
   text-decoration: underline;
@@ -193,14 +193,14 @@
 }
 
 .sp-change-plan-btn:hover {
-  color: #000000;
+  color: #0b2b26;
   text-decoration: underline;
 }
 
 /* Plan Picker Dropdown */
 .sp-plan-picker-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #f7f8f3;
+  border: 1px solid #e4e8e1;
   border-radius: 10px;
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -217,37 +217,37 @@
   border-radius: 6px;
   cursor: pointer;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e4e8e1;
   transition: all 0.15s ease;
 }
 
 .sp-plan-option:hover,
 .sp-plan-option.active {
-  border-color: #1ed760;
+  border-color: #0b2b26;
   background: #f0fdf4;
 }
 
 .sp-plan-option-info strong {
   display: block;
   font-size: 0.85rem;
-  color: #0f172a;
+  color: #0b2b26;
 }
 
 .sp-plan-option-info span {
   font-size: 0.74rem;
-  color: #64748b;
+  color: #6b7773;
 }
 
 .sp-plan-option-price {
   font-weight: 700;
   font-size: 0.88rem;
-  color: #0f172a;
+  color: #0b2b26;
   text-align: right;
 }
 
 /* 4. Plan Card */
 .sp-plan-card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e4e8e1;
   border-radius: 10px;
   padding: 1.15rem 1.15rem 1rem;
   margin-bottom: 2rem;
@@ -260,7 +260,7 @@
   align-items: center;
   gap: 0.85rem;
   padding-bottom: 0.9rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f1f3ec;
   margin-bottom: 0.75rem;
 }
 
@@ -281,14 +281,14 @@
 .sp-plan-name {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #000000;
+  color: #0b2b26;
   margin: 0 0 0.15rem;
   line-height: 1.25;
 }
 
 .sp-plan-sub {
   font-size: 0.82rem;
-  color: #535353;
+  color: #44524e;
   display: block;
 }
 
@@ -300,13 +300,13 @@
 .sp-price-amount {
   font-size: 1.05rem;
   font-weight: 800;
-  color: #000000;
+  color: #0b2b26;
   display: block;
 }
 
 .sp-price-period {
   font-size: 0.76rem;
-  color: #535353;
+  color: #44524e;
   display: block;
 }
 
@@ -321,7 +321,7 @@
 
 .sp-plan-bullets li {
   font-size: 0.82rem;
-  color: #535353;
+  color: #44524e;
   line-height: 1.35;
 }
 
@@ -336,14 +336,14 @@
 }
 
 .sp-payment-methods-box {
-  border: 1px solid #dcdcdc;
+  border: 1px solid #e4e8e1;
   border-radius: 8px;
   overflow: hidden;
   background: #ffffff;
 }
 
 .sp-method-item {
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: 1px solid #e4e8e1;
   transition: background 0.15s ease;
 }
 
@@ -362,11 +362,11 @@
 }
 
 .sp-method-item.selected .sp-method-header {
-  background: #fafafa;
+  background: #f7f8f3;
 }
 
 .sp-method-header:hover {
-  background: #fafafa;
+  background: #f7f8f3;
 }
 
 .sp-radio-col {
@@ -384,7 +384,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid #767676;
+  border: 2px solid #98a29e;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -393,7 +393,7 @@
 }
 
 .sp-radio-col input[type="radio"]:checked + .sp-custom-radio {
-  border-color: #000000;
+  border-color: #0b2b26;
 }
 
 .sp-radio-col input[type="radio"]:checked + .sp-custom-radio::after {
@@ -401,7 +401,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #000000;
+  background: #0b2b26;
 }
 
 .sp-method-content {
@@ -414,7 +414,7 @@
 .sp-method-label {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #121212;
+  color: #10201c;
   line-height: 1.25;
 }
 
@@ -445,11 +445,11 @@
 .sp-bank-tag {
   font-size: 0.72rem;
   font-weight: 600;
-  color: #475569;
-  background: #f1f5f9;
+  color: #44524e;
+  background: #f1f3ec;
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e4e8e1;
 }
 
 .sp-paypal-logo {
@@ -473,7 +473,7 @@
 
 .sp-crypto-tag.usdt {
   background: #ecfdf5;
-  color: #059669;
+  color: #0f6b3a;
   border: 1px solid #a7f3d0;
 }
 
@@ -484,11 +484,11 @@
 }
 
 .sp-crypto-tag.fast {
-  background: #f1f5f9;
-  color: #475569;
+  background: #f1f3ec;
+  color: #44524e;
   font-size: 0.7rem;
   font-weight: 600;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e4e8e1;
 }
 
 /* Card Inputs Accordion */
@@ -512,7 +512,7 @@
   background: #fcfcfc;
   border-top: 1px solid #f1f3f5;
   font-size: 0.82rem;
-  color: #535353;
+  color: #44524e;
   line-height: 1.4;
 }
 
@@ -525,23 +525,23 @@
 .sp-input-field label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #121212;
+  color: #10201c;
 }
 
 .sp-input-field input {
   padding: 0.65rem 0.85rem;
-  border: 1px solid #878787;
+  border: 1px solid #98a29e;
   border-radius: 4px;
   font-size: 0.9rem;
-  color: #121212;
+  color: #10201c;
   outline: none;
   font-family: inherit;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .sp-input-field input:focus {
-  border-color: #000000;
-  box-shadow: 0 0 0 1px #000000;
+  border-color: #0b2b26;
+  box-shadow: 0 0 0 1px #0b2b26;
 }
 
 .sp-input-icon-wrap {
@@ -558,7 +558,7 @@
 .sp-input-lock {
   position: absolute;
   right: 0.75rem;
-  color: #767676;
+  color: #98a29e;
 }
 
 .sp-input-grid {
@@ -589,7 +589,7 @@
 .sp-summary-title {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #b3b3b3; /* Soft light grey title matching screenshot */
+  color: #98a29e; /* Soft light grey title matching screenshot */
   margin: 0 0 0.85rem;
   letter-spacing: -0.01em;
 }
@@ -605,23 +605,23 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.88rem;
-  color: #121212;
+  color: #10201c;
 }
 
 .sp-summary-line.muted {
-  color: #767676;
+  color: #98a29e;
 }
 
 .sp-summary-divider {
   height: 1px;
-  background: #e5e7eb;
+  background: #e4e8e1;
   margin: 0.35rem 0;
 }
 
 .sp-summary-line.total {
   font-weight: 800;
   font-size: 0.98rem;
-  color: #000000;
+  color: #0b2b26;
 }
 
 /* Submit Action Button */
@@ -632,9 +632,9 @@
 .sp-btn-submit {
   width: 100%;
   padding: 0.88rem 1.5rem;
-  border-radius: 9999px; /* Spotify pill style */
-  background: #1ed760; /* Spotify signature green */
-  color: #000000;
+  border-radius: 9999px;
+  background: #0b2b26;
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
   border: none;
@@ -648,12 +648,12 @@
 }
 
 .sp-btn-submit:hover:not(:disabled) {
-  background: #1fdf64;
+  background: #14443b;
   transform: scale(1.015);
 }
 
 .sp-btn-submit:active:not(:disabled) {
-  background: #169c46;
+  background: #071d19;
   transform: scale(0.99);
 }
 
@@ -666,7 +666,7 @@
 .sp-checkout-footer {
   margin-top: 2rem;
   padding-top: 1.25rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #e4e8e1;
 }
 
 .sp-security-footnote {
@@ -674,7 +674,7 @@
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
-  color: #64748b;
+  color: #6b7773;
   font-weight: 500;
   text-align: center;
 }
@@ -688,14 +688,14 @@
 }
 
 .sp-country-name {
-  color: #121212;
+  color: #10201c;
   font-weight: 500;
 }
 
 .sp-change-country-link {
   background: none;
   border: none;
-  color: #535353;
+  color: #44524e;
   font-size: 0.85rem;
   text-decoration: underline;
   cursor: pointer;
@@ -703,12 +703,12 @@
 }
 
 .sp-change-country-link:hover {
-  color: #121212;
+  color: #10201c;
 }
 
 .sp-country-dropdown {
   background: #ffffff;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #e4e8e1;
   border-radius: 6px;
   padding: 0.4rem;
   margin-bottom: 0.85rem;
@@ -724,7 +724,7 @@
   padding: 0.35rem 0.65rem;
   border-radius: 4px;
   font-size: 0.78rem;
-  color: #121212;
+  color: #10201c;
   cursor: pointer;
 }
 
@@ -742,7 +742,7 @@
 .sp-cookie-link {
   background: none;
   border: none;
-  color: #535353;
+  color: #44524e;
   font-size: 0.8rem;
   cursor: pointer;
   padding: 0;
@@ -750,7 +750,7 @@
 }
 
 .sp-cookie-link:hover {
-  color: #121212;
+  color: #10201c;
   text-decoration: underline;
 }
 
@@ -767,19 +767,19 @@
 .sp-success-title {
   font-size: 1.45rem;
   font-weight: 800;
-  color: #000000;
+  color: #0b2b26;
   margin: 0 0 0.4rem;
 }
 
 .sp-success-subtext {
   font-size: 0.88rem;
-  color: #535353;
+  color: #44524e;
   margin: 0 0 1.5rem;
 }
 
 .sp-receipt-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #f7f8f3;
+  border: 1px solid #e4e8e1;
   border-radius: 12px;
   padding: 1rem 1.15rem;
   margin-bottom: 1.75rem;
@@ -791,9 +791,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.45rem 0;
-  border-bottom: 1px solid #edf2f7;
+  border-bottom: 1px solid #eef1ea;
   font-size: 0.82rem;
-  color: #64748b;
+  color: #6b7773;
 }
 
 .sp-receipt-row:last-child {
@@ -802,7 +802,7 @@
 }
 
 .sp-receipt-row strong {
-  color: #0f172a;
+  color: #0b2b26;
 }
 
 .sp-mono {

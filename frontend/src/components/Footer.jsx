@@ -1,4 +1,5 @@
 import React from 'react';
+import BrandMark from './BrandMark';
 import './Footer.css';
 
 export default function Footer({ onNavigate }) {
@@ -10,7 +11,7 @@ export default function Footer({ onNavigate }) {
           {/* Col 1: Brand & Mission */}
           <div className="footer-brand-col">
             <div className="brand-logo" onClick={() => onNavigate && onNavigate('home')}>
-              <img src="/logo.png" alt="US.ClaimBack Emblem" className="brand-logo-img" />
+              <BrandMark size={38} />
               <div className="brand-name">
                 US.<span>ClaimBack</span>
               </div>

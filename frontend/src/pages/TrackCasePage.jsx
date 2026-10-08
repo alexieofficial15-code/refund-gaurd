@@ -74,7 +74,7 @@ export default function TrackCasePage({ onNavigate, initialCaseNumber = '' }) {
   };
 
   return (
-    <div style={{ padding: '3.5rem 0 5rem', minHeight: 'calc(100vh - 72px)', backgroundColor: 'var(--bg-subtle)' }}>
+    <div style={{ padding: '3.5rem 0 5rem', minHeight: 'calc(100vh - 72px)' }}>
       <div className="container">
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           {/* Header */}
@@ -83,8 +83,8 @@ export default function TrackCasePage({ onNavigate, initialCaseNumber = '' }) {
               <Compass size={15} />
               <span>Real-Time Case Intelligence</span>
             </div>
-            <h1 style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--navy-primary)', marginBottom: '0.5rem' }}>
-              Track Your Case Progress
+            <h1 style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', fontWeight: 600, color: 'var(--navy-primary)', marginBottom: '0.75rem', lineHeight: 1.1 }}>
+              Track Your Case <em>Progress</em>
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
               Enter your official US.ClaimBack case identifier to inspect live dispute milestones directly from our database.
@@ -147,7 +147,7 @@ export default function TrackCasePage({ onNavigate, initialCaseNumber = '' }) {
 
           {/* Result Box */}
           {hasSearched && searchResult && (
-            <div className="card-clean" style={{ padding: '2rem', backgroundColor: '#ffffff', borderTop: '4px solid var(--blue-accent)' }}>
+            <div className="card-clean" style={{ padding: '2rem', backgroundColor: '#ffffff' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                 <div>
                   <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-subtle)', fontWeight: 600 }}>Active Database Record</span>
@@ -210,8 +210,8 @@ export default function TrackCasePage({ onNavigate, initialCaseNumber = '' }) {
                             gap: '0.75rem',
                             padding: '0.75rem 1rem',
                             borderRadius: 'var(--radius-sm)',
-                            backgroundColor: isCurrent ? 'var(--bg-soft-blue)' : isCompleted ? '#f0fdf4' : 'var(--bg-subtle)',
-                            border: `1px solid ${isCurrent ? 'var(--blue-accent)' : isCompleted ? '#bbf7d0' : 'var(--border-subtle)'}`
+                            backgroundColor: isCurrent ? 'var(--lime-soft)' : isCompleted ? '#f1f8ee' : 'var(--bg-subtle)',
+                            border: `1px solid ${isCurrent ? 'var(--blue-accent)' : isCompleted ? '#cfe3d8' : 'var(--border-subtle)'}`
                           }}
                         >
                           <div style={{ marginTop: '2px' }}>

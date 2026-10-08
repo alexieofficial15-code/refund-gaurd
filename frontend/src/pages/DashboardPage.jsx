@@ -22,7 +22,6 @@ import {
   ArrowRight, 
   ShieldAlert, 
   HelpCircle, 
-  Home, 
   Compass, 
   Bell,
   Trash2,
@@ -42,6 +41,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import CheckoutModal from '../components/CheckoutModal';
+import BrandMark from '../components/BrandMark';
 import './DashboardPage.css';
 
 export default function DashboardPage({ onStartNewCase, onNavigate, isActive = true }) {
@@ -617,7 +617,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
     ctx.beginPath();
     ctx.moveTo(x, y);
-    ctx.strokeStyle = '#0f172a';
+    ctx.strokeStyle = '#0b2b26';
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     setIsDrawing(true);
@@ -1030,25 +1030,25 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 30px; color: #0b192e; line-height: 1.5; font-size: 13px; }
     .header { border-bottom: 2px solid #0b192e; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
     .brand { font-size: 24px; font-weight: 800; color: #0b192e; }
-    .brand span { color: #10b981; }
+    .brand span { color: #2f8a6f; }
     .badge { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-    .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e2e8f0; text-align: left; }
-    .meta-table th { background-color: #f8fafc; font-weight: 600; width: 32%; color: #475569; }
-    .box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e4e8e1; text-align: left; }
+    .meta-table th { background-color: #f7f8f3; font-weight: 600; width: 32%; color: #44524e; }
+    .box { background: #f7f8f3; border: 1px solid #e4e8e1; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
     .due-amount { font-size: 26px; font-weight: 900; color: #b45309; margin: 8px 0; }
-    .footer { margin-top: 35px; border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 10px; color: #64748b; text-align: center; }
+    .footer { margin-top: 35px; border-top: 1px solid #d5dcd6; padding-top: 12px; font-size: 10px; color: #6b7773; text-align: center; }
   </style>
 </head>
 <body>
   <div class="header">
     <div>
       <div class="brand">US.<span>ClaimBack</span></div>
-      <div style="font-size: 11px; color: #64748b; text-transform: uppercase;">Official Statutory Escrow Clearance Bill & Payout Requisition</div>
+      <div style="font-size: 11px; color: #6b7773; text-transform: uppercase;">Official Statutory Escrow Clearance Bill & Payout Requisition</div>
     </div>
     <div style="text-align: right;">
       <span class="badge">Reference: #${activeClearanceBill.billNumber}</span>
-      <div style="margin-top: 4px; font-size: 10px; color: #059669; font-weight: 600;">✓ FinCEN 31 CFR § 1010.410 Compliant</div>
+      <div style="margin-top: 4px; font-size: 10px; color: #0f6b3a; font-weight: 600;">FinCEN 31 CFR § 1010.410 Compliant</div>
     </div>
   </div>
 
@@ -1058,7 +1058,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     <tr><th>Beneficiary Legal Name</th><td><strong>${activeClearanceBill.claimantName}</strong></td></tr>
     <tr><th>Beneficiary Verified Email</th><td><strong>${activeClearanceBill.claimantEmail}</strong></td></tr>
     <tr><th>Designated Payout Destination</th><td><strong>${activeClearanceBill.destination}</strong></td></tr>
-    <tr><th>Disbursement Release Amount</th><td><strong style="color: #059669; font-size: 14px;">$${Number(activeClearanceBill.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</strong></td></tr>
+    <tr><th>Disbursement Release Amount</th><td><strong style="color: #0f6b3a; font-size: 14px;">$${Number(activeClearanceBill.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })} USD</strong></td></tr>
     <tr><th>Statutory Clearance Fee Required</th><td><div class="due-amount">$300.00 USD</div></td></tr>
     <tr><th>Statutory Regulatory Mandate</th><td>AML Escrow Clearance & Recipient Account Authorization Protocol (FinCEN / SWIFT Reg. #CLR-882)</td></tr>
     <tr><th>Settlement Banking Instructions</th><td>Dispatched directly to beneficiary registered email (${activeClearanceBill.claimantEmail}) & coordinated with Senior Dispute Strategist Sarah K.</td></tr>
@@ -1100,25 +1100,25 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 30px; color: #0b192e; line-height: 1.5; font-size: 13px; }
     .header { border-bottom: 2px solid #0b192e; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
     .brand { font-size: 24px; font-weight: 800; color: #0b192e; }
-    .brand span { color: #10b981; }
-    .badge { background: #e0f2fe; color: #0369a1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #bae6fd; }
+    .brand span { color: #2f8a6f; }
+    .badge { background: #e9f4ef; color: #0369a1; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; border: 1px solid #bae6fd; }
     .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-    .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e2e8f0; text-align: left; }
-    .meta-table th { background-color: #f8fafc; font-weight: 600; width: 28%; color: #475569; }
-    .section-title { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 8px; color: #0b192e; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-    .box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
-    .footer { margin-top: 35px; border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 10px; color: #64748b; text-align: center; }
+    .meta-table th, .meta-table td { padding: 9px 12px; border: 1px solid #e4e8e1; text-align: left; }
+    .meta-table th { background-color: #f7f8f3; font-weight: 600; width: 28%; color: #44524e; }
+    .section-title { font-size: 13px; font-weight: 700; margin-top: 18px; margin-bottom: 8px; color: #0b192e; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid #e4e8e1; padding-bottom: 4px; }
+    .box { background: #f7f8f3; border: 1px solid #e4e8e1; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    .footer { margin-top: 35px; border-top: 1px solid #d5dcd6; padding-top: 12px; font-size: 10px; color: #6b7773; text-align: center; }
   </style>
 </head>
 <body>
   <div class="header">
     <div>
       <div class="brand">US.<span>ClaimBack</span></div>
-      <div style="font-size: 11px; color: #64748b; text-transform: uppercase;">Formal Banking Dispute Dossier & Interbank Recall Package</div>
+      <div style="font-size: 11px; color: #6b7773; text-transform: uppercase;">Formal Banking Dispute Dossier & Interbank Recall Package</div>
     </div>
     <div style="text-align: right;">
       <span class="badge">Official Reference: #${caseId}</span>
-      <div style="margin-top: 4px; font-size: 10px; color: #059669; font-weight: 600;">✓ Synced with MongoDB Atlas & eIDAS Verified</div>
+      <div style="margin-top: 4px; font-size: 10px; color: #0f6b3a; font-weight: 600;">Synced with MongoDB Atlas & eIDAS Verified</div>
     </div>
   </div>
 
@@ -1128,7 +1128,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
     <tr><th>Claimant Legal Name</th><td><strong>${claimantName}</strong></td></tr>
     <tr><th>Claimant Verified Contact</th><td>${claimantEmail}</td></tr>
     <tr><th>Dispute Category</th><td>${targetCase.scamType || 'Online Financial Fraud'}</td></tr>
-    <tr><th>Disputed Sum</th><td><strong style="font-size: 14px; color: #0f172a;">$${amountFormatted} ${targetCase.currency || 'USD'}</strong></td></tr>
+    <tr><th>Disputed Sum</th><td><strong style="font-size: 14px; color: #0b2b26;">$${amountFormatted} ${targetCase.currency || 'USD'}</strong></td></tr>
     <tr><th>Transaction Date</th><td>${targetCase.incidentDate || 'Recent'}</td></tr>
     <tr><th>Payment Route / Channel</th><td>${targetCase.paymentMethod || 'Bank Wire / SWIFT Network'}</td></tr>
     <tr><th>Counterparty Recipient</th><td><strong>${targetCase.counterpartyInfo?.recipientName || targetCase.counterpartyInfo?.beneficiary || 'Apex Global Trade Ltd'}</strong></td></tr>
@@ -1141,7 +1141,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 
   <div class="section-title">Sworn Claimant Affidavit Status</div>
   <div class="box" style="background: #ecfdf5; border-color: #a7f3d0; color: #065f46;">
-    <strong>✓ Sworn Electronic Signature Recorded</strong><br>
+    <strong>Sworn Electronic Signature Recorded</strong><br>
     Declared under penalty of perjury. Transmitted to correspondent bank fraud compliance intake under eIDAS reference #EF-9481.
   </div>
 
@@ -1153,7 +1153,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
         <td>${i + 1}</td>
         <td><strong>${f.name}</strong></td>
         <td>${f.size}</td>
-        <td><span style="color: #059669; font-weight: 600;">✓ SHA-256 Verified</span></td>
+        <td><span style="color: #0f6b3a; font-weight: 600;">SHA-256 Verified</span></td>
       </tr>
     `).join('')}
   </table>
@@ -1183,7 +1183,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
         {/* ================= WELCOME BANNER ================= */}
         <div className="member-welcome-card">
           <h1 className="member-welcome-title">
-            Welcome back, {claimantDisplayName}.
+            Welcome back, <em>{claimantDisplayName}</em>.
           </h1>
         </div>
 
@@ -1265,7 +1265,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <div className="wallet-card-header">
             <div className="wallet-brand-meta">
               <div className="wallet-icon-shield">
-                <img src="/logo.png" alt="US.ClaimBack Emblem" className="wallet-logo-shield-img" />
+                <BrandMark size={34} />
               </div>
               <div>
                 <div className="wallet-title-row">
@@ -1319,7 +1319,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                     >
                       <div className="case-select-header">
                         <span className="case-select-id">Case #{c.caseNumber}</span>
-                        <span className={`case-select-status-badge ${isApproved ? 'badge-approved' : (isCaseSettled ? 'badge-pending' : 'badge-review')}`} style={!isCaseSettled ? { background: '#f1f5f9', color: '#64748b', borderColor: '#e2e8f0' } : {}}>
+                        <span className={`case-select-status-badge ${isApproved ? 'badge-approved' : (isCaseSettled ? 'badge-pending' : 'badge-review')}`} style={!isCaseSettled ? { background: '#f1f3ec', color: '#6b7773', borderColor: '#e4e8e1' } : {}}>
                           {isApproved 
                             ? 'Approved for Withdrawal' 
                             : (isCaseSettled ? 'Pending $300 Clearance' : 'In Progress / Pending Review')}
@@ -1327,7 +1327,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                       </div>
                       <div className="case-select-body">
                         <span className="case-select-label">Recovered Amount</span>
-                        <span className="case-select-val" style={!isCaseSettled ? { color: '#94a3b8' } : {}}>
+                        <span className="case-select-val" style={!isCaseSettled ? { color: '#98a29e' } : {}}>
                           ${cAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
                         </span>
                       </div>
@@ -1380,7 +1380,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                     </span>
                   )
                 ) : (
-                  <span className="wallet-status-tag" style={{ background: '#f8fafc', color: '#64748b', border: '1px solid #e2e8f0' }}>
+                  <span className="wallet-status-tag" style={{ background: '#f7f8f3', color: '#6b7773', border: '1px solid #e4e8e1' }}>
                     Case Status: {activeCase?.status ? activeCase.status.replace('_', ' ').toUpperCase() : 'PENDING'} (Dispute In Progress &bull; Unsettled)
                   </span>
                 )}
@@ -1432,16 +1432,16 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                       {walletTransactions.map((tx, idx) => (
                         <tr key={tx._id || idx}>
                           <td>
-                            <div style={{ fontWeight: 600, color: '#0f172a' }}>
+                            <div style={{ fontWeight: 600, color: '#0b2b26' }}>
                               {new Date(tx.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                             </div>
-                            <span style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                            <span style={{ fontSize: '0.72rem', color: '#6b7773' }}>
                               {tx.caseNumber ? `#${tx.caseNumber}` : `TX-${(tx._id || idx).toString().slice(-6).toUpperCase()}`}
                             </span>
                           </td>
                           <td>
                             <div style={{ fontWeight: 600 }}>{tx.type === 'settlement_credit' ? 'Recovery Settlement Credit' : 'Claimant Withdrawal'}</div>
-                            <span style={{ fontSize: '0.74rem', color: '#64748b' }}>{tx.description}</span>
+                            <span style={{ fontSize: '0.74rem', color: '#6b7773' }}>{tx.description}</span>
                           </td>
                           <td>
                             <span style={{ fontSize: '0.78rem', textTransform: 'capitalize' }}>
@@ -1487,13 +1487,13 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                                     setFeePaymentRef(tx.details?.feePaymentReference || '');
                                   }}
                                 >
-                                  📄 View $300 Bill (#{tx.details.clearanceBillNumber})
+                                  <FileText size={14} style={{ verticalAlign: '-2px', marginRight: '0.35rem' }} /> View $300 Bill (#{tx.details.clearanceBillNumber})
                                 </button>
                               )}
                             </div>
                           </td>
                           <td style={{ textAlign: 'right', fontWeight: 700, fontSize: '0.9rem' }}>
-                            <span style={{ color: tx.type === 'settlement_credit' ? '#059669' : '#0f172a' }}>
+                            <span style={{ color: tx.type === 'settlement_credit' ? '#0f6b3a' : '#0b2b26' }}>
                               {tx.type === 'settlement_credit' ? '+' : '-'}${Number(tx.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                             </span>
                           </td>
@@ -1503,7 +1503,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                   </table>
                 </div>
               ) : (
-                <p style={{ fontSize: '0.82rem', color: '#64748b', margin: '0.5rem 0' }}>
+                <p style={{ fontSize: '0.82rem', color: '#6b7773', margin: '0.5rem 0' }}>
                   No transaction records yet. As disputes are settled, recovered funds will appear here.
                 </p>
               )}
@@ -1552,7 +1552,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
         {affidavitSigned && activeCase && (
           <div className="affidavit-signed-seal">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flex: 1 }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#d1fae5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#d1fae5', color: '#0f6b3a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <CheckCircle2 size={18} />
               </div>
               <div>
@@ -1732,7 +1732,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                       className="btn-msg-specialist"
                       onClick={() => setMessengerOpen(true)}
                     >
-                      <MessageSquare size={13} color="#2563eb" />
+                      <MessageSquare size={13} color="#0f5d4b" />
                       <span>Message Analyst Sarah</span>
                     </button>
                   </div>
@@ -1759,7 +1759,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                           <div key={ms._id || idx} className={`audit-step-item ${ms.status}`}>
                             <div className="audit-step-marker">
                               {isCompleted ? (
-                                <div className="marker-check">✓</div>
+                                <div className="marker-check"><Check size={14} strokeWidth={3} /></div>
                               ) : isCurrent ? (
                                 <div className="marker-current">
                                   <span className="marker-current-dot" />
@@ -1927,16 +1927,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 
         {/* ================= 10. BOTTOM FLOATING DOCK (Matches Screenshot) ================= */}
         <div className="member-bottom-dock">
-          <button 
-            className="dock-item"
-            onClick={() => onNavigate && onNavigate('home')}
-            title="Home"
-          >
-            <Home size={19} />
-            <span>Home</span>
-          </button>
-
-          <button 
+          <button
             className="dock-item active"
             title="Dashboard"
           >
@@ -1964,8 +1955,12 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <button 
             className="dock-item"
             onClick={() => {
-              const el = document.getElementById('help-center');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
+              // The Help Center lives on the Home page: go there, then scroll to it
+              if (onNavigate) onNavigate('home');
+              setTimeout(() => {
+                const el = document.getElementById('help-center');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }, 250);
             }}
             title="Help"
           >
@@ -1984,7 +1979,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <div className="dash-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="dash-modal-header">
               <h3 className="dash-modal-title">
-                <Folder size={18} color="#2563eb" />
+                <Folder size={18} color="#0f5d4b" />
                 <span>Evidence Vault &bull; #{activeCase?.caseNumber || 'Active Case'}</span>
               </h3>
               <button className="dash-modal-close-btn" onClick={() => setEvidenceModalOpen(false)}>
@@ -1993,17 +1988,17 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
             </div>
 
             <div className="dash-modal-body">
-              <p style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '1rem', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.82rem', color: '#6b7773', marginBottom: '1rem', lineHeight: 1.5 }}>
                 Upload bank transfer receipts, Swift MT103 confirmations, emails, and scam communications. All files are cataloged with cryptographic integrity hashes for issuing bank arbitration.
               </p>
 
               {/* Upload Dropzone */}
               <label className="vault-dropzone">
-                <UploadCloud size={28} color="#2563eb" style={{ margin: '0 auto 0.5rem', display: 'block' }} />
-                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#0f172a' }}>
+                <UploadCloud size={28} color="#0f5d4b" style={{ margin: '0 auto 0.5rem', display: 'block' }} />
+                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#0b2b26' }}>
                   {isUploading ? 'Encrypting & uploading to vault...' : 'Click or tap to upload evidence document'}
                 </div>
-                <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '0.25rem' }}>
+                <div style={{ fontSize: '0.74rem', color: '#6b7773', marginTop: '0.25rem' }}>
                   Supports PDF, JPG, PNG, WEBP (Up to 15MB each)
                 </div>
                 <input 
@@ -2016,11 +2011,11 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 
               {/* Document Category Selector */}
               <div style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#475569' }}>Tag Document As:</label>
+                <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#44524e' }}>Tag Document As:</label>
                 <select 
                   value={evidenceCategory} 
                   onChange={(e) => setEvidenceCategory(e.target.value)}
-                  style={{ padding: '0.35rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.76rem', background: '#ffffff' }}
+                  style={{ padding: '0.35rem 0.65rem', borderRadius: '6px', border: '1px solid #d5dcd6', fontSize: '0.76rem', background: '#ffffff' }}
                 >
                   <option value="bank_statement">Bank Account Statement</option>
                   <option value="swift_mt103">Swift MT103 Transfer Slip</option>
@@ -2032,19 +2027,19 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
 
               {/* Uploaded Files Inventory */}
               <div>
-                <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0b2b26', marginBottom: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   Vault Inventory ({evidenceList.length} Files)
                 </h4>
 
                 {evidenceList.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '1.5rem', background: '#f8fafc', borderRadius: '10px', border: '1px dashed #cbd5e1' }}>
-                    <Folder size={24} color="#94a3b8" style={{ margin: '0 auto 0.4rem', display: 'block' }} />
-                    <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0 }}>No evidence files uploaded for this case yet.</p>
+                  <div style={{ textAlign: 'center', padding: '1.5rem', background: '#f7f8f3', borderRadius: '10px', border: '1px dashed #d5dcd6' }}>
+                    <Folder size={24} color="#98a29e" style={{ margin: '0 auto 0.4rem', display: 'block' }} />
+                    <p style={{ fontSize: '0.8rem', color: '#6b7773', margin: 0 }}>No evidence files uploaded for this case yet.</p>
                   </div>
                 ) : (
                   evidenceList.map((file, idx) => (
                     <div key={file.id || idx} className="evidence-file-item">
-                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#eff6ff', color: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f2fbc4', color: '#0f5d4b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                         <FileText size={16} />
                       </div>
                       <div className="file-info-col">
@@ -2053,7 +2048,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                           <span>{file.size}</span>
                           <span>&bull;</span>
                           <span style={{ textTransform: 'capitalize' }}>{file.type?.replace('_', ' ')}</span>
-                          <span className="sha-badge">SHA-256 ✓</span>
+                          <span className="sha-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>SHA-256 <Check size={11} strokeWidth={3} /></span>
                         </div>
                       </div>
                       <div className="file-action-btns">
@@ -2103,7 +2098,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <div className="dash-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="dash-modal-header">
               <h3 className="dash-modal-title">
-                <PenTool size={18} color="#2563eb" />
+                <PenTool size={18} color="#0f5d4b" />
                 <span>Sworn Claimant Affidavit &bull; #{activeCase?.caseNumber || 'RG-10482'}</span>
               </h3>
               <button className="dash-modal-close-btn" onClick={() => setAffidavitModalOpen(false)}>
@@ -2143,29 +2138,29 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                     </span>
                   </div>
 
-                  <div className="affidavit-legal-frame" style={{ background: '#f8fafc' }}>
-                    <p style={{ margin: '0 0 0.5rem', fontWeight: 700, color: '#0f172a', fontSize: '0.86rem' }}>
+                  <div className="affidavit-legal-frame" style={{ background: '#f7f8f3' }}>
+                    <p style={{ margin: '0 0 0.5rem', fontWeight: 700, color: '#0b2b26', fontSize: '0.86rem' }}>
                       SUMMARY OF SWORN DEPOSITION
                     </p>
-                    <p style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', color: '#334155' }}>
+                    <p style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', color: '#3d4f4a' }}>
                       Deponent Claimant: <strong>{affidavitData?.signedBy || claimantDisplayName}</strong>
                     </p>
-                    <p style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', color: '#334155' }}>
+                    <p style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', color: '#3d4f4a' }}>
                       Filing Case Reference: <strong>#{affidavitData?.caseNumber || activeCase?.caseNumber || 'RG-10482'}</strong>
                     </p>
-                    <p style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', color: '#334155' }}>
+                    <p style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', color: '#3d4f4a' }}>
                       Execution Timestamp: <strong>{affidavitData?.signedDateFormatted || 'Recorded & Verified'}</strong>
                     </p>
-                    <p style={{ margin: '0 0 0.6rem', fontSize: '0.8rem', color: '#334155' }}>
-                      Cryptographic Ledger Hash: <code style={{ fontSize: '0.72rem', background: '#e2e8f0', padding: '2px 6px', borderRadius: '4px' }}>{affidavitData?.certHash || 'SHA256:AUTHENTICATED-SEAL'}</code>
+                    <p style={{ margin: '0 0 0.6rem', fontSize: '0.8rem', color: '#3d4f4a' }}>
+                      Cryptographic Ledger Hash: <code style={{ fontSize: '0.72rem', background: '#e4e8e1', padding: '2px 6px', borderRadius: '4px' }}>{affidavitData?.certHash || 'SHA256:AUTHENTICATED-SEAL'}</code>
                     </p>
 
-                    <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px dashed #cbd5e1' }}>
-                      <span style={{ fontSize: '0.72rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', display: 'block', marginBottom: '0.4rem', fontWeight: 700 }}>
+                    <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px dashed #d5dcd6' }}>
+                      <span style={{ fontSize: '0.72rem', color: '#6b7773', textTransform: 'uppercase', letterSpacing: '0.04em', display: 'block', marginBottom: '0.4rem', fontWeight: 700 }}>
                         Legal Digital Signature:
                       </span>
                       {affidavitData?.signatureImg ? (
-                        <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '0.5rem', display: 'inline-block' }}>
+                        <div style={{ background: '#ffffff', border: '1px solid #e4e8e1', borderRadius: '6px', padding: '0.5rem', display: 'inline-block' }}>
                           <img 
                             src={affidavitData.signatureImg} 
                             alt="Claimant Signature" 
@@ -2173,7 +2168,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                           />
                         </div>
                       ) : (
-                        <div style={{ fontFamily: 'cursive', fontSize: '1.3rem', color: '#1e3a8a', padding: '0.25rem 0' }}>
+                        <div style={{ fontFamily: 'cursive', fontSize: '1.3rem', color: '#0b2b26', padding: '0.25rem 0' }}>
                           {affidavitData?.typedSignature || claimantDisplayName}
                         </div>
                       )}
@@ -2184,7 +2179,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                 <>
                   {/* Formal Legal Declaration Frame */}
                   <div className="affidavit-legal-frame">
-                    <p style={{ margin: '0 0 0.5rem', fontWeight: 700, color: '#0f172a' }}>
+                    <p style={{ margin: '0 0 0.5rem', fontWeight: 700, color: '#0b2b26' }}>
                       AFFIDAVIT OF UNAUTHORIZED TRANSACTION & FRAUDULENT INDUCEMENT
                     </p>
                     <p style={{ margin: '0 0 0.5rem' }}>
@@ -2242,7 +2237,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                     </div>
                   ) : (
                     <div style={{ marginBottom: '1rem' }}>
-                      <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#475569', marginBottom: '0.4rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 700, color: '#44524e', marginBottom: '0.4rem' }}>
                         Type Full Legal Name (Creates eIDAS Digital Signature):
                       </label>
                       <input 
@@ -2253,11 +2248,11 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                         style={{
                           width: '100%',
                           padding: '0.75rem 1rem',
-                          border: '1px solid #cbd5e1',
+                          border: '1px solid #d5dcd6',
                           borderRadius: '8px',
                           fontSize: '1.1rem',
                           fontFamily: 'cursive',
-                          color: '#1e3a8a',
+                          color: '#0b2b26',
                           background: '#ffffff'
                         }}
                       />
@@ -2265,7 +2260,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                   )}
 
                   {/* Legal Confirmation Checkbox */}
-                  <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.78rem', color: '#334155', cursor: 'pointer', lineHeight: 1.45, marginTop: '0.5rem' }}>
+                  <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.78rem', color: '#3d4f4a', cursor: 'pointer', lineHeight: 1.45, marginTop: '0.5rem' }}>
                     <input 
                       type="checkbox" 
                       checked={affidavitConsent}
@@ -2320,7 +2315,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                   <button 
                     type="button"
                     className="btn btn-primary" 
-                    style={{ padding: '0.45rem 1.15rem', fontSize: '0.82rem', background: '#059669', borderColor: '#059669' }}
+                    style={{ padding: '0.45rem 1.15rem', fontSize: '0.82rem', background: '#0f6b3a', borderColor: '#0f6b3a' }}
                     onClick={handleSealAffidavit}
                   >
                     <Check size={15} />
@@ -2346,8 +2341,8 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                   <h3 className="dash-modal-title" style={{ fontSize: '0.98rem' }}>
                     Sarah K. &bull; Senior Strategist
                   </h3>
-                  <span style={{ fontSize: '0.72rem', color: '#059669', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981' }} />
+                  <span style={{ fontSize: '0.72rem', color: '#0f6b3a', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2f8a6f' }} />
                     Active on Case #{activeCase?.caseNumber || 'RG-10482'}
                   </span>
                 </div>
@@ -2418,7 +2413,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
           <div className="dash-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="dash-modal-header" style={{ background: '#f0fdf4' }}>
               <h3 className="dash-modal-title" style={{ color: '#065f46' }}>
-                <Award size={20} color="#059669" />
+                <Award size={20} color="#0f6b3a" />
                 <span>Official Settlement Release Dossier</span>
               </h3>
               <button className="dash-modal-close-btn" onClick={() => setSettlementModalOpen(false)}>
@@ -2468,7 +2463,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                 <button 
                   type="button"
                   className="btn btn-primary" 
-                  style={{ width: '100%', padding: '0.65rem 1rem', fontSize: '0.82rem', background: '#059669', borderColor: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                  style={{ width: '100%', padding: '0.65rem 1rem', fontSize: '0.82rem', background: '#0f6b3a', borderColor: '#0f6b3a', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                   onClick={() => handleExportFullPacket(selectedSettlementCase)}
                 >
                   <Printer size={15} />
@@ -2522,7 +2517,7 @@ export default function DashboardPage({ onStartNewCase, onNavigate, isActive = t
                       cx="44" 
                       cy="44" 
                       r="38" 
-                      stroke="#E2E8F0" 
+                      stroke="#e4e8e1" 
                       strokeWidth="3.5" 
                       className="ap-circle-track"
                     />

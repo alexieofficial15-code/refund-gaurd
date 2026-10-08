@@ -1,39 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  Search, Plus, Minus, Star, ArrowRight, ArrowUpRight,
+  FileText, FolderLock, PackageCheck, Activity,
+  ShoppingBag, Globe, Landmark, CreditCard, TrendingUp, Users, Wrench, Layers,
+  LayoutDashboard, CheckCircle2, Clock3, Share2, Copy,
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { Reveal, RollingNumber } from '../components/Motion';
 import './HomePage.css';
+
+const STEP_ICONS = [FileText, FolderLock, PackageCheck, Activity];
+
+const SCAM_ICONS = {
+  'online-shopping': ShoppingBag,
+  'fake-website': Globe,
+  'bank-transfer': Landmark,
+  'card-payment': CreditCard,
+  'investment-scam': TrendingUp,
+  'social-media': Users,
+  'service-scam': Wrench,
+  other: Layers,
+};
+
+const MOCK_TABS = ['Incident Details', 'Evidence Vault', 'Dispute Package', 'Live Milestones'];
+
+function StarRow({ size = 14 }) {
+  return (
+    <span className="star-row" aria-label="5 out of 5 stars">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <Star key={i} size={size} strokeWidth={0} fill="currentColor" />
+      ))}
+    </span>
+  );
+}
 
 export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
   const [openFaq, setOpenFaq] = useState(null);
   const [faqSearch, setFaqSearch] = useState('');
+  const [activeTab, setActiveTab] = useState(0);
   const { currentUser, isAuthenticated, signOut } = useAuth();
+
+  // Cycle the highlighted tab in the hero dashboard preview
+  useEffect(() => {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return undefined;
+    const id = setInterval(() => setActiveTab((t) => (t + 1) % MOCK_TABS.length), 2600);
+    return () => clearInterval(id);
+  }, []);
 
   const stepsData = [
     {
       num: 1,
       title: "1. Report Incident",
       desc: "Enter transaction details, amount, and recipient information.",
-      image: "/images/step1_report.jpg",
       badgeText: "Incident Details"
     },
     {
       num: 2,
       title: "2. Submit Evidence",
       desc: "Upload bank statements, receipts, and chat screenshots.",
-      image: "/images/step2_evidence.jpg",
       badgeText: "Evidence Vault"
     },
     {
       num: 3,
       title: "3. Build Dossier",
       desc: "We organize records into a formal bank dispute filing.",
-      image: "/images/step3_dossier.jpg",
       badgeText: "Dispute Package"
     },
     {
       num: 4,
       title: "4. Track Progress",
       desc: "Monitor case milestones and bank responses in real time.",
-      image: "/images/step4_tracking.jpg",
       badgeText: "Live Milestones"
     }
   ];
@@ -119,35 +156,28 @@ export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
     }
   ];
 
-  const filteredFaqs = faqs.filter(f => 
-    f.q.toLowerCase().includes(faqSearch.toLowerCase()) || 
+  const filteredFaqs = faqs.filter(f =>
+    f.q.toLowerCase().includes(faqSearch.toLowerCase()) ||
     f.a.toLowerCase().includes(faqSearch.toLowerCase())
   );
 
   return (
-    <div>
+    <div className="home-page">
       {/* ================= AUTHENTICATED SESSION BANNER ================= */}
       {isAuthenticated && currentUser && (
-        <div style={{ backgroundColor: 'rgba(236, 253, 245, 0.95)', backdropFilter: 'blur(8px)', borderBottom: '1px solid #a7f3d0', padding: '0.85rem 1rem' }}>
-          <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <span style={{ fontSize: '0.88rem', color: '#065f46', fontWeight: 500 }}>
-                Logged in as <strong>{currentUser.fullName || currentUser.name}</strong> ({currentUser.email}) &bull; Active Session
-              </span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <button 
-                className="btn btn-primary" 
-                style={{ padding: '0.35rem 0.85rem', fontSize: '0.8rem' }}
+        <div className="session-banner">
+          <div className="container session-banner-inner">
+            <span className="session-banner-text">
+              Logged in as <strong>{currentUser.fullName || currentUser.name}</strong> ({currentUser.email}) &bull; Active Session
+            </span>
+            <div className="session-banner-actions">
+              <button
+                className="btn btn-primary session-btn"
                 onClick={() => onNavigate && onNavigate('dashboard')}
               >
-                Go to Member Dashboard &rarr;
+                Go to Member Dashboard <ArrowRight size={14} strokeWidth={2.4} />
               </button>
-              <button 
-                className="btn btn-outline" 
-                style={{ padding: '0.35rem 0.85rem', fontSize: '0.8rem', borderColor: '#a7f3d0', color: '#065f46', backgroundColor: '#ffffff' }}
-                onClick={signOut}
-              >
+              <button className="btn btn-glass session-btn" onClick={signOut}>
                 Sign Out
               </button>
             </div>
@@ -155,249 +185,287 @@ export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
         </div>
       )}
 
-      {/* ================= HERO SECTION (NO AI SHIELD LOGOS) ================= */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-grid">
-            <div className="hero-content">
-              <div className="hero-trust-badge">
-                <span>Dispute Preparation & Dossier Routing</span>
-              </div>
+      {/* ================= HERO ================= */}
+      <section className={`hero-section ${isAuthenticated && currentUser ? '' : 'under-nav'}`}>
+        <div className="hero-frame">
+        <div className="hero-bg" aria-hidden="true" />
+        <div className="container hero-inner">
+          <div className="hero-center">
+            <Reveal className="hero-trust-badge">
+              <span className="hero-badge-dot" />
+              <span>Dispute Preparation & Dossier Routing</span>
+            </Reveal>
 
+            <Reveal delay={80}>
               <h1 className="hero-title">
                 Report Scams.<br />
-                Build Your Dispute.
+                <em>Build Your Dispute.</em>
               </h1>
+            </Reveal>
 
+            <Reveal delay={160}>
               <p className="hero-lead">
                 We organize your evidence and prepare formal dispute dossiers for your bank or card issuer.
               </p>
+            </Reveal>
 
-              <div className="hero-cta-group">
-                <button 
-                  className="btn btn-primary" 
-                  onClick={onStartCase}
-                >
-                  Start a Case
-                </button>
+            <Reveal delay={240} className="hero-cta-group">
+              <button className="btn btn-lime" onClick={onStartCase}>
+                Start a Case <ArrowUpRight size={16} strokeWidth={2.2} />
+              </button>
 
-                <button 
-                  className="btn btn-glass" 
-                  onClick={() => {
-                    const el = document.getElementById('how-it-works');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  See How It Works
-                </button>
-
-                {!isAuthenticated && (
-                  <button 
-                    className="btn btn-outline hero-signin-btn" 
-                    onClick={() => onOpenAuth('signin')}
-                  >
-                    Sign In
-                  </button>
-                )}
-              </div>
+              <button
+                className="btn btn-glass"
+                onClick={() => {
+                  const el = document.getElementById('how-it-works');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                See How It Works
+              </button>
 
               {!isAuthenticated && (
-                <div className="hero-member-login-banner">
-                  <span className="hero-member-login-text">Existing claimant?</span>
-                  <button 
-                    type="button" 
-                    className="hero-member-login-link"
-                    onClick={() => onOpenAuth('signin')}
-                  >
-                    Sign in to your dispute account &rarr;
-                  </button>
-                </div>
+                <button className="btn btn-outline-light hero-signin-btn" onClick={() => onOpenAuth('signin')}>
+                  Sign In
+                </button>
               )}
+            </Reveal>
 
-              <div className="hero-trust-statement">
-                <span>Independent dispute preparation &bull; Non-guarantee policy</span>
-              </div>
-            </div>
+            {!isAuthenticated && (
+              <Reveal delay={300} className="hero-member-login-banner">
+                <span className="hero-member-login-text">Existing claimant?</span>
+                <button type="button" className="hero-member-login-link" onClick={() => onOpenAuth('signin')}>
+                  Sign in to your dispute account <ArrowRight size={13} strokeWidth={2.4} />
+                </button>
+              </Reveal>
+            )}
 
-            {/* Right Financial Record Graphic */}
-            <div className="hero-graphic-wrap">
-              <div className="hero-graphic-card">
-                <div className="graphic-card-header">
-                  <div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--text-subtle)', textTransform: 'uppercase', fontWeight: 600 }}>Active Case</div>
-                    <div style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--navy-primary)' }}>#RG-10482</div>
-                  </div>
-                  <span className="graphic-pill-status">
-                    Under Review
-                  </span>
-                </div>
-
-                <div className="graphic-milestone-row completed">
-                  <div className="graphic-milestone-tag">01</div>
-                  <div>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--navy-primary)' }}>Evidence Dossier Compiled</div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Wire receipts & chat records verified</div>
-                  </div>
-                </div>
-
-                <div className="graphic-milestone-row completed">
-                  <div className="graphic-milestone-tag">02</div>
-                  <div>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--navy-primary)' }}>Dispute Channel Identified</div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Interbank Recall & Ombudsman Route</div>
-                  </div>
-                </div>
-
-                <div className="graphic-milestone-row" style={{ backgroundColor: 'rgba(255, 251, 235, 0.85)', borderColor: 'rgba(253, 230, 138, 0.7)' }}>
-                  <div className="graphic-milestone-tag pending">03</div>
-                  <div>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--navy-primary)' }}>Review in Progress</div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Correspondent bank filing submitted</div>
-                  </div>
-                </div>
-
-                <div style={{ marginTop: '1rem', paddingTop: '0.85rem', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
-                  <span style={{ color: 'var(--text-muted)' }}>Reported Sum:</span>
-                  <strong style={{ color: 'var(--navy-primary)' }}>$4,850.00 USD</strong>
-                </div>
-              </div>
-            </div>
+            <Reveal delay={340} className="hero-trust-statement">
+              <span>Independent dispute preparation &bull; Non-guarantee policy</span>
+            </Reveal>
           </div>
+
+          {/* Dashboard preview inside a browser frame */}
+          <Reveal delay={200} className="hero-mock-wrap">
+            <div className="mock-browser">
+              <div className="mock-chrome">
+                <div className="mock-dots"><i /><i /><i /></div>
+                <div className="mock-url">usclaimback.com</div>
+                <div className="mock-chrome-icons"><Share2 size={14} /><Copy size={14} /></div>
+              </div>
+
+              <div className="mock-body">
+                <div className="mock-tabs" role="tablist">
+                  {MOCK_TABS.map((tab, i) => (
+                    <span key={tab} className={`mock-tab ${activeTab === i ? 'active' : ''}`}>
+                      {activeTab === i && <span className="mock-tab-dot" />}
+                      {tab}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mock-layout">
+                  <aside className="mock-sidebar">
+                    <div className="mock-side-item active"><LayoutDashboard size={15} /> Active Case</div>
+                    <div className="mock-side-item"><FolderLock size={15} /> Evidence Vault</div>
+                    <div className="mock-side-item"><PackageCheck size={15} /> Dispute Package</div>
+                    <div className="mock-side-item"><Activity size={15} /> Live Milestones</div>
+                  </aside>
+
+                  <div className="mock-main">
+                    <div className="mock-stats">
+                      <div className="mock-stat">
+                        <span className="mock-stat-label">Active Case</span>
+                        <span className="mock-stat-value">#RG-<RollingNumber value="10482" /></span>
+                        <span className="mock-chip">Under Review</span>
+                      </div>
+                      <div className="mock-stat">
+                        <span className="mock-stat-label">Reported Sum:</span>
+                        <span className="mock-stat-value"><RollingNumber value="$4,850.00" /></span>
+                        <span className="mock-chip lime">USD</span>
+                      </div>
+                      <div className="mock-stat">
+                        <span className="mock-stat-label">Live Milestones</span>
+                        <span className="mock-stat-value"><RollingNumber value="03" /></span>
+                        <span className="mock-chip">Review in Progress</span>
+                      </div>
+                    </div>
+
+                    <div className="mock-panels">
+                      <div className="mock-panel">
+                        <div className="mock-panel-title">Active Case</div>
+                        <div className="mock-milestone done">
+                          <CheckCircle2 size={16} />
+                          <div>
+                            <strong>Evidence Dossier Compiled</strong>
+                            <span>Wire receipts & chat records verified</span>
+                          </div>
+                        </div>
+                        <div className="mock-milestone done">
+                          <CheckCircle2 size={16} />
+                          <div>
+                            <strong>Dispute Channel Identified</strong>
+                            <span>Interbank Recall & Ombudsman Route</span>
+                          </div>
+                        </div>
+                        <div className="mock-milestone pending">
+                          <Clock3 size={16} />
+                          <div>
+                            <strong>Review in Progress</strong>
+                            <span>Correspondent bank filing submitted</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mock-panel mock-chart-panel">
+                        <div className="mock-panel-title">Reported Sum:</div>
+                        <div className="mock-bars" aria-hidden="true">
+                          {[38, 52, 46, 68, 60, 82, 74].map((h, i) => (
+                            <span key={i} style={{ '--bar-h': `${h}%`, '--bar-delay': `${i * 90}ms` }} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
         </div>
       </section>
 
-      {/* ================= HOW IT WORKS: 4-STEP EXPLANATION BOXES ================= */}
-      <section id="how-it-works" className="home-section subtle-bg">
+      {/* ================= HOW IT WORKS ================= */}
+      <section id="how-it-works" className="home-section">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <div className="section-tag">Process</div>
             <h2 className="section-title">How It Works</h2>
-          </div>
+          </Reveal>
 
           <div className="steps-grid">
-            {stepsData.map(step => (
-              <div key={step.num} className="step-card">
-                <div className="step-image-container">
-                  <img 
-                    src={step.image} 
-                    alt={step.title}
-                    className="step-image-asset" 
-                    loading="lazy"
-                  />
-                  <div className="step-badge-number-overlay">
-                    {step.num}
+            {stepsData.map((step, idx) => {
+              const Icon = STEP_ICONS[idx];
+              return (
+                <Reveal key={step.num} delay={idx * 90} className="step-card">
+                  <div className="step-visual">
+                    <div className="step-visual-icon">
+                      <Icon size={30} strokeWidth={1.8} />
+                    </div>
+                    <div className="step-visual-lines" aria-hidden="true">
+                      <span /><span /><span />
+                    </div>
+                    <div className="step-badge-number-overlay">{step.num}</div>
                   </div>
-                </div>
 
-                <div className="step-content-body">
-                  <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--blue-accent)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.25rem' }}>
-                    {step.badgeText}
+                  <div className="step-content-body">
+                    <div className="step-kicker">{step.badgeText}</div>
+                    <h3>{step.title}</h3>
+                    <p>{step.desc}</p>
                   </div>
-                  <h3>{step.title}</h3>
-                  <p>{step.desc}</p>
-                </div>
-              </div>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ================= SCAM TYPES (CLEAN TYPOGRAPHY CARDS) ================= */}
+      {/* ================= SCAM TYPES ================= */}
       <section id="scam-types" className="home-section">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <div className="section-tag">Categories</div>
             <h2 className="section-title">Dispute Categories</h2>
-          </div>
+          </Reveal>
 
           <div className="scams-grid">
-            {scamTypes.map(item => (
-              <div key={item.id} className="scam-card" onClick={onStartCase}>
-                <div>
-                  <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--blue-accent)', fontWeight: 700, marginBottom: '0.3rem' }}>
-                    Category
+            {scamTypes.map((item, idx) => {
+              const Icon = SCAM_ICONS[item.id] || Layers;
+              return (
+                <Reveal key={item.id} delay={(idx % 4) * 80} className="scam-card" onClick={onStartCase}>
+                  <div>
+                    <div className="scam-icon-wrap">
+                      <Icon size={20} strokeWidth={1.9} />
+                    </div>
+                    <div className="scam-kicker">Category</div>
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
                   </div>
-                  <h4>{item.title}</h4>
-                  <p>{item.desc}</p>
-                </div>
-                <span className="scam-link-action">
-                  Select →
-                </span>
-              </div>
-            ))}
+                  <span className="scam-link-action">
+                    Select <ArrowRight size={14} strokeWidth={2.4} />
+                  </span>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ================= CASE DASHBOARD PREVIEW ================= */}
-      <section className="home-section subtle-bg">
+      {/* ================= CASE PORTAL PREVIEW ================= */}
+      <section className="home-section">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <div className="section-tag">Tracking</div>
             <h2 className="section-title">Case Portal Preview</h2>
-          </div>
+          </Reveal>
 
-          <div className="preview-glass-container">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '1rem', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <Reveal className="preview-glass-container">
+            <div className="preview-head">
               <div>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontWeight: 600, textTransform: 'uppercase' }}>Sample View</span>
-                <h3 style={{ fontSize: '1.25rem', color: 'var(--navy-primary)', fontWeight: 700 }}>Case #RG-10482</h3>
+                <span className="preview-eyebrow">Sample View</span>
+                <h3 className="preview-title">Case #RG-10482</h3>
               </div>
-              <div style={{ display: 'flex', gap: '0.6rem' }}>
-                <button className="btn btn-outline" style={{ padding: '0.45rem 0.9rem', fontSize: '0.82rem' }} onClick={() => onOpenAuth('signin')}>Sign In</button>
-                <button className="btn btn-primary" style={{ padding: '0.45rem 0.9rem', fontSize: '0.82rem' }} onClick={onStartCase}>New Case</button>
+              <div className="preview-actions">
+                <button className="btn btn-outline-light preview-btn" onClick={() => onOpenAuth('signin')}>Sign In</button>
+                <button className="btn btn-lime preview-btn" onClick={onStartCase}>New Case</button>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.85rem', background: 'rgba(248, 250, 252, 0.85)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-              <div>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>Disputed Sum</span>
-                <div style={{ fontWeight: 700, color: 'var(--navy-primary)', fontSize: '0.98rem' }}>$4,850.00 USD</div>
+            <div className="preview-stats">
+              <div className="preview-stat">
+                <span>Disputed Sum</span>
+                <strong><RollingNumber value="$4,850.00" /> USD</strong>
               </div>
-              <div>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>Date</span>
-                <div style={{ fontWeight: 600, color: 'var(--navy-primary)', fontSize: '0.88rem' }}>Jan 14, 2026</div>
+              <div className="preview-stat">
+                <span>Date</span>
+                <strong>Jan 14, 2026</strong>
               </div>
-              <div>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>Method</span>
-                <div style={{ fontWeight: 600, color: 'var(--navy-primary)', fontSize: '0.88rem' }}>Bank Wire</div>
+              <div className="preview-stat">
+                <span>Method</span>
+                <strong>Bank Wire</strong>
               </div>
-              <div>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-subtle)', textTransform: 'uppercase' }}>Status</span>
-                <div style={{ fontWeight: 600, color: 'var(--status-warning-text)', fontSize: '0.88rem' }}>Under Review</div>
+              <div className="preview-stat">
+                <span>Status</span>
+                <strong className="preview-status">Under Review</strong>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ================= CLIENT REVIEWS & EXPERIENCES ================= */}
+      {/* ================= CLIENT REVIEWS ================= */}
       <section id="reviews" className="home-section">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <div className="section-tag">Feedback</div>
             <h2 className="section-title">Verified Case Outcomes</h2>
-          </div>
+          </Reveal>
 
-          <div className="reviews-aggregate-wrap">
+          <Reveal className="reviews-aggregate-wrap">
             <div className="reviews-aggregate-bar">
-              <span style={{ color: '#d97706', fontWeight: 700 }}>★★★★★</span>
-              <span className="aggregate-text">4.9/5 Rating</span>
+              <StarRow size={15} />
+              <span className="aggregate-text"><RollingNumber value="4.9" />/5 Rating</span>
               <span className="aggregate-sub">&bull; Verified Claimant Submissions</span>
             </div>
-          </div>
+          </Reveal>
 
           <div className="reviews-grid">
-            {reviewsData.map(rev => (
-              <div key={rev.id} className="review-card">
+            {reviewsData.map((rev, idx) => (
+              <Reveal key={rev.id} delay={(idx % 2) * 100} className="review-card">
                 <div>
                   <div className="review-card-top">
-                    <div style={{ color: '#d97706', fontSize: '0.82rem', letterSpacing: '1px' }}>
-                      ★★★★★
-                    </div>
-                    <span className="review-verified-tag">
-                      {rev.caseNumber}
-                    </span>
+                    <StarRow size={14} />
+                    <span className="review-verified-tag">{rev.caseNumber}</span>
                   </div>
 
                   <div className="review-incident-type">{rev.incident}</div>
@@ -418,7 +486,7 @@ export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
                     <span className="review-resolution-tag">{rev.resolution}</span>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -427,16 +495,17 @@ export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
       {/* ================= HELP CENTER & FAQS ================= */}
       <section id="help-center" className="home-section">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <div className="section-tag">FAQ</div>
             <h2 className="section-title">Frequently Asked Questions</h2>
-          </div>
+          </Reveal>
 
-          <div className="faq-container">
+          <Reveal className="faq-container">
             <div className="faq-search-box">
-              <input 
-                type="text" 
-                placeholder="Search questions..." 
+              <Search size={16} className="faq-search-icon" />
+              <input
+                type="text"
+                placeholder="Search questions..."
                 value={faqSearch}
                 onChange={(e) => setFaqSearch(e.target.value)}
               />
@@ -445,23 +514,24 @@ export default function HomePage({ onStartCase, onOpenAuth, onNavigate }) {
             {filteredFaqs.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
-                <div key={index} className="faq-item">
-                  <button 
+                <div key={index} className={`faq-item ${isOpen ? 'open' : ''}`}>
+                  <button
                     className="faq-question-btn"
+                    aria-expanded={isOpen}
                     onClick={() => setOpenFaq(isOpen ? null : index)}
                   >
                     <span>{faq.q}</span>
-                    <span style={{ fontSize: '1rem', color: 'var(--text-subtle)' }}>{isOpen ? '−' : '+'}</span>
+                    <span className="faq-toggle-icon">
+                      {isOpen ? <Minus size={16} strokeWidth={2.2} /> : <Plus size={16} strokeWidth={2.2} />}
+                    </span>
                   </button>
-                  {isOpen && (
-                    <div className="faq-answer-box">
-                      {faq.a}
-                    </div>
-                  )}
+                  <div className="faq-answer-wrap">
+                    <div className="faq-answer-box">{faq.a}</div>
+                  </div>
                 </div>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

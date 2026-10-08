@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Lock, ShieldCheck, KeyRound } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AuthPage.css';
 
@@ -265,46 +266,46 @@ export default function AuthPage({
                   marginBottom: '0.75rem',
                   textTransform: 'uppercase'
                 }}>
-                  <span>🔒 RESTRICTED GATEWAY</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}><Lock size={12} strokeWidth={2.4} /> RESTRICTED GATEWAY</span>
                   <span>•</span>
                   <span>ADMINISTRATOR CLEARANCE</span>
                 </div>
-                <h1 className="auth-title">Admin Authentication</h1>
+                <h1 className="auth-title">Admin <em>Authentication</em></h1>
                 <p className="auth-subtitle">
                   Single Gateway: Enter verified administrator credentials to access the Dispute Operations Control Panel.
                 </p>
               </>
             ) : mode === 'signin' ? (
               <>
-                <h1 className="auth-title">Sign In</h1>
+                <h1 className="auth-title">Sign <em>In</em></h1>
                 <p className="auth-subtitle">
                   Access your dispute cases and tracked milestones.
                 </p>
               </>
             ) : mode === 'signup' ? (
               <>
-                <h1 className="auth-title">Create Account</h1>
+                <h1 className="auth-title">Create <em>Account</em></h1>
                 <p className="auth-subtitle">
                   Organize and prepare your dispute evidence securely.
                 </p>
               </>
             ) : mode === 'forgot' ? (
               <>
-                <h1 className="auth-title">Reset Password</h1>
+                <h1 className="auth-title">Reset <em>Password</em></h1>
                 <p className="auth-subtitle">
                   Enter your email to receive a 6-digit verification code.
                 </p>
               </>
             ) : mode === 'reset' ? (
               <>
-                <h1 className="auth-title">New Password</h1>
+                <h1 className="auth-title">New <em>Password</em></h1>
                 <p className="auth-subtitle">
                   Enter the 6-digit code sent to <strong>{email}</strong>.
                 </p>
               </>
             ) : mode === 'otp' ? (
               <>
-                <h1 className="auth-title">Security Code</h1>
+                <h1 className="auth-title">Security <em>Code</em></h1>
                 <p className="auth-subtitle">
                   Enter the 6-digit code sent to <strong>{email}</strong>.
                 </p>
@@ -319,12 +320,12 @@ export default function AuthPage({
               alignItems: 'center',
               gap: '0.75rem',
               padding: '0.85rem 1rem',
-              backgroundColor: isAdminPortal ? '#fff1f2' : 'rgba(37, 99, 235, 0.08)',
-              border: isAdminPortal ? '1px solid #fecdd3' : '1px solid rgba(37, 99, 235, 0.25)',
+              backgroundColor: isAdminPortal ? '#fff1f2' : 'var(--lime-soft)',
+              border: isAdminPortal ? '1px solid #fecdd3' : '1px solid rgba(15, 93, 75, 0.2)',
               borderRadius: 'var(--radius-md, 8px)',
               marginBottom: '1.25rem'
             }}>
-              <span style={{ fontSize: '1.1rem' }}>🔒</span>
+              <Lock size={18} strokeWidth={2.2} style={{ flexShrink: 0, color: isAdminPortal ? '#9f1239' : 'var(--navy-primary)' }} />
               <span style={{ fontSize: '0.85rem', color: isAdminPortal ? '#9f1239' : 'var(--navy-primary)', fontWeight: 600, lineHeight: 1.4 }}>
                 {promptMessage}
               </span>
@@ -380,14 +381,14 @@ export default function AuthPage({
               alignItems: 'center',
               gap: '0.5rem',
               padding: '0.65rem 0.85rem',
-              backgroundColor: '#f1f5f9',
+              backgroundColor: '#f1f3ec',
               borderRadius: '6px',
               marginBottom: '1.25rem',
               fontSize: '0.8rem',
-              color: '#334155',
+              color: '#3d4f4a',
               fontWeight: 600
             }}>
-              <span>🛡️</span>
+              <ShieldCheck size={16} strokeWidth={2.2} style={{ flexShrink: 0 }} />
               <span>Single Authentication Gateway • Administrator / Operations Specialist Clearance</span>
             </div>
           ) : (
@@ -502,12 +503,12 @@ export default function AuthPage({
                 <div style={{
                   marginTop: '1rem',
                   padding: '0.85rem',
-                  backgroundColor: '#f8fafc',
-                  border: '1px dashed #cbd5e1',
+                  backgroundColor: '#f7f8f3',
+                  border: '1px dashed #d5dcd6',
                   borderRadius: '8px',
                   textAlign: 'center'
                 }}>
-                  <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600, marginBottom: '0.45rem' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#6b7773', fontWeight: 600, marginBottom: '0.45rem' }}>
                     Authorized Seed Admin Credentials:
                   </div>
                   <button
@@ -522,7 +523,7 @@ export default function AuthPage({
                       alignItems: 'center',
                       gap: '0.4rem',
                       padding: '0.45rem 0.9rem',
-                      background: '#0f172a',
+                      background: '#0b2b26',
                       color: '#ffffff',
                       border: 'none',
                       borderRadius: '6px',
@@ -532,7 +533,7 @@ export default function AuthPage({
                       boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
                     }}
                   >
-                    <span>⚡</span> Fill Admin Credentials (admin@refundguard.org)
+                    <KeyRound size={14} strokeWidth={2.2} style={{ verticalAlign: '-2px', marginRight: '0.35rem' }} /> Fill Admin Credentials (admin@refundguard.org)
                   </button>
                 </div>
               )}
@@ -545,7 +546,7 @@ export default function AuthPage({
                     style={{
                       background: 'none',
                       border: 'none',
-                      color: '#64748b',
+                      color: '#6b7773',
                       fontSize: '0.82rem',
                       fontWeight: 600,
                       cursor: 'pointer',
