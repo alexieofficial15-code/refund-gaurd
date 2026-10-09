@@ -45,32 +45,65 @@
   flex-shrink: 0;
 }
 
+/* Logo mark: gradient colours via variables (see BrandMark.jsx). Default = lime-green on dark surfaces. */
 .brand-mark {
+  --bm-c1: #3fae86;
+  --bm-c2: #a9e06a;
+  --bm-c3: #e4f76a;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--lime);
-  color: var(--navy-primary);
-  border-radius: 10px;
   flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 0;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand-mark svg { display: block; overflow: visible; }
+.bm-s1 { stop-color: var(--bm-c1); }
+.bm-s2 { stop-color: var(--bm-c2); }
+.bm-s3 { stop-color: var(--bm-c3); }
+
+/* Light surfaces: deep-green runner */
+.drawer-header-left .brand-mark,
+.rg-site-logo .brand-mark,
+.wallet-icon-shield .brand-mark {
+  --bm-c1: #0b2b26;
+  --bm-c2: #0f5d4b;
+  --bm-c3: #2f8a6f;
 }
 
 .brand-logo:hover .brand-mark {
-  transform: rotate(-6deg) scale(1.06);
+  transform: translateX(3px) rotate(-3deg);
 }
 
-.brand-name {
-  font-size: 1.05rem;
+/* Stacked lockup (mark above the name) */
+.brand-lockup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.brand-lockup-name {
+  font-size: 1.35rem;
   font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.06em;
+  color: var(--lime);
+  line-height: 1;
+}
+
+.brand-lockup-name span { color: #ffffff; }
+/* Wordmark: lime "US." + white name, uppercase */
+.brand-name {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--lime);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
 }
 
 .brand-name span {
-  color: var(--lime);
+  color: #ffffff;
 }
 
 /* Desktop links */
@@ -256,11 +289,6 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-}
-
-.drawer-header-left .brand-mark {
-  background-color: var(--navy-primary);
-  color: var(--lime);
 }
 
 .drawer-title {

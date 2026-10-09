@@ -1,5 +1,5 @@
 import React from 'react';
-import BrandMark from './BrandMark';
+import { BrandLockup } from './BrandMark';
 import './Footer.css';
 
 export default function Footer({ onNavigate }) {
@@ -11,10 +11,7 @@ export default function Footer({ onNavigate }) {
           {/* Col 1: Brand & Mission */}
           <div className="footer-brand-col">
             <div className="brand-logo" onClick={() => onNavigate && onNavigate('home')}>
-              <BrandMark size={38} />
-              <div className="brand-name">
-                US.<span>ClaimBack</span>
-              </div>
+              <BrandLockup markSize={92} />
             </div>
             <p className="footer-brand-desc">
               Evidence preparation and dispute documentation platform for consumers and merchants.
